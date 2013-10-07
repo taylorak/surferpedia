@@ -1,11 +1,13 @@
 package controllers;
 
 import play.mvc.Controller;
+
 import play.mvc.Result;
 import views.html.Index;
 import views.html.laird;
 import views.html.bethany;
 import views.html.jake;
+import views.html.koloheandino;
 
 
 /**
@@ -45,6 +47,15 @@ public class Application extends Controller {
    */
   public static Result jake() {
     return ok(jake.render("Jake Marshall"));
+    
+  }
+  
+  /**
+   * Returns Jake Marshall, a simple example of a second page to illustrate navigation.
+   * @return Jake Marshall.
+   */
+  public static Result koloheandino() {
+    return ok(koloheandino.render("Jake Marshall"));
     
   }
 }
