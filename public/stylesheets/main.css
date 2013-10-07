@@ -1,0 +1,35 @@
+body {
+  min-height: 800px;
+/*  padding-top: 70px;   Move body of page below navbar. */
+}
+
+.banner {
+  background: url('../images/Duke-Kahanamoku-Statue-Waikiki-Beach2.png');
+  background-size: cover;
+  height: 200px;
+}
+
+.laird {
+  background: url("../images/LairdHamilton.jpg");
+  background-size: cover;
+  background-position: center;
+  height: 500px;
+}
+
+.bethany {
+  background: url("../images/BethanyHamilton.jpg");
+  background-size: cover;
+  background-position: center;
+  height: 500px;
+}
+
+.jake {
+  background: url("../images/JakeMarshall.jpg");
+  background-size: cover;
+  background-position: center;
+  height: 500px;
+}
+
+.navbar {
+  border-radius: 0;
+}
