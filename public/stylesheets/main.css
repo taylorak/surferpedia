@@ -30,6 +30,13 @@ body {
   height: 500px;
 }
 
+.stephanie {
+  background: url("../images/stephanie-gilmore.jpg");
+  background-size: cover;
+  background-position: center;
+  height: 500px;
+}
+
 .jake {
   background: url("../images/JakeMarshall.jpg");
   background-size: cover;

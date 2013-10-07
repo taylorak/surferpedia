@@ -1,13 +1,14 @@
 package controllers;
 
 import play.mvc.Controller;
-
 import play.mvc.Result;
 import views.html.Index;
+import views.html.Stephanie;
 import views.html.laird;
 import views.html.bethany;
 import views.html.jake;
 import views.html.koloheandino;
+import views.html.Stephanie;
 
 
 /**
@@ -57,5 +58,13 @@ public class Application extends Controller {
   public static Result koloheandino() {
     return ok(koloheandino.render("Kolohe Andino"));
     
+  }
+  
+  /**
+   * Returns the Stephanie Gilmore page
+   * @return Stephanie Gilmore
+   */
+  public static Result stephanie() {
+    return ok(Stephanie.render("Stephanie Gilmore"));
   }
 }
