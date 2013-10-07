@@ -51,11 +51,11 @@ public class Application extends Controller {
   }
   
   /**
-   * Returns Jake Marshall, a simple example of a second page to illustrate navigation.
-   * @return Jake Marshall.
+   * Returns Kolohe Andino, a simple example of a second page to illustrate navigation.
+   * @return Kolohe Andino.
    */
   public static Result koloheandino() {
-    return ok(koloheandino.render("Jake Marshall"));
+    return ok(koloheandino.render("Kolohe Andino"));
     
   }
 }
