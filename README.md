@@ -1,4 +1,4 @@
-![screenshot](https://raw.github.com/taylorak/surferpedia/blob/master/doc/surferpedia.png)
+![screenshot](https://raw.github.com/taylorak/surferpedia/master/doc/surferpedia.png)
 
 ##Overview
 This is a Play application that provides an encyclopedia of surfers.
