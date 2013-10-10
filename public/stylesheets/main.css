@@ -44,6 +44,13 @@ body {
   height: 500px;
 }
 
+.adriano {
+  background: url("../images/adriano.jpg");
+  background-size: cover;
+  background-position: center;
+  height: 500px;
+}
+
 .navbar {
   border-radius: 0;
 }

@@ -9,6 +9,7 @@ import views.html.bethany;
 import views.html.jake;
 import views.html.koloheandino;
 import views.html.Stephanie;
+import views.html.adriano;
 
 
 /**
@@ -48,6 +49,14 @@ public class Application extends Controller {
    */
   public static Result jake() {
     return ok(jake.render("Jake Marshall"));
+    
+  }
+  /**
+   * Returns Adriano de Souza, a simple example of a second page to illustrate navigation.
+   * @return Adriano de Souza.
+   */
+  public static Result adriano() {
+    return ok(adriano.render("Adriano de Souza"));
     
   }
   
