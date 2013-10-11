@@ -10,7 +10,6 @@ import views.html.JakeMarshall;
 import views.html.KoloheAndino;
 import views.html.StephanieGilmore;
 
-
 /**
  * Implements the controllers for this application.
  */
@@ -48,6 +47,14 @@ public class Application extends Controller {
    */
   public static Result jake() {
     return ok(JakeMarshall.render("Jake Marshall"));
+    
+  }
+  /**
+   * Returns Adriano de Souza, a simple example of a second page to illustrate navigation.
+   * @return Adriano de Souza.
+   */
+  public static Result Adriano() {
+    return ok(Adriano.render("Adriano de Souza"));
     
   }
   
