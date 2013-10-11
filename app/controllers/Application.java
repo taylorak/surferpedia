@@ -3,12 +3,13 @@ package controllers;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.Index;
-import views.html.Stephanie;
 import views.html.LairdHamilton;
 import views.html.BethanyHamilton;
 import views.html.JakeMarshall;
 import views.html.KoloheAndino;
 import views.html.StephanieGilmore;
+import views.html.AdrianoSouza;
+
 
 /**
  * Implements the controllers for this application.
@@ -53,8 +54,8 @@ public class Application extends Controller {
    * Returns Adriano de Souza, a simple example of a second page to illustrate navigation.
    * @return Adriano de Souza.
    */
-  public static Result Adriano() {
-    return ok(Adriano.render("Adriano de Souza"));
+  public static Result adriano() {
+    return ok(AdrianoSouza.render("Adriano de Souza"));
     
   }
   
@@ -63,7 +64,7 @@ public class Application extends Controller {
    * @return Kolohe Andino.
    */
   public static Result koloheandino() {
-    return ok(KolohAandino.render("Kolohe Andino"));
+    return ok(KoloheAndino.render("Kolohe Andino"));
     
   }
   
