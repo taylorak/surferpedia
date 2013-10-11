@@ -4,11 +4,11 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.Index;
 import views.html.Stephanie;
-import views.html.laird;
-import views.html.bethany;
-import views.html.jake;
-import views.html.koloheandino;
-import views.html.Stephanie;
+import views.html.LairdHamilton;
+import views.html.BethanyHamilton;
+import views.html.JakeMarshall;
+import views.html.KoloheAndino;
+import views.html.StephanieGilmore;
 
 
 /**
@@ -29,7 +29,7 @@ public class Application extends Controller {
    * @return Laird Hamilton.
    */
   public static Result laird() {
-    return ok(laird.render("Laird Hamilton"));
+    return ok(LairdHamilton.render("Laird Hamilton"));
     
   }
   
@@ -38,7 +38,7 @@ public class Application extends Controller {
    * @return Bethany Hamilton.
    */
   public static Result bethany() {
-    return ok(bethany.render("Bethany Hamilton"));
+    return ok(BethanyHamilton.render("Bethany Hamilton"));
     
   }
   
@@ -47,7 +47,7 @@ public class Application extends Controller {
    * @return Jake Marshall.
    */
   public static Result jake() {
-    return ok(jake.render("Jake Marshall"));
+    return ok(JakeMarshall.render("Jake Marshall"));
     
   }
   
@@ -56,7 +56,7 @@ public class Application extends Controller {
    * @return Kolohe Andino.
    */
   public static Result koloheandino() {
-    return ok(koloheandino.render("Kolohe Andino"));
+    return ok(KolohAandino.render("Kolohe Andino"));
     
   }
   
@@ -65,6 +65,6 @@ public class Application extends Controller {
    * @return Stephanie Gilmore
    */
   public static Result stephanie() {
-    return ok(Stephanie.render("Stephanie Gilmore"));
+    return ok(StephanieGilmore.render("Stephanie Gilmore"));
   }
 }
