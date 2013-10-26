@@ -1,0 +1,36 @@
+@(ContactForm: Form[views.formdata.SurferFormData], SurferTypeMap: Map[String, Boolean]) 
+@import helper.form 
+@import bootstrap3._
+
+@Main("New Surfer") {
+<div class="container">
+    
+  @form(routes.Application.postSurfer(), 'class -> "form-horizontal") {
+
+    
+    @hidden(ContactForm("id"))
+    
+    @text(ContactForm("FirstName"),
+        label = "FirstName",
+        placeholder = "First Name",
+        help = "Please enter your first name. (required)")
+
+    @text(ContactForm("LastName"),
+        label = "Last Name",
+        placeholder = "Last Name",
+        help = "Please enter your last name. (required)")
+        
+          
+    @telephone(ContactForm("digits"), 
+          ContactForm("telephoneType"),          
+          optionMap = TelephoneTypeMap,
+          isMultiple = false)
+          
+  <div class="form-group">
+    <div class="col-lg-offset-2 col-lg-10">
+      <button type="submit" class="btn btn-default">Add</button>
+    </div>
+  </div>
+  }
+</div>
+}
