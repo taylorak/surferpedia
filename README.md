@@ -1,7 +1,10 @@
-![screenshot](https://raw.github.com/taylorak/surferpedia/master/doc/surferpedia.png)
-
 ##Overview
-This is a Play application that provides an encyclopedia of surfers.
+This is a Play application that provides an encyclopedia of surfers.  
+
+![screenshot](https://raw.github.com/taylorak/surferpedia/dynamic/public/images/New_Surfer.png)
+![screenshot](https://raw.github.com/taylorak/surferpedia/dynamic/public/images/Home.png)
+![screenshot](https://raw.github.com/taylorak/surferpedia/dynamic/public/images/Surfer.png)
+
 ##Installation
 ```
 git clone https://github.com/taylorak/ResponsiveKamanu.git  
