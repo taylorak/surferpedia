@@ -1,5 +1,5 @@
 body {
-  min-height: 700px;
+  min-height: 800px;
 }
 
 .banner {
@@ -15,7 +15,7 @@ body {
 .carousel-image {
   background-size: cover;
   background-position: center;
-  height: 385px;
+  height: 500px;
 }
 
 .bio-image {
