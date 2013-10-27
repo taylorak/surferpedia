@@ -13,7 +13,7 @@ public class Global extends GlobalSettings {
 
   public void onStart(Application app) {
 
-    SurferDB.addSurfer(new SurferFormData("Laird Hamilton", "San Fransisco, California", "",
+    SurferDB.addSurfer(new SurferFormData("Laird Hamilton", "San Francisco, California", "",
         "http://swellseekers.ie/home/wp-content/themes/classifiedstheme/thumbs//laird-hamilton-surf.jpg",
         "http://assets-s3.mensjournal.com/img/article/laird-hamiltons-high-performance-breathing/298_298_laird-hamiltons-high-performance-breathing.jpg",
         "Laird was born Laird John Zerfas in San Francisco on March 2, 1964, in an experimental salt-water sphere"
