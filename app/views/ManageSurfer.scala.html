@@ -1,30 +1,60 @@
-@(ContactForm: Form[views.formdata.SurferFormData], SurferTypeMap: Map[String, Boolean]) 
+@(SurferForm: Form[views.formdata.SurferFormData], SurferTypeMap: Map[String, Boolean], Surfers: List[Surfer], ReadOnly:Boolean) 
 @import helper.form 
 @import bootstrap3._
 
-@Main("New Surfer") {
+@Main("Manage", Surfers) {
 <div class="container">
     
   @form(routes.Application.postSurfer(), 'class -> "form-horizontal") {
 
+    @text(SurferForm("name"),
+          label = "Name",
+          placeholder = "Eddie Aikau",
+          help = "The name of the surfer.",
+          readonly = false)
     
-    @hidden(ContactForm("id"))
+    @text(SurferForm("home"),
+          label = "Home",
+          placeholder = "Kahului, Hawaii",
+          help = "The surfer's home town.",
+          readonly = false)
+      
+    @text(SurferForm("awards"),
+          label = "Awards",
+          placeholder = "1977 Duke Kahanamoku Invitational Surfing Championship.",
+          help = "Optional: List of titles and surfing awards.",
+          readonly = false)
     
-    @text(ContactForm("FirstName"),
-        label = "FirstName",
-        placeholder = "First Name",
-        help = "Please enter your first name. (required)")
+    @text(SurferForm("carouselUrl"),
+          label = "Carousel URL",
+          placeholder = "http://example.com/picture.jpg",
+          help = "A URL to the picture to be presented in the home page carousel of surfers.",
+          readonly = false)
+    
+    @text(SurferForm("bioUrl"),
+          label = "Bio URL",
+          placeholder = "http://example.com/picture.jpg",
+          help = "A URL to the picture to be presented in the bio page for this surfer.",
+          readonly = false)
+    
+    @textarea(SurferForm("bio"),
+            rows = "10",
+            label = "Bio",
+            placeholder = "Bio statement goes here.",
+            help = "One paragraph description of this surfer.")
+    
+    @text(SurferForm("slug"),
+          label = "Slug",
+          placeholder = "eddieaikau",
+          help = "Letters and digits to be used to identify the surfers in URLs; i.e. http://surferpedia.com/surfer/eddieaikau",
+          readonly = ReadOnly)
 
-    @text(ContactForm("LastName"),
-        label = "Last Name",
-        placeholder = "Last Name",
-        help = "Please enter your last name. (required)")
-        
-          
-    @telephone(ContactForm("digits"), 
-          ContactForm("telephoneType"),          
-          optionMap = TelephoneTypeMap,
-          isMultiple = false)
+    @select(SurferForm("type"),
+            label = "Type",
+            optionMap = SurferTypeMap,
+            isMultiple = false,
+            help = "The type of surfer for placement in the menu.")
+            
           
   <div class="form-group">
     <div class="col-lg-offset-2 col-lg-10">

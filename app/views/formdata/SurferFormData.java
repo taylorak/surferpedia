@@ -2,6 +2,7 @@ package views.formdata;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 import models.Surfer;
 import models.SurferDB;
 import play.data.validation.ValidationError;
@@ -92,8 +93,11 @@ public class SurferFormData {
     if (slug == null || slug.length() == 0) {
       errors.add(new ValidationError("slug", "Slug is required."));
     }
-    if (SurferDB.getSurfer(slug) == null) {
-      errors.add(new ValidationError("slug", "Slug has already been added."));
+    if (!slug.matches("[0-9a-zA-Z]+")) {
+      errors.add(new ValidationError("slug", "Letters and digits to be used."));
+    }
+    if (SurferDB.contains(slug)) {
+      errors.add(new ValidationError("slug", "Slug already exists."));
     }
     if (name == null || name.length() == 0) {
       errors.add(new ValidationError("name", "Name is required."));
@@ -113,8 +117,7 @@ public class SurferFormData {
     if (!SurferTypes.isType(type)) {
       errors.add(new ValidationError("type", "Invalid surfer type."));
     }
-
-    return errors.isEmpty() ? null : errors;
+    return errors.isEmpty() ? null : errors; 
   }
 
 

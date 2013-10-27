@@ -33,7 +33,7 @@ public class Application extends Controller {
     SurferFormData data = new SurferFormData();
     Form<SurferFormData> formData = Form.form(SurferFormData.class).fill(data);
     Map<String, Boolean> surferTypeMap = SurferTypes.getTypes(data.type);
-    return ok(ManageSurfer.render(formData, surferTypeMap));
+    return ok(ManageSurfer.render(formData, surferTypeMap, SurferDB.getSurfers(), false));
   }
   
   /**
@@ -41,7 +41,7 @@ public class Application extends Controller {
    * @return The resulting home page. 
    */
   public static Result getSurfer(String slug) {
-    return ok(ShowSurfer.render(SurferDB.getSurfer(slug)));
+    return ok(ShowSurfer.render(SurferDB.getSurfer(slug), SurferDB.getSurfers()));
   }
   
   /**
@@ -58,7 +58,10 @@ public class Application extends Controller {
    * @return The resulting home page. 
    */
   public static Result manageSurfer(String slug) {
-    return ok(ManageSurfer.render("Welcome to the home page."));
+    SurferFormData data = new SurferFormData(SurferDB.getSurfer(slug));
+    Form<SurferFormData> formData = Form.form(SurferFormData.class).fill(data);
+    Map<String, Boolean> surferTypeMap = SurferTypes.getTypes(SurferDB.getSurfer(slug).getType());
+    return ok(ManageSurfer.render(formData, surferTypeMap, SurferDB.getSurfers(), true));
   }
   
   /**
@@ -69,13 +72,13 @@ public class Application extends Controller {
     Form<SurferFormData> formData = Form.form(SurferFormData.class).bindFromRequest();
     if (formData.hasErrors()) {
       Map<String, Boolean> typeMap = SurferTypes.getTypes();
-      return badRequest(ManageSurfer.render(formData, typeMap));
+      return badRequest(ManageSurfer.render(formData, typeMap, SurferDB.getSurfers(), false));
     } 
     else {
       SurferFormData data = formData.get();
       Map<String, Boolean> typeMap = SurferTypes.getTypes(data.type);
       SurferDB.addSurfer(data);
-      //return ok(NewContact.render(formData));
+      //return ok(NewSurfer.render(formData));
       return redirect("/");
     }
   }

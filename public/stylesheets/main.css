@@ -1,6 +1,5 @@
 body {
-  min-height: 800px;
-/*  padding-top: 70px;   Move body of page below navbar. */
+  min-height: 700px;
 }
 
 .banner {
@@ -9,48 +8,19 @@ body {
   height: 200px;
 }
 
-.laird {
-  background: url("../images/LairdHamilton.jpg");
-  background-size: cover;
-  background-position: center;
-  height: 500px;
-}
-
-.kolohe {
-  background: url("../images/KoloheAndino_02.jpg");
-  background-size: cover;
-  background-position: center;
-  height: 500px;
-}
-
-.bethany {
-  background: url("../images/BethanyHamilton.jpg");
-  background-size: cover;
-  background-position: center;
-  height: 500px;
-}
-
-.stephanie {
-  background: url("../images/stephanie-gilmore.jpg");
-  background-size: cover;
-  background-position: center;
-  height: 500px;
-}
-
-.jake {
-  background: url("../images/JakeMarshall.jpg");
-  background-size: cover;
-  background-position: center;
-  height: 500px;
-}
-
-.adriano {
-  background: url("../images/adriano.jpg");
-  background-size: cover;
-  background-position: center;
-  height: 500px;
-}
-
 .navbar {
-  border-radius: 0;
+  border-radius: 0px;
 }
+
+.carousel-image {
+  background-size: cover;
+  background-position: center;
+  height: 385px;
+}
+
+.bio-image {
+  background-size: cover;
+  background-position: center;
+  height: 250px;
+}
+

@@ -56,4 +56,13 @@ public class SurferDB {
     }
     return contact;
   }
+  
+  /**
+   * Check if slug exists.
+   * @param slug
+   * @return true if contains key false if not
+   * */
+  public static boolean contains(String slug) {
+    return surfers.containsKey(slug);
+  }
 }

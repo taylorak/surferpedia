@@ -1,62 +1,29 @@
-@(message: String) 
+@(Surfers: List[Surfer]) 
 
-@Main("Home") {
+@Main("Home", Surfers) {
 <div class="container">
   <div id="carousel-example-generic" class="carousel slide">
     <!-- Indicators -->
     <ol class="carousel-indicators">
-      <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-      <li data-target="#carasel-example-generic" data-slide-to="1"></li>
-      <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-      <li data-target="#carousel-example-generic" data-slide-to="3"></li>
-      <li data-target="#carousel-example-generic" data-slide-to="4"></li>
-      <li data-target="#carousel-example-generic" data-slide-to="5"></li>
+     @for((surfer, index) <- Surfers.zipWithIndex) {
+      <li data-target="#carousel-example-generic" data-slide-to="@index"@if(index == 0) {class="active"}></li>
+      }
     </ol>
+
 
     <!-- Wrapper for slides -->
     <div class="carousel-inner">
-      <div class="item active">
-        <div class="laird"></div>
+    
+     @for((surfer, index) <- Surfers.zipWithIndex) {
+      <div class="item@if(index == 0) { active}">
+        <div class="carousel-image" style="background-image: url('@surfer.getCarouselUrl');"></div>
         <div class="carousel-caption">
-          <h3>Laird Hamilton</h3>
+         <h3>@surfer.getName()</h3>
         </div>
-      </div>
-
-      <div class="item">
-        <div class="bethany"></div>
-        <div class="carousel-caption">
-          <h3>Bethany Hamilton</h3>
         </div>
-      </div>
-      
-      <div class="item">
-        <div class="stephanie"></div>
-        <div class="carousel-caption">
-          <h3>Stephanie Gilmore</h3>
-        </div>
-      </div>
-
-      <div class="item">
-        <div class="jake"></div>
-        <div class="carousel-caption">
-          <h3>Jake Marshall</h3>
-        </div>
-      </div>
-      
-      <div class="item">
-        <div class="adriano"></div>
-        <div class="carousel-caption">
-          <h3>Adriano de Souza</h3>
-        </div>
-      </div>
-      
-      <div class="item">
-        <div class="kolohe"></div>
-        <div class="carousel-caption">
-          <h3>Kolohe Andino</h3>
-        </div>
-      </div>
+      }
     </div>
+
 
     <!-- Controls -->
     <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev"> <span class="icon-prev"></span>

@@ -1,4 +1,4 @@
-@(page: String)(content: Html)
+@(page: String, Surfers: List[Surfer])(content: Html)
 
 <!DOCTYPE html>
 
@@ -31,36 +31,34 @@
         </button>
         <a class="navbar-brand" href="/">Surferpedia</a>
       </div>
-      
-      <div class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-          
-            <li class="dropdown">
-              <a data-toggle="dropdown" class="dropdown-toggle" href="#" id="drop1">Men <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li class="@("active".when(page == "Laird Hamilton"))"><a href="@routes.Application.laird()">Laird Hamilton</a></li>
-                <li class="@("active".when(page == "Kolohe Andino"))"><a href="@routes.Application.koloheandino()">Kolohe Andino</a></li>
-                <li class="@("active".when(page == "Adriano de Souza"))"><a href="@routes.Application.adriano()">Adriano de Souza</a></li>
-              </ul>
-            </li>
-            
-            <li class="dropdown">
-              <a data-toggle="dropdown" class="dropdown-toggle" id="drop2" href="#">Women <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li class="@("active".when(page == "Bethany Hamilton"))"><a href="@routes.Application.bethany()">Bethany Hamilton</a></li>
-                <li class="@("active".when(page == "Stephanie Gilmore"))"><a href="@routes.Application.stephanie()">Stephanie Gilmore</a></li>
-              </ul>
-            </li>
 
-            <li class="dropdown">
-              <a data-toggle="dropdown" class="dropdown-toggle" href="#">Groms <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li class="@("active".when(page == "Jake Marshall"))"><a href="@routes.Application.jake()">Jake Marshall</a></li>
-                </ul>
-            </li>
-            
-          </ul>
-        </div>
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+
+          <li class="dropdown"><a data-toggle="dropdown" class="dropdown-toggle" href="#" id="drop1">Men <b
+              class="caret"></b></a>
+            <ul class="dropdown-menu">
+              @for(surfer <- Surfers) { @if(surfer.getType() == "Male") {
+              <li><a href="@routes.Application.getSurfer(surfer.getSlug())">@surfer.getName()</a></li> } }
+            </ul></li>
+
+          <li class="dropdown"><a data-toggle="dropdown" class="dropdown-toggle" id="drop2" href="#">Women <b
+              class="caret"></b></a>
+            <ul class="dropdown-menu">
+              @for(surfer <- Surfers) { @if(surfer.getType() == "Female") {
+              <li><a href="@routes.Application.getSurfer(surfer.getSlug())">@surfer.getName()</a></li> } }
+            </ul></li>
+
+          <li class="dropdown"><a data-toggle="dropdown" class="dropdown-toggle" href="#">Groms <b
+              class="caret"></b></a>
+            <ul class="dropdown-menu">
+              @for(surfer <- Surfers) { @if(surfer.getType() == "Grom") {
+              <li><a href="@routes.Application.getSurfer(surfer.getSlug())">@surfer.getName()</a></li> } }</li>
+        </ul>
+        
+        <li class="@("active".when(page == "New Surfer"))"><a href="@routes.Application.newSurfer()">New</a></li>
+
+      </div>
 
     </div>
   </div>
