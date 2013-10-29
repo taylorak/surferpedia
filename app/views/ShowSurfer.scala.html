@@ -22,7 +22,25 @@
 
       <a class="pull-left" href="@routes.Application.manageSurfer(Surfer.getSlug())">Edit</a>
       <!-- deletes surfer -->
-      <a class="pull-right" href="@routes.Application.deleteSurfer(Surfer.getSlug())">Delete</a>
+      <a data-toggle="modal" href="#myModal" class="pull-right">Delete</a>
+      
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Really Delete Surfer?</h4>
+        </div>
+        <div class="modal-body">
+          This cannot be undone.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <a type="button" href="@routes.Application.deleteSurfer(Surfer.getSlug())" class="btn btn-primary">Delete</a>
+          </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
     </div>
   </div>
 </div>
