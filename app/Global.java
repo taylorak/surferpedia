@@ -24,7 +24,7 @@ public class Global extends GlobalSettings {
         + " 1970s and owned a small business handmaking custom, high-performance surfboards for the Oahu North Shore big"
         + " wave riders of the era. The two became immediate companions. The young Laird invited Bill Hamilton home to"
         + " meet his mother. Bill Hamilton married Laird's then-single mother, becoming Laird's adoptive father.",
-        "lairdhamilton", "Male"));
+        "lairdhamilton", "Male", "Regular"));
     
     SurferDB.addSurfer(new SurferFormData("Bethany Hamilton", "Lihue, Hawaii", "",
         "http://upload.wikimedia.org/wikipedia/commons/a/a4/Bethany_Hamilton_20070311.jpg",
@@ -35,7 +35,7 @@ public class Global extends GlobalSettings {
         + " 2004 autobiography Soul Surfer: A True Story of Faith, Family, and Fighting to Get Back" 
         + " on the Board. In April 2011, the feature film Soul Surfer was released, based on the book"
         + " and additional interviews. She has appeared on many television shows since the loss of her arm.",
-        "bethanyhamilton", "Female"));
+        "bethanyhamilton", "Female", "Regular"));
     
     SurferDB.addSurfer(new SurferFormData("Jake Marshall", "San Diego, California", "",
         "http://cdn.surf.transworld.net/wp-content/blogs.dir/443/files/2012/06/Jake-Marshall.jpg",
@@ -52,7 +52,7 @@ public class Global extends GlobalSettings {
         + " knows where his priorities should be. “I surf and try to improve all the time, but I still put a lot of"
         + " emphasis on school,” says Jake. “I know that education is really important, and if surfing doesn’t work out,"
         + " it’s always good to have a backup plan.",
-        "jakemarshall", "Grom"));
+        "jakemarshall", "Grom", "Regular"));
   }
 
   

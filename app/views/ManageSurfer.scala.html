@@ -1,4 +1,4 @@
-@(SurferForm: Form[views.formdata.SurferFormData], SurferTypeMap: Map[String, Boolean], Surfers: List[Surfer], ReadOnly:Boolean) 
+@(SurferForm: Form[views.formdata.SurferFormData], SurferTypeMap: Map[String, Boolean], FootStyleMap: List[String], Surfers: List[Surfer], ReadOnly:Boolean) 
 @import helper.form 
 @import bootstrap3._
 
@@ -54,6 +54,12 @@
             optionMap = SurferTypeMap,
             isMultiple = false,
             help = "The type of surfer for placement in the menu.")
+            
+      <!-- Grade Level -->
+    @radiobuttons(SurferForm("footstyle"),
+                label = "footstyle",
+                buttonNameList = FootStyleMap,
+                help = "Select the surfer's foot style. (required)")
             
           
   <div class="form-group">

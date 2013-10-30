@@ -2,7 +2,6 @@ package views.formdata;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 import models.Surfer;
 import models.SurferDB;
 import play.data.validation.ValidationError;
@@ -38,6 +37,9 @@ public class SurferFormData {
   /** Type of Surfer Field**/
   public String type;
   
+  /** Surfer's Footstyle **/
+  public String footstyle;
+  
   
   /**
    * The default constructor.
@@ -58,7 +60,7 @@ public class SurferFormData {
    * @param type
    */
   public SurferFormData(String name, String home, String awards, String carouselUrl, String bioUrl, String bio, String slug,
-      String type) {
+      String type, String footstyle) {
     this.slug = slug;
     this.name = name;
     this.home = home;
@@ -67,6 +69,7 @@ public class SurferFormData {
     this.bioUrl = bioUrl;
     this.bio = bio;
     this.type = type;
+    this.footstyle = footstyle;
   }
 
   /**
@@ -82,6 +85,7 @@ public class SurferFormData {
     this.bioUrl = surfer.getBioUrl();
     this.bio = surfer.getBio();
     this.type = surfer.getType();
+    this.footstyle = surfer.getFootStyle();
   }
   
   /** Checks if form is valid.
@@ -116,6 +120,9 @@ public class SurferFormData {
     }
     if (!SurferTypes.isType(type)) {
       errors.add(new ValidationError("type", "Invalid surfer type."));
+    }
+    if (!FootstyleTypes.isType(footstyle)) {
+      errors.add(new ValidationError("footstyle", "Invalid foot style type."));
     }
     return errors.isEmpty() ? null : errors; 
   }
