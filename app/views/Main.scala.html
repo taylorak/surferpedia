@@ -1,4 +1,4 @@
-@(page: String, Surfers: List[Surfer])(content: Html)
+@(page: String, isLoggedIn: Boolean, userInfo: UserInfo, Surfers: List[Surfer])(content: Html)
 
 <!DOCTYPE html>
 
@@ -34,7 +34,6 @@
 
       <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
-
           <li class="dropdown"><a data-toggle="dropdown" class="dropdown-toggle" href="#" id="drop1">Men <b
               class="caret"></b></a>
             <ul class="dropdown-menu">
@@ -53,13 +52,25 @@
               class="caret"></b></a>
             <ul class="dropdown-menu">
               @for(surfer <- Surfers) { @if(surfer.getType() == "Grom") {
-              <li><a href="@routes.Application.getSurfer(surfer.getSlug())">@surfer.getName()</a></li> } }</li>
-        </ul>
+              <li><a href="@routes.Application.getSurfer(surfer.getSlug())">@surfer.getName()</a></li> } }</ul></li>
+       
+       
+        @if(isLoggedIn) {
         
         <li class="@("active".when(page == "New Surfer"))"><a href="@routes.Application.newSurfer()">New</a></li>
         <li class="@("active".when(page == "Update"))"><a href="@routes.Application.updateSurfer()">Updates</a></li>
+        } 
+        </ul>
         
-
+        
+        
+        <ul class="nav navbar-nav navbar-right">
+          @if(isLoggedIn) {
+            <li><p class="navbar-text">@userInfo.getEmail()</p></li>
+            <li><a href="@routes.Application.logout()">Logout</a></li>
+          } else {
+            <li><a href="@routes.Application.login()">Login</a></li>
+          }
       </div>
 
     </div>

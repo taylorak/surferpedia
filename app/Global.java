@@ -1,5 +1,6 @@
 import play.GlobalSettings;
 import models.SurferDB;
+import models.UserInfoDB;
 import play.Application;
 import views.formdata.SurferFormData;
 
@@ -12,6 +13,9 @@ import views.formdata.SurferFormData;
 public class Global extends GlobalSettings {
 
   public void onStart(Application app) {
+    
+    UserInfoDB.addUserInfo("John Smith", "smith@example.com", "password");
+
 
     SurferDB.addSurfer(new SurferFormData("Laird Hamilton", "San Fransisco, California", "",
         "http://swellseekers.ie/home/wp-content/themes/classifiedstheme/thumbs//laird-hamilton-surf.jpg",

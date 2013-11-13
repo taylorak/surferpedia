@@ -1,6 +1,6 @@
-@(Surfer: Surfer, Surfers: List[Surfer])
+@(page: String, isLoggedIn: Boolean, userInfo: UserInfo, Surfer: Surfer, Surfers: List[Surfer])
 
-@Main("Surfer", Surfers) {
+@Main(page, isLoggedIn, userInfo, Surfers) {
 <div class="container">
   <div class="col-md-4">
     <div class="well">
@@ -22,10 +22,13 @@
       <p>
         <b>Biography: </b> @Surfer.getBio()
       </p>
-
+      
+      @if(isLoggedIn) {
+        
       <a class="pull-left" href="@routes.Application.manageSurfer(Surfer.getSlug())">Edit</a>
       <!-- deletes surfer -->
       <a data-toggle="modal" href="#myModal" class="pull-right">Delete</a>
+      }
       
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
