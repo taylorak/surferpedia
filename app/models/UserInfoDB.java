@@ -13,6 +13,25 @@ public class UserInfoDB {
   private static Map<String, UserInfo> userinfos = new HashMap<String, UserInfo>();
   
   /**
+   * If the admin is defined.
+   */
+  private static boolean adminDefined = false;
+
+  /**
+   * Defines the Admin user.
+   *
+   * @param name Admin name.
+   * @param email Admin email.
+   * @param password Admin password.
+   */
+  public static void defineAdmin(String name, String email, String password) {
+    if (name != null && email != null && password != null) {
+      addUserInfo(name, email, password);
+      adminDefined = true;
+    }
+  }
+   
+  /**
    * Adds the specified user to the UserInfoDB.
    * @param name Their name.
    * @param email Their email.
@@ -22,6 +41,13 @@ public class UserInfoDB {
     userinfos.put(email, new UserInfo(name, email, password));
   }
   
+  /**
+   * Returns true if an admin is defined
+   * @return adminDefined
+   */
+  public static boolean adminDefined() {
+    return adminDefined;
+  }
   /**
    * Returns true if the email represents a known user.
    * @param email The email.
