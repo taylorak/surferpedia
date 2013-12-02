@@ -3,7 +3,7 @@ package views.formdata;
 import java.util.ArrayList;
 import java.util.List;
 import models.Surfer;
-import models.SurferDB;
+//import models.SurferDB;
 import play.data.validation.ValidationError;
 
 /**
@@ -40,6 +40,9 @@ public class SurferFormData {
   /** Surfer's Footstyle **/
   public String footstyle;
   
+  /** The surfer's country **/
+  public String country;
+  
   
   /**
    * The default constructor.
@@ -60,7 +63,7 @@ public class SurferFormData {
    * @param type
    */
   public SurferFormData(String name, String home, String awards, String carouselUrl, String bioUrl, String bio, String slug,
-      String type, String footstyle) {
+      String type, String footstyle, String country) {
     this.slug = slug;
     this.name = name;
     this.home = home;
@@ -70,6 +73,7 @@ public class SurferFormData {
     this.bio = bio;
     this.type = type;
     this.footstyle = footstyle;
+    this.country = country;
   }
 
   /**
@@ -86,6 +90,7 @@ public class SurferFormData {
     this.bio = surfer.getBio();
     this.type = surfer.getType();
     this.footstyle = surfer.getFootStyle();
+    this.country = surfer.getCountry();
   }
   
   /** Checks if form is valid.
@@ -100,7 +105,7 @@ public class SurferFormData {
     if (!slug.matches("[0-9a-zA-Z]+")) {
       errors.add(new ValidationError("slug", "Letters and digits to be used."));
     }
-    if (SurferDB.contains(slug)) {
+    if (Surfer.contains(slug)) {
       errors.add(new ValidationError("slug", "Slug already exists."));
     }
     if (name == null || name.length() == 0) {
@@ -124,7 +129,24 @@ public class SurferFormData {
     if (!FootstyleTypes.isType(footstyle)) {
       errors.add(new ValidationError("footstyle", "Invalid foot style type."));
     }
+    if (country == null || country.length() == 0) {
+      errors.add(new ValidationError("country", "Country is required."));
+    }
     return errors.isEmpty() ? null : errors; 
+  }
+
+  /**
+   * @return the country
+   */
+  public String getCountry() {
+    return country;
+  }
+
+  /**
+   * @param country the country to set
+   */
+  public void setCountry(String country) {
+    this.country = country;
   }
 
 

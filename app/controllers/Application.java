@@ -2,7 +2,8 @@ package controllers;
 
 import java.util.List;
 import java.util.Map;
-import models.SurferDB;
+import models.Surfer;
+//import models.SurferDB;
 import models.UpdateDB;
 import play.data.Form;
 import play.mvc.Controller;
@@ -17,6 +18,8 @@ import views.html.Login;
 import views.html.ManageSurfer;
 import views.html.ShowSurfer;
 import views.html.UpdateSurfer;
+import views.html.SurferList;
+
 
 
 /**
@@ -29,7 +32,7 @@ public class Application extends Controller {
    * @return The resulting home page. 
    */
   public static Result index() {
-    return ok(Index.render("Home", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), SurferDB.getSurfers()));
+    return ok(Index.render("Home", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), Surfer.getSurfers()));
   }
   
   /**
@@ -42,7 +45,7 @@ public class Application extends Controller {
     Form<SurferFormData> formData = Form.form(SurferFormData.class).fill(data);
     Map<String, Boolean> surferTypeMap = SurferTypes.getTypes(data.type);
     List<String> footStyleMap = FootstyleTypes.getFootStyleTypes();
-    return ok(ManageSurfer.render("Manage", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), formData, surferTypeMap, footStyleMap, SurferDB.getSurfers(), false));
+    return ok(ManageSurfer.render("Manage", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), formData, surferTypeMap, footStyleMap, Surfer.getSurfers(), false));
   }
   
   /**
@@ -50,7 +53,15 @@ public class Application extends Controller {
    * @return The resulting home page. 
    */
   public static Result getSurfer(String slug) {
-    return ok(ShowSurfer.render("Surfer", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), SurferDB.getSurfer(slug), SurferDB.getSurfers()));
+    return ok(ShowSurfer.render("Surfer", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), Surfer.getSurfer(slug), Surfer.getSurfers()));
+  }
+  
+  /**
+   * Gets all surfers. 
+   * @return The resulting home page. 
+   */
+  public static Result getSurfers() {
+    return ok(SurferList.render("Surfer List", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), Surfer.getSurfers()));
   }
   
   /**
@@ -59,9 +70,9 @@ public class Application extends Controller {
    */
   @Security.Authenticated(Secured.class)
   public static Result deleteSurfer(String slug) {
-    UpdateDB.addUpdate("delete", SurferDB.getSurfer(slug).getName());
-    SurferDB.deleteSurfer(slug);
-    return ok(Index.render("Home", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), SurferDB.getSurfers()));
+    UpdateDB.addUpdate("delete", Surfer.getSurfer(slug).getName());
+    Surfer.deleteSurfer(slug);
+    return ok(Index.render("Home", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), Surfer.getSurfers()));
   }
   
   /**
@@ -70,13 +81,13 @@ public class Application extends Controller {
    */
   @Security.Authenticated(Secured.class)
   public static Result manageSurfer(String slug) {
-    UpdateDB.addUpdate("edit", SurferDB.getSurfer(slug).getName());
-    SurferFormData data = new SurferFormData(SurferDB.getSurfer(slug));
+    UpdateDB.addUpdate("edit", Surfer.getSurfer(slug).getName());
+    SurferFormData data = new SurferFormData(Surfer.getSurfer(slug));
     Form<SurferFormData> formData = Form.form(SurferFormData.class).fill(data);
-    Map<String, Boolean> surferTypeMap = SurferTypes.getTypes(SurferDB.getSurfer(slug).getType());
+    Map<String, Boolean> surferTypeMap = SurferTypes.getTypes(Surfer.getSurfer(slug).getType());
   //  Map<String, Boolean> footStyleMap = FootstyleTypes.getFootStyleTypes(SurferDB.getSurfer(slug).getFootStyle());
     List<String> footStyleMap = FootstyleTypes.getFootStyleTypes();
-    return ok(ManageSurfer.render("Manage",Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), formData, surferTypeMap, footStyleMap, SurferDB.getSurfers(), true));
+    return ok(ManageSurfer.render("Manage",Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), formData, surferTypeMap, footStyleMap, Surfer.getSurfers(), true));
   }
   
   /**
@@ -88,16 +99,16 @@ public class Application extends Controller {
     if (formData.hasErrors()) {
       Map<String, Boolean> typeMap = SurferTypes.getTypes();
       List<String> footStyleMap = FootstyleTypes.getFootStyleTypes();
-      return badRequest(ManageSurfer.render("Manage", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), formData, typeMap, footStyleMap, SurferDB.getSurfers(), false));
+      return badRequest(ManageSurfer.render("Manage", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), formData, typeMap, footStyleMap, Surfer.getSurfers(), false));
     } 
     else {
       SurferFormData data = formData.get();
-      Map<String, Boolean> typeMap = SurferTypes.getTypes(data.type);
+      //Map<String, Boolean> typeMap = SurferTypes.getTypes(data.type);
       //Map<String, Boolean> footStyleMap = FootstyleTypes.getFootStyleTypes(data.footstyle);
-      SurferDB.addSurfer(data);
+      Surfer.addSurfer(data);
       UpdateDB.addUpdate("add", data.name);
       //return ok(NewSurfer.render(formData));
-      return redirect("/");
+      return redirect(routes.Application.index());
     }
   }
   
@@ -107,7 +118,7 @@ public class Application extends Controller {
    */
   @Security.Authenticated(Secured.class)
   public static Result updateSurfer() {
-    return ok(UpdateSurfer.render("Update", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), SurferDB.getSurfers(), UpdateDB.getUpdates()));
+    return ok(UpdateSurfer.render("Update", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), Surfer.getSurfers(), UpdateDB.getUpdates()));
   }
   
   /**
@@ -116,7 +127,7 @@ public class Application extends Controller {
    */
   public static Result login() {
     Form<LoginFormData> formData = Form.form(LoginFormData.class);
-    return ok(Login.render("Login", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), formData, SurferDB.getSurfers()));
+    return ok(Login.render("Login", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), formData, Surfer.getSurfers()));
   }
 
   /**
@@ -134,7 +145,7 @@ public class Application extends Controller {
 
     if (formData.hasErrors()) {
       flash("error", "Login credentials not valid.");
-      return badRequest(Login.render("Login", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), formData, SurferDB.getSurfers()));
+      return badRequest(Login.render("Login", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), formData, Surfer.getSurfers()));
     }
     else {
       // email/password OK, so now we set the session variable and only go to authenticated pages.
