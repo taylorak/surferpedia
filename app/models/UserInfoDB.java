@@ -1,7 +1,5 @@
 package models;
 
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Provides an in-memory repository for UserInfo.
@@ -10,27 +8,30 @@ import java.util.Map;
  */
 public class UserInfoDB {
   
-  private static Map<String, UserInfo> userinfos = new HashMap<String, UserInfo>();
   
   /**
-   * If the admin is defined.
-   */
-  private static boolean adminDefined = false;
-
-  /**
-   * Defines the Admin user.
-   *
-   * @param name Admin name.
-   * @param email Admin email.
-   * @param password Admin password.
+   * Defines the admin account if values are non-null.
+   * @param name Their name.
+   * @param email Their email.
+   * @param password Their password. 
    */
   public static void defineAdmin(String name, String email, String password) {
-    if (name != null && email != null && password != null) {
-      addUserInfo(name, email, password);
-      adminDefined = true;
+    if(email != null && password != null) {
+      UserInfo userInfo = new UserInfo(name, email, password);
+      userInfo.setAdmin(true);
+      userInfo.save();
     }
   }
-   
+  
+  /**
+   * Returns true if there is an admin.
+   * @return
+   */
+  public static boolean adminDefined() {
+    UserInfo userInfo = UserInfo.find().where().eq("admin", true).findUnique();
+    return userInfo != null;
+  }
+  
   /**
    * Adds the specified user to the UserInfoDB.
    * @param name Their name.
@@ -38,23 +39,17 @@ public class UserInfoDB {
    * @param password Their password. 
    */
   public static void addUserInfo(String name, String email, String password) {
-    userinfos.put(email, new UserInfo(name, email, password));
+    UserInfo userInfo = new UserInfo(name, email, password);
+    userInfo.save();
   }
   
-  /**
-   * Returns true if an admin is defined
-   * @return adminDefined
-   */
-  public static boolean adminDefined() {
-    return adminDefined;
-  }
   /**
    * Returns true if the email represents a known user.
    * @param email The email.
    * @return True if known user.
    */
   public static boolean isUser(String email) {
-    return userinfos.containsKey(email);
+    return UserInfo.find().where().eq("email", email).findUnique() != null;
   }
 
   /**
@@ -63,7 +58,7 @@ public class UserInfoDB {
    * @return The UserInfo.
    */
   public static UserInfo getUser(String email) {
-    return userinfos.get((email == null) ? "" : email);
+    return UserInfo.find().where().eq("email", email).findUnique();
   }
 
   /**
