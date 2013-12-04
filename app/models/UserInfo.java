@@ -12,9 +12,6 @@ import play.db.ebean.Model;
 @Entity
 public class UserInfo extends Model {
  
-  /**
-   * 
-   */
   private static final long serialVersionUID = 1L;
   
   @Id
@@ -88,8 +85,6 @@ public class UserInfo extends Model {
   public long getId() {
     return id;
   }
-
-
 
   /**
    * @param id the id to set

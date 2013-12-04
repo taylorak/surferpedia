@@ -25,10 +25,11 @@ public class Global extends GlobalSettings {
     if (admin == null) {
 
       UserInfoDB.defineAdmin("Administrator", adminEmail, adminPassword);
-    if (UserInfoDB.adminDefined()) {
+      
+      if (UserInfoDB.adminDefined()) {
 
-        //    UserInfoDB.addUserInfo("John Smith", "smith@example.com", "password");
- /**      Surfer.addSurfer(new SurferFormData("Laird Hamilton", "San Fransisco, California", "",
+       UserInfoDB.addUserInfo("John Smith", "smith@example.com", "password");
+       Surfer.addSurfer(new SurferFormData("Laird Hamilton", "San Fransisco, California", "",
             "http://swellseekers.ie/home/wp-content/themes/classifiedstheme/thumbs//laird-hamilton-surf.jpg",
             "http://assets-s3.mensjournal.com/img/article/laird-hamiltons-high-performance-breathing/298_298_laird-hamiltons-high-performance-breathing.jpg",
             "Laird was born Laird John Zerfas in San Francisco on March 2, 1964, in an experimental salt-water sphere"
@@ -68,7 +69,7 @@ public class Global extends GlobalSettings {
                 + " emphasis on school,” says Jake. “I know that education is really important, and if surfing doesn’t work out,"
                 + " it’s always good to have a backup plan.",
                 "jakemarshall", "Grom", "Regular", "USA"));
-      **/
+      
       } 
     }
   }

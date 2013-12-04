@@ -3,7 +3,6 @@ package controllers;
 import java.util.List;
 import java.util.Map;
 import models.Surfer;
-//import models.SurferDB;
 import models.UpdateDB;
 import play.data.Form;
 import play.mvc.Controller;
