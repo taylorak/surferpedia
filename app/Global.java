@@ -22,10 +22,10 @@ public class Global extends GlobalSettings {
 
     UserInfo admin = UserInfoDB.getUser(adminEmail);
 
-  //  if (admin == null) {
+    if (admin == null) {
 
       UserInfoDB.defineAdmin("Administrator", adminEmail, adminPassword);
- //     if (UserInfoDB.adminDefined()) {
+    if (UserInfoDB.adminDefined()) {
 
         //    UserInfoDB.addUserInfo("John Smith", "smith@example.com", "password");
  /**      Surfer.addSurfer(new SurferFormData("Laird Hamilton", "San Fransisco, California", "",
@@ -70,7 +70,7 @@ public class Global extends GlobalSettings {
                 "jakemarshall", "Grom", "Regular", "USA"));
       **/
       } 
- //   }
- // }
+    }
+  }
 
 }
