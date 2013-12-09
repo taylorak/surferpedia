@@ -163,5 +163,9 @@ public class Application extends Controller {
     session().clear();
     return redirect(routes.Application.index());
   }
+  
+  public static Result surferSearch() {
+    return ok(SurferSearch.render("Search",));
+  }
 
 }

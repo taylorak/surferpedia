@@ -14,6 +14,7 @@ POST    /post                       controllers.Application.postSurfer()
 GET     /login                      controllers.Application.login()
 POST    /login                      controllers.Application.postLogin()
 GET     /logout                      controllers.Application.logout()
+POST    /search                     controllers.Application.surferSearch()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
