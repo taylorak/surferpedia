@@ -10,6 +10,7 @@ import play.mvc.Result;
 import play.mvc.Security;
 import views.formdata.FootstyleTypes;
 import views.formdata.LoginFormData;
+import views.formdata.SearchFormData;
 import views.formdata.SurferFormData;
 import views.formdata.SurferTypes;
 import views.html.Index;
@@ -165,7 +166,16 @@ public class Application extends Controller {
   }
   
   public static Result surferSearch() {
-    return ok(SurferSearch.render("Search",));
+    Form<SearchFormData> formData = Form.form(SearchFormData.class).bindFromRequest();
+    SearchFormData data = formData.get();
+    String country = data.country;
+    String name = data.name;
+    String surferType = data.surferType;
+    Map<String, Boolean> typeMap = 
+    
+    
+    
+    return ok(SurferSearch.render("Search", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), Surfer.getSurfers()));
   }
 
 }
