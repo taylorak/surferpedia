@@ -26,7 +26,7 @@ public class Global extends GlobalSettings {
 
       UserInfoDB.defineAdmin("Administrator", adminEmail, adminPassword);
       
-      if (UserInfoDB.adminDefined()) {
+      if (Surfer.getSurfers().isEmpty()) {
 
        UserInfoDB.addUserInfo("John Smith", "smith@example.com", "password");
        Surfer.addSurfer(new SurferFormData("Laird Hamilton", "San Fransisco, California", "",
