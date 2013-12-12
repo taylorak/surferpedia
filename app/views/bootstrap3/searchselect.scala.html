@@ -1,17 +1,14 @@
-@(field: Field, label: String, optionMap: Map[String, Boolean], isMultiple: Boolean)
+@(field: Field, searchType: String, optionMap: Map[String, Boolean], isMultiple: Boolean)
 
   <div class="form-group">
-    <label class="col-sm-2 control-label" for="@field.id">@label</label>
-    <div class="col-sm-10">
       <select
         class="form-control"
         id="@field.id"
         name="@if(isMultiple) {@(field.name + "[]")} else {@field.name}"
         @if(isMultiple) {multiple="multiple"}>
-        @if(!isMultiple) {<option class="blank" value="">Please select a value</option>}
+        @if(!isMultiple) {<option class="blank" value="">@searchType</option>}
         @for((optionName, isSelected) <- optionMap) {
           <option id="@optionName" value="@optionName" @if(isSelected) {selected}>@optionName</option>
         }
       </select>
-    </div>
   </div>

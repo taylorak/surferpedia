@@ -24,6 +24,10 @@ public class SearchFormData {
     this.surferType = surferType;
   }
   
+  public SearchFormData() {
+    //Do nothing
+  }
+  
   
   
 }

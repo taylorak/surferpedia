@@ -10,7 +10,7 @@ create table surfer (
   awards                    varchar(255),
   carousel_url              varchar(255),
   bio_url                   varchar(255),
-  bio                       clob,
+  bio                       longtext,
   type                      varchar(255),
   footstyle                 varchar(255),
   country                   varchar(255),
@@ -18,32 +18,24 @@ create table surfer (
 ;
 
 create table user_info (
-  id                        bigint not null,
+  id                        bigint auto_increment not null,
   name                      varchar(255),
   email                     varchar(255),
   password                  varchar(255),
-  admin                     boolean,
+  admin                     tinyint(1) default 0,
   constraint pk_user_info primary key (id))
 ;
-
-create sequence surfer_seq;
-
-create sequence user_info_seq;
 
 
 
 
 # --- !Downs
 
-SET REFERENTIAL_INTEGRITY FALSE;
+SET FOREIGN_KEY_CHECKS=0;
 
-drop table if exists surfer;
+drop table surfer;
 
-drop table if exists user_info;
+drop table user_info;
 
-SET REFERENTIAL_INTEGRITY TRUE;
-
-drop sequence if exists surfer_seq;
-
-drop sequence if exists user_info_seq;
+SET FOREIGN_KEY_CHECKS=1;
 

@@ -1,5 +1,6 @@
-@(page: String, isLoggedIn: Boolean, userInfo: UserInfo, Surfers: List[Surfer], searchForm: Form[views.formdata.SearchFormData], typeList: Map[String,Boolean], countryList: Map[String,Boolean])(content: Html)
-
+@(page: String, isLoggedIn: Boolean, userInfo: UserInfo, Surfers: List[Surfer], typeList: Map[String,Boolean], countryList: Map[String,Boolean], searchForm : Form[views.formdata.SearchFormData])(content: Html)
+@import helper.form 
+@import bootstrap3._
 <!DOCTYPE html>
 
 <html>
@@ -67,9 +68,11 @@
             @search(searchForm("name"),
                     placeholder = "Name")
             @searchselect(searchForm("surferType"),
+                    searchType = "Type",
                     optionMap = typeList,
                     isMultiple = false)
             @searchselect(searchForm("country"),
+                          searchType = "Country",
                           optionMap = countryList,
                           isMultiple = false)
             <button type="submit" class="btn btn-default">Search</button>

@@ -1,7 +1,7 @@
-@(page: String, isLoggedIn: Boolean, userInfo: UserInfo, Surfers: List[Surfer], SurferResults: List[Surfer])
+@(page: String, isLoggedIn: Boolean, userInfo: UserInfo, Surfers: List[Surfer], typeList: Map[String,Boolean], countryList: Map[String,Boolean], SurferResults: List[Surfer], searchForm : Form[views.formdata.SearchFormData])
 
 
-@Main(page, isLoggedIn, userInfo, Surfers) {
+@Main(page, isLoggedIn, userInfo, Surfers, typeList, countryList, searchForm) {
  <div class="container">
   <table class="table table-condensed">
   <thead>

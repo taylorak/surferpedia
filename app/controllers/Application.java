@@ -1,7 +1,9 @@
 package controllers;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import com.avaje.ebean.ExpressionList;
 import models.Surfer;
 import models.UpdateDB;
 import play.data.Form;
@@ -19,7 +21,7 @@ import views.html.ManageSurfer;
 import views.html.ShowSurfer;
 import views.html.UpdateSurfer;
 import views.html.SurferList;
-
+import views.html.SurferSearch;
 
 
 /**
@@ -32,7 +34,17 @@ public class Application extends Controller {
    * @return The resulting home page. 
    */
   public static Result index() {
-    return ok(Index.render("Home", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), Surfer.getSurfers()));
+    SearchFormData searchdata =  new SearchFormData();
+    Form<SearchFormData> searchformdata = Form.form(SearchFormData.class).fill(searchdata);
+    Map<String, Boolean> typeMap = SurferTypes.getTypes();
+    Map<String, Boolean> countryMap = new HashMap<>();
+    List<Surfer> countryList = Surfer.getSurfers();
+    for(Surfer surfer : countryList) {
+      if(! countryMap.containsKey(surfer.getCountry())) {
+        countryMap.put(surfer.getCountry(), false);
+      }
+    }
+    return ok(Index.render("Home", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), Surfer.getSurfers(), typeMap, countryMap, searchformdata));
   }
   
   /**
@@ -45,7 +57,17 @@ public class Application extends Controller {
     Form<SurferFormData> formData = Form.form(SurferFormData.class).fill(data);
     Map<String, Boolean> surferTypeMap = SurferTypes.getTypes(data.type);
     List<String> footStyleMap = FootstyleTypes.getFootStyleTypes();
-    return ok(ManageSurfer.render("Manage", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), formData, surferTypeMap, footStyleMap, Surfer.getSurfers(), false));
+    SearchFormData searchdata =  new SearchFormData();
+    Form<SearchFormData> searchformdata = Form.form(SearchFormData.class).fill(searchdata);
+    Map<String, Boolean> typeMap = SurferTypes.getTypes();
+    Map<String, Boolean> countryMap = new HashMap<>();
+    List<Surfer> countryList = Surfer.getSurfers();
+    for(Surfer surfer : countryList) {
+      if(! countryMap.containsKey(surfer.getCountry())) {
+        countryMap.put(surfer.getCountry(), false);
+      }
+    }
+    return ok(ManageSurfer.render("Manage", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), formData, surferTypeMap, footStyleMap, Surfer.getSurfers(), false, typeMap, countryMap, searchformdata));
   }
   
   /**
@@ -53,7 +75,17 @@ public class Application extends Controller {
    * @return The resulting home page. 
    */
   public static Result getSurfer(String slug) {
-    return ok(ShowSurfer.render("Surfer", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), Surfer.getSurfer(slug), Surfer.getSurfers()));
+    SearchFormData searchdata =  new SearchFormData();
+    Form<SearchFormData> searchformdata = Form.form(SearchFormData.class).fill(searchdata);
+    Map<String, Boolean> typeMap = SurferTypes.getTypes();
+    Map<String, Boolean> countryMap = new HashMap<>();
+    List<Surfer> countryList = Surfer.getSurfers();
+    for(Surfer surfer : countryList) {
+      if(! countryMap.containsKey(surfer.getCountry())) {
+        countryMap.put(surfer.getCountry(), false);
+      }
+    }
+    return ok(ShowSurfer.render("Surfer", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), Surfer.getSurfer(slug), Surfer.getSurfers(), typeMap, countryMap, searchformdata));
   }
   
   /**
@@ -61,7 +93,17 @@ public class Application extends Controller {
    * @return The resulting home page. 
    */
   public static Result getSurfers() {
-    return ok(SurferList.render("Surfer List", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), Surfer.getSurfers()));
+    SearchFormData searchdata =  new SearchFormData();
+    Form<SearchFormData> searchformdata = Form.form(SearchFormData.class).fill(searchdata);
+    Map<String, Boolean> typeMap = SurferTypes.getTypes();
+    Map<String, Boolean> countryMap = new HashMap<>();
+    List<Surfer> countryList = Surfer.getSurfers();
+    for(Surfer surfer : countryList) {
+      if(! countryMap.containsKey(surfer.getCountry())) {
+        countryMap.put(surfer.getCountry(), false);
+      }
+    }
+    return ok(SurferList.render("Surfer List", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), Surfer.getSurfers(), typeMap, countryMap, searchformdata));
   }
   
   /**
@@ -72,7 +114,17 @@ public class Application extends Controller {
   public static Result deleteSurfer(String slug) {
     UpdateDB.addUpdate("delete", Surfer.getSurfer(slug).getName());
     Surfer.deleteSurfer(slug);
-    return ok(Index.render("Home", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), Surfer.getSurfers()));
+    SearchFormData searchdata =  new SearchFormData();
+    Form<SearchFormData> searchformdata = Form.form(SearchFormData.class).fill(searchdata);
+    Map<String, Boolean> typeMap = SurferTypes.getTypes();
+    Map<String, Boolean> countryMap = new HashMap<>();
+    List<Surfer> countryList = Surfer.getSurfers();
+    for(Surfer surfer : countryList) {
+      if(! countryMap.containsKey(surfer.getCountry())) {
+        countryMap.put(surfer.getCountry(), false);
+      }
+    }
+    return ok(Index.render("Home", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), Surfer.getSurfers(), typeMap, countryMap, searchformdata));
   }
   
   /**
@@ -87,7 +139,17 @@ public class Application extends Controller {
     Map<String, Boolean> surferTypeMap = SurferTypes.getTypes(Surfer.getSurfer(slug).getType());
   //  Map<String, Boolean> footStyleMap = FootstyleTypes.getFootStyleTypes(SurferDB.getSurfer(slug).getFootStyle());
     List<String> footStyleMap = FootstyleTypes.getFootStyleTypes();
-    return ok(ManageSurfer.render("Manage",Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), formData, surferTypeMap, footStyleMap, Surfer.getSurfers(), true));
+    SearchFormData searchdata =  new SearchFormData();
+    Form<SearchFormData> searchformdata = Form.form(SearchFormData.class).fill(searchdata);
+    Map<String, Boolean> typeMap = SurferTypes.getTypes();
+    Map<String, Boolean> countryMap = new HashMap<>();
+    List<Surfer> countryList = Surfer.getSurfers();
+    for(Surfer surfer : countryList) {
+      if(! countryMap.containsKey(surfer.getCountry())) {
+        countryMap.put(surfer.getCountry(), false);
+      }
+    }
+    return ok(ManageSurfer.render("Manage",Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), formData, surferTypeMap, footStyleMap, Surfer.getSurfers(), true, typeMap, countryMap, searchformdata));
   }
   
   /**
@@ -97,9 +159,18 @@ public class Application extends Controller {
   public static Result postSurfer() {
     Form<SurferFormData> formData = Form.form(SurferFormData.class).bindFromRequest();
     if (formData.hasErrors()) {
+      SearchFormData searchdata =  new SearchFormData();
+      Form<SearchFormData> searchformdata = Form.form(SearchFormData.class).fill(searchdata);
       Map<String, Boolean> typeMap = SurferTypes.getTypes();
       List<String> footStyleMap = FootstyleTypes.getFootStyleTypes();
-      return badRequest(ManageSurfer.render("Manage", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), formData, typeMap, footStyleMap, Surfer.getSurfers(), false));
+      Map<String, Boolean> countryMap = new HashMap<>();
+      List<Surfer> countryList = Surfer.getSurfers();
+      for(Surfer surfer : countryList) {
+        if(! countryMap.containsKey(surfer.getCountry())) {
+          countryMap.put(surfer.getCountry(), false);
+        }
+      }
+      return badRequest(ManageSurfer.render("Manage", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), formData, typeMap, footStyleMap, Surfer.getSurfers(), false, typeMap, countryMap, searchformdata));
     } 
     else {
       SurferFormData data = formData.get();
@@ -118,7 +189,17 @@ public class Application extends Controller {
    */
   @Security.Authenticated(Secured.class)
   public static Result updateSurfer() {
-    return ok(UpdateSurfer.render("Update", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), Surfer.getSurfers(), UpdateDB.getUpdates()));
+    SearchFormData searchdata =  new SearchFormData();
+    Form<SearchFormData> searchformdata = Form.form(SearchFormData.class).fill(searchdata);
+    Map<String, Boolean> typeMap = SurferTypes.getTypes();
+    Map<String, Boolean> countryMap = new HashMap<>();
+    List<Surfer> countryList = Surfer.getSurfers();
+    for(Surfer surfer : countryList) {
+      if(! countryMap.containsKey(surfer.getCountry())) {
+        countryMap.put(surfer.getCountry(), false);
+      }
+    }
+    return ok(UpdateSurfer.render("Update", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), Surfer.getSurfers(), UpdateDB.getUpdates(), typeMap, countryMap, searchformdata));
   }
   
   /**
@@ -126,8 +207,18 @@ public class Application extends Controller {
    * @return The Login page. 
    */
   public static Result login() {
+    SearchFormData searchdata =  new SearchFormData();
+    Form<SearchFormData> searchformdata = Form.form(SearchFormData.class).fill(searchdata);
     Form<LoginFormData> formData = Form.form(LoginFormData.class);
-    return ok(Login.render("Login", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), formData, Surfer.getSurfers()));
+    Map<String, Boolean> typeMap = SurferTypes.getTypes();
+    Map<String, Boolean> countryMap = new HashMap<>();
+    List<Surfer> countryList = Surfer.getSurfers();
+    for(Surfer surfer : countryList) {
+      if(! countryMap.containsKey(surfer.getCountry())) {
+        countryMap.put(surfer.getCountry(), false);
+      }
+    }
+    return ok(Login.render("Login", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), formData, Surfer.getSurfers(), typeMap, countryMap, searchformdata));
   }
 
   /**
@@ -145,7 +236,17 @@ public class Application extends Controller {
 
     if (formData.hasErrors()) {
       flash("error", "Login credentials not valid.");
-      return badRequest(Login.render("Login", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), formData, Surfer.getSurfers()));
+      SearchFormData searchdata =  new SearchFormData();
+      Form<SearchFormData> searchformdata = Form.form(SearchFormData.class).fill(searchdata);
+      Map<String, Boolean> typeMap = SurferTypes.getTypes();
+      Map<String, Boolean> countryMap = new HashMap<>();
+      List<Surfer> countryList = Surfer.getSurfers();
+      for(Surfer surfer : countryList) {
+        if(! countryMap.containsKey(surfer.getCountry())) {
+          countryMap.put(surfer.getCountry(), false);
+        }
+      }
+      return badRequest(Login.render("Login", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), formData, Surfer.getSurfers(), typeMap, countryMap, searchformdata));
     }
     else {
       // email/password OK, so now we set the session variable and only go to authenticated pages.
@@ -171,11 +272,20 @@ public class Application extends Controller {
     String country = data.country;
     String name = data.name;
     String surferType = data.surferType;
-    Map<String, Boolean> typeMap = 
+    List<Surfer> resultList = Surfer.find.where().contains("name", name).contains("country", country).contains("type", surferType).findList();
+    SearchFormData searchdata =  new SearchFormData();
+    Form<SearchFormData> searchformdata = Form.form(SearchFormData.class).fill(searchdata);
+    Map<String, Boolean> typeMap = SurferTypes.getTypes();
+    Map<String, Boolean> countryMap = new HashMap<>();
+    List<Surfer> countryList = Surfer.getSurfers();
+    for(Surfer surfer : countryList) {
+      if(! countryMap.containsKey(surfer.getCountry())) {
+        countryMap.put(surfer.getCountry(), false);
+      }
+    }
     
     
-    
-    return ok(SurferSearch.render("Search", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), Surfer.getSurfers()));
+    return ok(SurferSearch.render("Search", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), Surfer.getSurfers(), typeMap, countryMap, resultList, searchformdata));
   }
 
 }

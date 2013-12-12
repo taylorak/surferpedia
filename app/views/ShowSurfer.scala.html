@@ -1,6 +1,6 @@
-@(page: String, isLoggedIn: Boolean, userInfo: UserInfo, Surfer: Surfer, Surfers: List[Surfer])
+@(page: String, isLoggedIn: Boolean, userInfo: UserInfo, Surfer: Surfer, Surfers: List[Surfer], typeList: Map[String,Boolean], countryList: Map[String,Boolean], searchForm : Form[views.formdata.SearchFormData])
 
-@Main(page, isLoggedIn, userInfo, Surfers) {
+@Main(page, isLoggedIn, userInfo, Surfers, typeList, countryList, searchForm) {
 <div class="container">
   <div class="col-md-4">
     <div class="well">
