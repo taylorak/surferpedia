@@ -17,17 +17,14 @@ public class SearchFormData {
   /**Surfer type field**/
   public String surferType = "";
   
+  public SearchFormData() {
+    //Do nothing
+  }
   
   public SearchFormData(String name, String country, String surferType) {
     this.name = name;
     this.country = country;
     this.surferType = surferType;
   }
-  
-  public SearchFormData() {
-    //Do nothing
-  }
-  
-  
   
 }
