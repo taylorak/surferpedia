@@ -55,7 +55,7 @@ public class Surfer extends Model{
     ); 
   
   public static Page<Surfer> page(int size, int page) {
-    return find.where()//.orderBy("rating desc")
+    return find.where().orderBy("name asc")
            .findPagingList(size).getPage(page);
   }
 

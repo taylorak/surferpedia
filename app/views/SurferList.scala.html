@@ -16,10 +16,12 @@
     <td><a href="@routes.Application.getSurfer(surfer.getSlug())">@surfer.getName()</a></td>
     <td>@surfer.getHome()</td>
     <td>@surfer.getCountry()</td>
-    </tr> }
+    </tr> 
+    }
   </tbody>
   </table>
-  
+
+<!--
             <ul class="pagination">
                 @if(Surfers.hasPrev) {
                     <li class="prev">
@@ -43,6 +45,20 @@
                     </li>
                 }
             </ul>
+-->            
+            <ul class="pager">
+                @if(Surfers.hasPrev) {
+                <li class="previous"><a href="#">&larr; Prev</a></li>
+                } else {
+                <li class="previous disabled"><a href="#">&larr; Prev</a></li>
+               } 
+                @if(Surfers.hasNext) {               
+                <li class="next"><a href="#">Next &rarr;</a></li>
+                } else {
+                <li class="next disabled"><a href="#">Next &rarr;</a></li>
+                }
+            </ul>
+            
         
 </div>
 }
