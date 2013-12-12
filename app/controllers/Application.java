@@ -202,7 +202,7 @@ public class Application extends Controller {
     SearchFormData searchdata =  new SearchFormData();
     Form<SearchFormData> searchformdata = Form.form(SearchFormData.class).fill(searchdata);
     
-    return ok(SurferSearch.render("Search", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), Surfer.getSurfers(), SurferTypes.getTypes(), Surfer.getCountries(), resultList, searchformdata));
+    return ok(SurferList.render("Search", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), resultList, SurferTypes.getTypes(), Surfer.getCountries(), searchformdata));
   }
 
 }
