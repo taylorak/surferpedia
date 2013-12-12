@@ -1,6 +1,8 @@
 package models;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Lob;
@@ -76,6 +78,21 @@ public class Surfer extends Model{
     this.setType(type);
     this.setFootStyle(footstyle);
     this.setCountry(country);
+  }
+  
+  /**
+   * Creates a list of all countries in the database
+   * @return 
+   */
+  public static Map<String, Boolean> getCountries() {
+    Map<String, Boolean> countryMap = new HashMap<>();
+    List<Surfer> countryList = Surfer.getSurfers();
+    for(Surfer surfer : countryList) {
+      if(! countryMap.containsKey(surfer.getCountry())) {
+        countryMap.put(surfer.getCountry(), false);
+      }
+    }
+    return countryMap;
   }
   
   /**
