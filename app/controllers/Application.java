@@ -272,7 +272,12 @@ public class Application extends Controller {
     String country = data.country;
     String name = data.name;
     String surferType = data.surferType;
-    List<Surfer> resultList = Surfer.find.where().contains("name", name).contains("country", country).contains("type", surferType).findList();
+    List<Surfer> resultList;
+    if(surferType == "") {
+      resultList = Surfer.find.where().contains("name", name).contains("country", country).findList();
+    }else {
+      resultList = Surfer.find.where().contains("name", name).contains("country", country).eq("type", surferType).findList();
+    }
     SearchFormData searchdata =  new SearchFormData();
     Form<SearchFormData> searchformdata = Form.form(SearchFormData.class).fill(searchdata);
     Map<String, Boolean> typeMap = SurferTypes.getTypes();
