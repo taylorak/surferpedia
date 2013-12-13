@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import com.avaje.ebean.Page;
 import play.db.ebean.Model;
 import views.formdata.SurferFormData;
 
@@ -54,6 +55,12 @@ public class Surfer extends Model{
   public static Finder<String,Surfer> find = new Finder<String,Surfer>(
       String.class, Surfer.class
     ); 
+  
+  public static Page<Surfer> page(int size, int page) {
+    return find.where().orderBy("name asc")
+           .findPagingList(size).getPage(page);
+  }
+
 
   /**
    * Constructs a new Surfer.

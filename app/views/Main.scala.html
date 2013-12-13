@@ -1,6 +1,7 @@
-@(page: String, isLoggedIn: Boolean, userInfo: UserInfo, Surfers: List[Surfer], typeList: Map[String,Boolean], countryList: Map[String,Boolean], searchForm : Form[views.formdata.SearchFormData])(content: Html)
+@(page: String, isLoggedIn: Boolean, userInfo: UserInfo, typeList: Map[String,Boolean], countryList: Map[String,Boolean], searchForm : Form[views.formdata.SearchFormData])(content: Html)
 @import helper.form 
 @import bootstrap3._
+
 <!DOCTYPE html>
 
 <html>
@@ -35,27 +36,7 @@
 
      <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
-   <!--       <li class="dropdown"><a data-toggle="dropdown" class="dropdown-toggle" href="#" id="drop1">Men <b
-              class="caret"></b></a>
-            <ul class="dropdown-menu">
-              @for(surfer <- Surfers) { @if(surfer.getType() == "Male") {
-              <li><a href="@routes.Application.getSurfer(surfer.getSlug())">@surfer.getName()</a></li> } }
-            </ul></li>
 
-          <li class="dropdown"><a data-toggle="dropdown" class="dropdown-toggle" id="drop2" href="#">Women <b
-              class="caret"></b></a>
-            <ul class="dropdown-menu">
-              @for(surfer <- Surfers) { @if(surfer.getType() == "Female") {
-              <li><a href="@routes.Application.getSurfer(surfer.getSlug())">@surfer.getName()</a></li> } }
-            </ul></li>
-
-          <li class="dropdown"><a data-toggle="dropdown" class="dropdown-toggle" href="#">Groms <b
-              class="caret"></b></a>
-            <ul class="dropdown-menu">
-              @for(surfer <- Surfers) { @if(surfer.getType() == "Grom") {
-              <li><a href="@routes.Application.getSurfer(surfer.getSlug())">@surfer.getName()</a></li> } }</ul></li>
-       
-       -->
        <li class="@("active".when(page == "Surfer List"))"><a href="@routes.Application.getSurfers()">Surfers</a></li>
        
         @if(isLoggedIn) {

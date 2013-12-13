@@ -1,6 +1,6 @@
-@(page: String, isLoggedIn: Boolean, userInfo: UserInfo, Surfers: List[Surfer], typeList: Map[String,Boolean], countryList: Map[String,Boolean], searchForm : Form[views.formdata.SearchFormData])
+@(page: String, isLoggedIn: Boolean, userInfo: UserInfo, Surfers: Pager[Surfer], typeList: Map[String,Boolean], countryList: Map[String,Boolean], searchForm : Form[views.formdata.SearchFormData])
 
-@Main(page, isLoggedIn, userInfo, Surfers, typeList, countryList, searchForm) {
+@Main(page, isLoggedIn, userInfo, typeList, countryList, searchForm) {
 <div class="container">
   <table class="table table-condensed">
   <thead>
@@ -11,13 +11,54 @@
   </tr>
   </thead>
   <tbody>
-    @for(surfer <- Surfers) {
+    @for(surfer <- Surfers.getList) {
     <tr>
     <td><a href="@routes.Application.getSurfer(surfer.getSlug())">@surfer.getName()</a></td>
     <td>@surfer.getHome()</td>
     <td>@surfer.getCountry()</td>
-    </tr> }
+    </tr> 
+    }
   </tbody>
   </table>
+
+<!--
+            <ul class="pagination">
+                @if(Surfers.hasPrev) {
+                    <li class="prev">
+                        <a href="@routes.Application.getSurfers(Surfers.getPageIndex - 1)">&larr; Previous</a>
+                    </li>
+                } else {
+                    <li class="disabled">
+                        <a>&larr; Previous</a>
+                    </li>
+                }
+                <li class="current">
+                    <a>Displaying @Surfers.getDisplayXtoYofZ(" to "," of ")</a>
+                </li>
+                @if(Surfers.hasNext) {
+                    <li class="next">
+                        <a href="@routes.Application.getSurfers(Surfers.getPageIndex + 1)">Next &rarr;</a>
+                    </li>
+                } else {
+                    <li class="disabled">
+                        <a>Next &rarr;</a>
+                    </li>
+                }
+            </ul>
+-->            
+            <ul class="pager">
+                @if(Surfers.hasPrev) {
+                <li class="previous"><a href="#">&larr; Prev</a></li>
+                } else {
+                <li class="previous disabled"><a href="#">&larr; Prev</a></li>
+               } 
+                @if(Surfers.hasNext) {               
+                <li class="next"><a href="#">Next &rarr;</a></li>
+                } else {
+                <li class="next disabled"><a href="#">Next &rarr;</a></li>
+                }
+            </ul>
+            
+        
 </div>
 }
