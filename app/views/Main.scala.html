@@ -48,8 +48,9 @@
         
         
         <ul class="nav navbar-nav navbar-right">
+         @if(page != "Login") {
         
-                @form(routes.Application.surferSearch(), 'class -> "navbar-form navbar-left") {
+            @form(routes.Application.surferSearch(), 'class -> "navbar-form navbar-left") {
             @search(searchForm("name"),
                     placeholder = "Name")
             @searchselect(searchForm("surferType"),
@@ -61,13 +62,16 @@
                           optionMap = countryList,
                           isMultiple = false)
             <button type="submit" class="btn btn-default">Search</button>
+         }
         }
         
           @if(isLoggedIn) {
             <li><p class="navbar-text">@userInfo.getEmail()</p></li>
             <li><a href="@routes.Application.logout()">Logout</a></li>
           } else {
+            @if(page != "Login") {
             <li><a href="@routes.Application.login()">Login</a></li>
+            }
           }
           </ul>
           
