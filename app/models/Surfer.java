@@ -56,12 +56,17 @@ public class Surfer extends Model{
       String.class, Surfer.class
     ); 
   
-  public static Page<Surfer> page(int size, int page) {
-    return find.where().orderBy("name asc")
-           .findPagingList(size).getPage(page);
+  public static Page<Surfer> page(int size, int page, String name, String country, String surferType) {
+    return (surferType == "")? 
+        find.where().contains("name", name).contains("country", country)
+            .findPagingList(size).getPage(page) : 
+        find.where().contains("name", name).contains("country", country).eq("type", surferType)
+            .findPagingList(size).getPage(page);
+        // return find.where().orderBy("name asc")
+        //        .findPagingList(size).getPage(page);
   }
 
-
+  
   /**
    * Constructs a new Surfer.
    * @param name The surfer's name.
