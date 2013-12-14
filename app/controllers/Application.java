@@ -40,7 +40,7 @@ public class Application extends Controller {
 
     List<Surfer> surfers = Surfer.getSurfers();
     Collections.shuffle(surfers);
-    return ok(Index.render("Home", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), surfers.subList(0, 3), SurferTypes.getTypes(), Surfer.getCountries(), searchformdata));
+    return ok(Index.render("Home", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), surfers.subList(0, 3), SurferTypes.getTypes(), Surfer.getCountries(), searchformdata, Surfer.getRecentSurfers()));
   }
   
   /**
@@ -93,7 +93,7 @@ public class Application extends Controller {
 
     List<Surfer> surfers = Surfer.getSurfers();
     Collections.shuffle(surfers);
-    return ok(Index.render("Home", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), surfers.subList(0,3), SurferTypes.getTypes(), Surfer.getCountries(), searchformdata));
+    return ok(Index.render("Home", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), surfers.subList(0,3), SurferTypes.getTypes(), Surfer.getCountries(), searchformdata, Surfer.getRecentSurfers()));
   }
   
   /**
@@ -196,6 +196,10 @@ public class Application extends Controller {
     return redirect(routes.Application.index());
   }
   
+  /**
+   * Returns a list of surfers based on what parameters were given through the search function.
+   * @return
+   */
   public static Result surferSearch() {
     Form<SearchFormData> formData = Form.form(SearchFormData.class).bindFromRequest();
     SearchFormData data = formData.get();

@@ -1,7 +1,7 @@
-@(page: String, isLoggedIn: Boolean, userInfo: UserInfo, Surfers: List[Surfer], typeList: Map[String,Boolean], countryList: Map[String,Boolean], searchForm : Form[views.formdata.SearchFormData]) 
+@(page: String, isLoggedIn: Boolean, userInfo: UserInfo, Surfers: List[Surfer], typeList: Map[String,Boolean], countryList: Map[String,Boolean], searchForm : Form[views.formdata.SearchFormData], recentSurfers: List[Surfer]) 
 
 @Main(page, isLoggedIn, userInfo, typeList, countryList, searchForm) {
-<div class="container">
+<div class="container col-md-9">
   <div id="carousel-example-generic" class="carousel slide">
     <!-- Indicators -->
     <ol class="carousel-indicators">
@@ -24,11 +24,25 @@
       }
     </div>
 
-
     <!-- Controls -->
     <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev"> <span class="icon-prev"></span>
     </a> <a class="right carousel-control" href="#carousel-example-generic" data-slide="next"> <span class="icon-next"></span>
     </a>
   </div>
+</div>
+
+<div class="container col-md-3">
+    <table class="table table-condensed">
+      <thead>
+        <tr>
+        <td>Recently Added Surfers</td>
+        </tr>
+      </thead>
+      <tbody>
+      @for(surfer <- recentSurfers) {
+        <tr><td><a href="@routes.Application.getSurfer(surfer.getSlug())">@surfer.getName()</a></td></tr>
+      }
+      </tbody>
+    </table>
 </div>
 }

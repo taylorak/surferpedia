@@ -1,5 +1,6 @@
 package models;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -93,7 +94,7 @@ public class Surfer extends Model{
   }
   
   /**
-   * Creates a list of all countries in the database
+   * Creates a list of all countries that are in the database.
    * @return 
    */
   public static Map<String, Boolean> getCountries() {
@@ -105,6 +106,27 @@ public class Surfer extends Model{
       }
     }
     return countryMap;
+  }
+  
+  /**
+   * Returns up to three of the most recent surfers added to the application.
+   * @return
+   */
+  public static List<Surfer> getRecentSurfers() {
+    List<Surfer> surferList = Surfer.getSurfers();
+    List<Surfer> newSurfers = new ArrayList<>();
+    int totalSurferIndex = Surfer.find.findRowCount()-1;
+    int index = 2;
+    while(index >= 0) {
+      if(index < surferList.size()) {
+        newSurfers.add(surferList.get(totalSurferIndex-index));
+        index--;
+      }else {
+        index--;
+      }
+    }
+    
+    return newSurfers;
   }
   
   /**
