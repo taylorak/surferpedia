@@ -29,7 +29,7 @@ import views.html.SurferList;
  * Implements the controllers for this application.
  */
 public class Application extends Controller {
-
+  
   /**
    * Returns the home page. 
    * @return The resulting home page. 
@@ -38,9 +38,7 @@ public class Application extends Controller {
     SearchFormData searchdata =  new SearchFormData();
     Form<SearchFormData> searchformdata = Form.form(SearchFormData.class).fill(searchdata);    
 
-    List<Surfer> surfers = Surfer.getSurfers();
-    Collections.shuffle(surfers);
-    return ok(Index.render("Home", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), surfers.subList(0, 3), SurferTypes.getTypes(), Surfer.getCountries(), searchformdata));
+    return ok(Index.render("Home", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), Surfer.getRandomSurfers(3), SurferTypes.getTypes(), Surfer.getCountries(), searchformdata));
   }
   
   /**
@@ -85,15 +83,13 @@ public class Application extends Controller {
    */
   @Security.Authenticated(Secured.class)
   public static Result deleteSurfer(String slug) {
-    UpdateDB.addUpdate("delete", Surfer.getSurfer(slug).getName());
+    //UpdateDB.addUpdate("delete", Surfer.getSurfer(slug).getName());
     Surfer.deleteSurfer(slug);
     
     SearchFormData searchdata =  new SearchFormData();
     Form<SearchFormData> searchformdata = Form.form(SearchFormData.class).fill(searchdata);
 
-    List<Surfer> surfers = Surfer.getSurfers();
-    Collections.shuffle(surfers);
-    return ok(Index.render("Home", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), surfers.subList(0,3), SurferTypes.getTypes(), Surfer.getCountries(), searchformdata));
+    return ok(Index.render("Home", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), Surfer.getRandomSurfers(3), SurferTypes.getTypes(), Surfer.getCountries(), searchformdata));
   }
   
   /**
@@ -102,7 +98,7 @@ public class Application extends Controller {
    */
   @Security.Authenticated(Secured.class)
   public static Result manageSurfer(String slug) {
-    UpdateDB.addUpdate("edit", Surfer.getSurfer(slug).getName());
+    //UpdateDB.addUpdate("edit", Surfer.getSurfer(slug).getName());
     SurferFormData data = new SurferFormData(Surfer.getSurfer(slug));
     Form<SurferFormData> formData = Form.form(SurferFormData.class).fill(data);
     Map<String, Boolean> surferTypeMap = SurferTypes.getTypes(Surfer.getSurfer(slug).getType());
@@ -128,11 +124,8 @@ public class Application extends Controller {
     } 
     else {
       SurferFormData data = formData.get();
-      //Map<String, Boolean> typeMap = SurferTypes.getTypes(data.type);
-      //Map<String, Boolean> footStyleMap = FootstyleTypes.getFootStyleTypes(data.footstyle);
       Surfer.addSurfer(data);
-      UpdateDB.addUpdate("add", data.name);
-      //return ok(NewSurfer.render(formData));
+      //UpdateDB.addUpdate("add", data.name);
       return redirect(routes.Application.index());
     }
   }

@@ -1,5 +1,6 @@
 package models;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -114,8 +115,14 @@ public class Surfer extends Model{
    */
   public static Surfer addSurfer(SurferFormData formData) {
     Surfer surfer = new Surfer(formData.name, formData.home, formData.awards, formData.carouselUrl, formData.bioUrl, formData.bio, formData.slug, formData.type, formData.footstyle,  formData.country);
-    surfer.save();
+    if(Surfer.getSurfer(formData.slug) == null) {
+      surfer.save();
+
+    } else {
+      surfer.update();
+    }
     return surfer;
+
   }
   
   /**
@@ -134,6 +141,16 @@ public class Surfer extends Model{
     return Surfer.find.all();
   }
 
+  /**
+   * Return in memory database containing all surfers.
+   * @return surfers
+   */
+  public static List<Surfer> getRandomSurfers(int max) {
+    List<Surfer> surfers = Surfer.getSurfers();
+    Collections.shuffle(surfers);
+    return surfers.subList(0, max);
+  }
+  
   /**
    * Returns surfer with specified id.
    * @param id

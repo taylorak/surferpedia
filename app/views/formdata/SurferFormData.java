@@ -5,6 +5,7 @@ import java.util.List;
 import models.Surfer;
 //import models.SurferDB;
 import play.data.validation.ValidationError;
+import javax.persistence.*;
 
 /**
  * The backing class for form data.
