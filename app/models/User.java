@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import play.db.ebean.Model;
 import views.formdata.RegistrationForm;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  * A simple representation of a user. 
@@ -72,7 +73,8 @@ public class User extends Model {
    * @param formData RegistrationForm info. 
    */
   public static User addUser(RegistrationForm formData) {
-    User user = new User(formData.first, formData.last, formData.email, formData.password);
+    String passwordHash = BCrypt.hashpw(formData.password, BCrypt.gensalt());
+    User user = new User(formData.first, formData.last, formData.email, passwordHash);
     user.save();
     return user;
   }
@@ -102,10 +104,18 @@ public class User extends Model {
    * @return True if email is a valid user email and password is valid for that email.
    */
   public static boolean authenticate(String email, String password) {
-        return find.where()
+    
+    User user = find.where().eq("email", email).findUnique();
+    if (user != null && BCrypt.checkpw(password, user.password)) {
+      return true;
+    } else {
+      return false;
+    }
+ /**       return find.where()
             .eq("email", email)
             .eq("password", password)
             .findUnique() != null;
+ **/
   }
 
   /**

@@ -98,6 +98,7 @@ public class Surfer extends Model{
    * @return contact
    */
   public static Surfer addSurfer(SurferFormData formData) {
+    //String slug = formData.name.toLowerCase().replaceAll("[^a-z0-9-]", "_");
     Surfer surfer;
     if (!contains(formData.slug)){
       surfer = new Surfer(formData.name, formData.home, formData.awards, formData.carouselUrl, formData.bioUrl, formData.bio, formData.slug, formData.type, formData.footstyle,  formData.country);
