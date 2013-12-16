@@ -2,10 +2,12 @@ package views.formdata;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Id;
+import javax.persistence.Lob;
 import models.Surfer;
-//import models.SurferDB;
 import play.data.validation.ValidationError;
-import javax.persistence.*;
+import play.data.validation.Constraints.Pattern;
+import play.data.validation.Constraints.Required;
 
 /**
  * The backing class for form data.
@@ -14,42 +16,57 @@ import javax.persistence.*;
  */
 public class SurferFormData {
   
-  /** Slug Field **/
+  /** The slug related to surfer **/
+  @Id
+  @Required(message="Slug is required.")
+  @Pattern(value="[0-9a-zA-Z]+", message="Letters and digits to be used.") 
   public String slug;
-  
-  /** Name Field **/
+
+  /** The surfer's name **/
+  @Required(message="Name is required.")
   public String name;
-  
-  /** Home Field **/
+
+  /** The surfer's home **/
+  @Required(message="Home is required.")
   public String home;
-  
-  /** Awards Field **/
-  public String awards;
-  
-  /** Carousel Picture URL Field **/
+
+  /** The surfer's awards **/
+ public String awards;
+
+  /** The surfer's portrait picture **/
+  @Required(message="Carousel image required.")
   public String carouselUrl;
-  
-  /** Bio Picture URL Field **/
+
+  /** The surfer's bio picture **/
+  @Required(message="Bio image required.")
   public String bioUrl;
-  
-  /** Bio Field **/
+
+  /** The surfer's bio **/
+  @Lob
+  @Required(message="Bio paragraph required.")
   public String bio;
-  
-  /** Type of Surfer Field**/
+
+  /** The surfer's type **/
+  @Required(message="Surfer type required.")
   public String type;
-  
-  /** Surfer's Footstyle **/
+
+  /** The surfer's foot style **/
+  @Required(message="Footstyle required.")
   public String footstyle;
   
   /** The surfer's country **/
+  @Required(message="Country required.")
   public String country;
   
+  @Required
+  public boolean isEditable;
   
   /**
    * The default constructor.
    */
   public SurferFormData() {
     // default no arg constructor
+    this.isEditable = false;
   }
   
   /**
@@ -75,13 +92,14 @@ public class SurferFormData {
     this.type = type;
     this.footstyle = footstyle;
     this.country = country;
+    this.isEditable = false;
   }
 
   /**
    * Create a surfer form data object based on surfer.
    * @param surfer
    */
-  public SurferFormData(Surfer surfer) {
+  public SurferFormData(Surfer surfer, boolean isEditable) {
     this.slug = surfer.getSlug();
     this.name = surfer.getName();
     this.home = surfer.getHome();
@@ -92,37 +110,17 @@ public class SurferFormData {
     this.type = surfer.getType();
     this.footstyle = surfer.getFootStyle();
     this.country = surfer.getCountry();
+    this.isEditable = isEditable;
   }
-  
+
   /** Checks if form is valid.
    * @return null if no errors, List of errors if there are.
    */
   public List<ValidationError> validate() {
     List<ValidationError> errors = new ArrayList<>();
     
-    if (slug == null || slug.length() == 0) {
-      errors.add(new ValidationError("slug", "Slug is required."));
-    }
-    if (!slug.matches("[0-9a-zA-Z]+")) {
-      errors.add(new ValidationError("slug", "Letters and digits to be used."));
-    }
-    if (Surfer.contains(slug)) {
+    if (Surfer.contains(slug) && isEditable == false) {
       errors.add(new ValidationError("slug", "Slug already exists."));
-    }
-    if (name == null || name.length() == 0) {
-      errors.add(new ValidationError("name", "Name is required."));
-    }
-    if (home == null || home.length() == 0) {
-      errors.add(new ValidationError("home", "Home is required."));
-    }
-    if (carouselUrl == null || carouselUrl.length() == 0) {
-      errors.add(new ValidationError("carouselUrl", "Carousel URL is required."));
-    }
-    if (bioUrl == null || bioUrl.length() == 0) {
-      errors.add(new ValidationError("bioUrl", "Bio URL is required."));
-    }
-    if (bio == null || bio.length() == 0) {
-      errors.add(new ValidationError("bio", "Bio paragraph is required."));
     }
     if (!SurferTypes.isType(type)) {
       errors.add(new ValidationError("type", "Invalid surfer type."));
@@ -130,25 +128,7 @@ public class SurferFormData {
     if (!FootstyleTypes.isType(footstyle)) {
       errors.add(new ValidationError("footstyle", "Invalid foot style type."));
     }
-    if (country == null || country.length() == 0) {
-      errors.add(new ValidationError("country", "Country is required."));
-    }
     return errors.isEmpty() ? null : errors; 
   }
-
-  /**
-   * @return the country
-   */
-  public String getCountry() {
-    return country;
-  }
-
-  /**
-   * @param country the country to set
-   */
-  public void setCountry(String country) {
-    this.country = country;
-  }
-
 
 }

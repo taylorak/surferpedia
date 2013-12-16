@@ -1,6 +1,7 @@
-@(page: String, isLoggedIn: Boolean, userInfo: UserInfo, Surfer: Surfer, typeList: Map[String,Boolean], countryList: Map[String,Boolean], searchForm : Form[views.formdata.SearchFormData])
+@(page: String, isLoggedIn: Boolean, user: User, Surfer: Surfer, typeList: Map[String,Boolean], 
+countryList: Map[String,Boolean], searchForm : Form[views.formdata.SearchFormData])
 
-@Main(page, isLoggedIn, userInfo, typeList, countryList, searchForm) {
+@Main(page, isLoggedIn, user, typeList, countryList, searchForm) {
 <div class="container">
   <div class="col-md-4">
     <div class="well">
@@ -8,6 +9,7 @@
     </div>
   </div>
   <div class="col-md-8">
+  
     <div class="well">
       <h2>@Surfer.getName()</h2>
       <p>
@@ -27,10 +29,12 @@
       </p>
       
       @if(isLoggedIn) {
-        
-      <a class="pull-left" href="@routes.Application.manageSurfer(Surfer.getSlug())">Edit</a>
-      <!-- deletes surfer -->
-      <a data-toggle="modal" href="#myModal" class="pull-right">Delete</a>
+      <div class="container">
+      <div class="row">       
+      <a type="button" class="pull-left btn btn-primary" href="@routes.Application.manageSurfer(Surfer.getSlug())">Edit</a>
+      <a type="button" data-toggle="modal" href="#myModal" class="pull-right btn btn-primary">Delete</a>
+      </div>
+      </div>
       }
       
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

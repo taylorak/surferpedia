@@ -17,9 +17,9 @@ public class UserInfoDB {
    */
   public static void defineAdmin(String name, String email, String password) {
     if(email != null && password != null) {
-      UserInfo userInfo = new UserInfo(name, email, password);
-      userInfo.setAdmin(true);
-      userInfo.save();
+      User user = new User(name, email, password);
+      user.setAdmin(true);
+      user.save();
     }
   }
   
@@ -28,8 +28,8 @@ public class UserInfoDB {
    * @return
    */
   public static boolean adminDefined() {
-    UserInfo userInfo = UserInfo.find().where().eq("admin", true).findUnique();
-    return userInfo != null;
+    User user = User.find().where().eq("admin", true).findUnique();
+    return user != null;
   }
   
   /**
@@ -39,8 +39,8 @@ public class UserInfoDB {
    * @param password Their password. 
    */
   public static void addUserInfo(String name, String email, String password) {
-    UserInfo userInfo = new UserInfo(name, email, password);
-    userInfo.save();
+    User user = new User(name, email, password);
+    user.save();
   }
   
   /**
@@ -49,7 +49,7 @@ public class UserInfoDB {
    * @return True if known user.
    */
   public static boolean isUser(String email) {
-    return UserInfo.find().where().eq("email", email).findUnique() != null;
+    return User.find().where().eq("email", email).findUnique() != null;
   }
 
   /**
@@ -57,8 +57,8 @@ public class UserInfoDB {
    * @param email The email.
    * @return The UserInfo.
    */
-  public static UserInfo getUser(String email) {
-    return UserInfo.find().where().eq("email", email).findUnique();
+  public static User getUser(String email) {
+    return User.find().where().eq("email", email).findUnique();
   }
 
   /**
@@ -68,10 +68,7 @@ public class UserInfoDB {
    * @return True if email is a valid user email and password is valid for that email.
    */
   public static boolean isValid(String email, String password) {
-    return ((email != null) 
-            &&
-            (password != null) 
-            &&
+    return (
             isUser(email) 
             &&
             getUser(email).getPassword().equals(password));

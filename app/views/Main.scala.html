@@ -1,4 +1,4 @@
-@(page: String, isLoggedIn: Boolean, userInfo: UserInfo, typeList: Map[String,Boolean], countryList: Map[String,Boolean], searchForm : Form[views.formdata.SearchFormData])(content: Html)
+@(page: String, isLoggedIn: Boolean, user: User, typeList: Map[String,Boolean], countryList: Map[String,Boolean], searchForm : Form[views.formdata.SearchFormData])(content: Html)
 @import helper.form 
 @import bootstrap3._
 
@@ -22,8 +22,8 @@
     </head>
     <body>
     
-    <div class="banner"></div>
-     <!-- Responsive navbar -->
+    <!--<div class="banner"></div>
+      Responsive navbar -->
   <div class="navbar navbar-inverse navbar-static" role="navigation">
     <div class="container">
       <div class="navbar-header">
@@ -32,56 +32,62 @@
           <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
         </button>
         <a class="navbar-brand" href="/">Surferpedia</a>
-      </div>
+        <!-- <img class="wave-icon" src="@routes.Assets.at("images/wave-icon.png")"/> -->
+        </div>
 
-     <div class="collapse navbar-collapse">
+      <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
-       
-        @if(isLoggedIn) {
-        
-        <li class="@("active".when(page == "New Surfer"))"><a href="@routes.Application.newSurfer()">New</a></li>
-        <li class="@("active".when(page == "Update"))"><a href="@routes.Application.updateSurfer()">Updates</a></li>
-        } 
-        
-        
+
+<!--          @if(isLoggedIn) {
+
+          <li class="@(" active".when(page=="NewSurfer"))"><a href="@routes.Application.newSurfer()">New</a></li>
+          <li class="@(" active".when(page=="Update"))"><a href="@routes.Application.updateSurfer()">Updates</a></li> } -->
+
+          @if(page != "Login") { @form(routes.Application.surferSearch(), 'class -> "navbar-form navbar-left") {
+          @search(searchForm("name"), placeholder = "Name") @searchselect(searchForm("surferType"), searchType = "Type",
+          optionMap = typeList, isMultiple = false) @searchselect(searchForm("country"), searchType = "Country",
+          optionMap = countryList, isMultiple = false)
+          <button type="submit" class="btn btn-default">
+            <span class="glyphicon glyphicon-search"></span>
+          </button>
+          } }
         </ul>
-        
-        
+
+
         <ul class="nav navbar-nav navbar-right">
-         @if(page != "Login") {
-        
-            @form(routes.Application.surferSearch(), 'class -> "navbar-form navbar-left") {
-            @search(searchForm("name"),
-                    placeholder = "Name")
-            @searchselect(searchForm("surferType"),
-                    searchType = "Type",
-                    optionMap = typeList,
-                    isMultiple = false)
-            @searchselect(searchForm("country"),
-                          searchType = "Country",
-                          optionMap = countryList,
-                          isMultiple = false)
-            <button type="submit" class="btn btn-default">Search</button>
-         }
-        }
-        
+
+
           @if(isLoggedIn) {
-            <li><p class="navbar-text">@userInfo.getEmail()</p></li>
-            <li><a href="@routes.Application.logout()">Logout</a></li>
-          } else {
-            @if(page != "Login") {
-            <li><a href="@routes.Application.login()">Login</a></li>
-            }
-          }
-          </ul>
-          
-          
+          <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">@user.getFirst()<b
+              class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="@(" active".when(page=="NewSurfer"))"><a href="@routes.Application.newSurfer()">New
+                  Surfer</a></li>
+              <li class="@(" active".when(page=="Update"))"><a href="@routes.Application.updateSurfer()">Updates</a></li>
+                  
+            </ul></li>
+          <li><a href="@routes.Application.logout()">Logout</a></li> } else { @if(page != "Login") {
+          <li><a href="#">Register</a></li>
+          <li><a href="@routes.Application.login()">Login</a></li> } }
+        </ul>
       </div>
 
     </div>
   </div>
+      <!-- <div class="well">
+
+          <div class="bs-sidebar">
+            <ul class="nav sidenav">
+              <li><a href="#">Main Page</a></li>
+              <li><a href="#">Featured Content</a></li>
+              <li><a href="#">Random Surfer</a></li>
+            </ul>
+          </div>
+        </div> -->
+      <div class="col-sm-12">
       @content
-      <!-- Load Bootstrap JavaScript components. HTMLUnit (used in testing) requires JQuery 1.8.3 or below). -->
+      </div>
+  <!-- Load Bootstrap JavaScript components. HTMLUnit (used in testing) requires JQuery 1.8.3 or below). -->
       <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
       <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
     </body>

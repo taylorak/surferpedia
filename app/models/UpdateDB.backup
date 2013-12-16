@@ -12,7 +12,6 @@ import java.util.Map;
 public class UpdateDB {
 
     
-    private static Map<String, Update> updates = new HashMap<>();
     
     
     /**
@@ -21,13 +20,12 @@ public class UpdateDB {
      * @return contact
      */
     public static Update addUpdate(String action, String surfer) {
-            DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+      DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 
       Date today = Calendar.getInstance().getTime();        
-      String date = df.format(today);
+      Date date = df.format(today);
       
       Update update = new Update(date, action, surfer);
-      updates.put(date, update);
       return update;
     }
     

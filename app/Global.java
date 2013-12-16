@@ -1,9 +1,7 @@
 import play.GlobalSettings;
 import play.Play;
 import models.Surfer;
-import models.UserInfo;
-//import models.SurferDB;
-import models.UserInfoDB;
+import models.User;
 import play.Application;
 import views.formdata.SurferFormData;
 
@@ -20,15 +18,16 @@ public class Global extends GlobalSettings {
     String adminEmail = Play.application().configuration().getString("surferpedia.admin.email");
     String adminPassword = Play.application().configuration().getString("surferpedia.admin.password");
 
-    UserInfo admin = UserInfoDB.getUser(adminEmail);
+    User admin = User.getUser(adminEmail);
 
     if (admin == null) {
 
-      UserInfoDB.defineAdmin("Administrator", adminEmail, adminPassword);
+      User.defineAdmin("Administrator","Administrator", adminEmail, adminPassword);
       
       if (Surfer.getSurfers().isEmpty()) {
 
-       UserInfoDB.addUserInfo("John Smith", "smith@example.com", "password");
+       User.addUser("John", "Smith", "smith@example.com", "password");
+       
        Surfer.addSurfer(new SurferFormData("Laird Hamilton", "San Fransisco, California", "",
             "http://swellseekers.ie/home/wp-content/themes/classifiedstheme/thumbs//laird-hamilton-surf.jpg",
             "http://assets-s3.mensjournal.com/img/article/laird-hamiltons-high-performance-breathing/298_298_laird-hamiltons-high-performance-breathing.jpg",
@@ -41,7 +40,7 @@ public class Global extends GlobalSettings {
                 + " wave riders of the era. The two became immediate companions. The young Laird invited Bill Hamilton home to"
                 + " meet his mother. Bill Hamilton married Laird's then-single mother, becoming Laird's adoptive father.",
                 "lairdhamilton", "Male", "Regular", "USA"));
-
+       
         Surfer.addSurfer(new SurferFormData("Bethany Hamilton", "Lihue, Hawaii", "",
             "http://upload.wikimedia.org/wikipedia/commons/a/a4/Bethany_Hamilton_20070311.jpg",
             "http://blog.zap2it.com/frominsidethebox/bethany-hamilton-acm.jpg",

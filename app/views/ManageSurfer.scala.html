@@ -1,12 +1,17 @@
-@(page: String, isLoggedIn: Boolean, userInfo: UserInfo, SurferForm: Form[views.formdata.SurferFormData], SurferTypeMap: Map[String, Boolean], FootStyleMap: List[String], ReadOnly:Boolean, typeList: Map[String,Boolean], countryList: Map[String,Boolean], searchForm : Form[views.formdata.SearchFormData]) 
+@(page: String, isLoggedIn: Boolean, user: User, SurferForm: Form[views.formdata.SurferFormData], 
+FootStyleMap: List[String], ReadOnly:Boolean, typeList: Map[String,Boolean], countryList: Map[String,Boolean], 
+searchForm : Form[views.formdata.SearchFormData]) 
+
 @import helper.form 
 @import bootstrap3._
 
-@Main(page, isLoggedIn, userInfo, typeList, countryList, searchForm) {
+@Main(page, isLoggedIn, user, typeList, countryList, searchForm) {
 <div class="container">
     
   @form(routes.Application.postSurfer(), 'class -> "form-horizontal") {
 
+    @hidden(SurferForm("isEditable"))
+        
     @text(SurferForm("name"),
           label = "Name",
           placeholder = "Eddie Aikau",
@@ -57,7 +62,7 @@
 
     @select(SurferForm("type"),
             label = "Type",
-            optionMap = SurferTypeMap,
+            optionMap = typeList,
             isMultiple = false,
             help = "The type of surfer for placement in the menu.")
             

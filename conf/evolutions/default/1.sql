@@ -17,13 +17,21 @@ create table surfer (
   constraint pk_surfer primary key (slug))
 ;
 
-create table user_info (
+create table surfer_update (
   id                        bigint auto_increment not null,
-  name                      varchar(255),
-  email                     varchar(255),
+  date                      datetime,
+  action                    varchar(255),
+  surfer                    varchar(255),
+  constraint pk_surfer_update primary key (id))
+;
+
+create table user (
+  email                     varchar(255) not null,
+  first                     varchar(255),
+  last                      varchar(255),
   password                  varchar(255),
   admin                     tinyint(1) default 0,
-  constraint pk_user_info primary key (id))
+  constraint pk_user primary key (email))
 ;
 
 
@@ -35,7 +43,9 @@ SET FOREIGN_KEY_CHECKS=0;
 
 drop table surfer;
 
-drop table user_info;
+drop table surfer_update;
+
+drop table user;
 
 SET FOREIGN_KEY_CHECKS=1;
 

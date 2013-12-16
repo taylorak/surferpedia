@@ -1,8 +1,9 @@
-@(page: String, isLoggedIn: Boolean, userInfo: UserInfo, Surfers:  com.avaje.ebean.Page[Surfer], typeList: Map[String,Boolean], countryList: Map[String,Boolean], searchForm : Form[views.formdata.SearchFormData])
+@(page: String, isLoggedIn: Boolean, user: User, Surfers:  com.avaje.ebean.Page[Surfer], typeList: Map[String,Boolean], countryList: Map[String,Boolean], searchForm : Form[views.formdata.SearchFormData])
 
-@Main(page, isLoggedIn, userInfo, typeList, countryList, searchForm) {
+@Main(page, isLoggedIn, user, typeList, countryList, searchForm) {
 <div class="container">
-  <table class="table table-condensed">
+  @if(Surfers.getList().size() > 0) {
+  <table class="table table-condensed table-bordered">
   <thead>
   <tr>
   <td>Name</td>
@@ -58,7 +59,11 @@
                 <li class="next disabled"><a href="#">Next &rarr;</a></li>
                 }
             </ul>
-            
+    } else {
+        <div class="col-sm-8 col-sm-offset-2">
+        <h3>There were no results matching this query.</h3>
+        </div>
+    }       
         
 </div>
 }

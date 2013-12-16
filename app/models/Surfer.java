@@ -1,9 +1,7 @@
 package models;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Lob;
@@ -32,7 +30,7 @@ public class Surfer extends Model{
   private String home;
 
   /** The surfer's awards **/
-  private String awards;
+ private String awards;
 
   /** The surfer's portrait picture **/
   private String carouselUrl;
@@ -93,20 +91,6 @@ public class Surfer extends Model{
     this.setCountry(country);
   }
   
-  /**
-   * Creates a list of all countries in the database
-   * @return 
-   */
-  public static Map<String, Boolean> getCountries() {
-    Map<String, Boolean> countryMap = new HashMap<>();
-    List<Surfer> countryList = Surfer.getSurfers();
-    for(Surfer surfer : countryList) {
-      if(! countryMap.containsKey(surfer.getCountry())) {
-        countryMap.put(surfer.getCountry(), false);
-      }
-    }
-    return countryMap;
-  }
   
   /**
    * Creates a new contact and adds it to the database.
@@ -114,12 +98,24 @@ public class Surfer extends Model{
    * @return contact
    */
   public static Surfer addSurfer(SurferFormData formData) {
-    Surfer surfer = new Surfer(formData.name, formData.home, formData.awards, formData.carouselUrl, formData.bioUrl, formData.bio, formData.slug, formData.type, formData.footstyle,  formData.country);
-    if(Surfer.getSurfer(formData.slug) == null) {
+    Surfer surfer;
+    if (!contains(formData.slug)){
+      surfer = new Surfer(formData.name, formData.home, formData.awards, formData.carouselUrl, formData.bioUrl, formData.bio, formData.slug, formData.type, formData.footstyle,  formData.country);
       surfer.save();
-
+      SurferUpdate.addUpdate("Create", surfer);
     } else {
-      surfer.update();
+      surfer = getSurfer(formData.slug);
+      surfer.setName(formData.name);
+      surfer.setHome(formData.home);
+      surfer.setAwards(formData.awards);
+      surfer.setCarouselUrl(formData.carouselUrl);
+      surfer.setBio(formData.bio);
+      surfer.setBioUrl(formData.bioUrl);
+      surfer.setType(formData.type);
+      surfer.setFootStyle(formData.footstyle);
+      surfer.setCountry(formData.country);
+      surfer.save();
+      SurferUpdate.addUpdate("Edit", surfer);
     }
     return surfer;
 
@@ -130,7 +126,8 @@ public class Surfer extends Model{
    * @param id
    */
   public static void deleteSurfer(String slug) {
-    Surfer.find.ref(slug).delete();
+    SurferUpdate.addUpdate("Delete",find.ref(slug));
+    find.ref(slug).delete();
   }
   
   /**
@@ -138,7 +135,7 @@ public class Surfer extends Model{
    * @return surfers
    */
   public static List<Surfer> getSurfers() {
-    return Surfer.find.all();
+    return find.all();
   }
 
   /**
@@ -157,11 +154,7 @@ public class Surfer extends Model{
    * @return surfer
    */
   public static Surfer getSurfer(String slug) {
-    Surfer surfer = Surfer.find.byId(slug);
-    if (surfer == null) {
-      throw new RuntimeException("Passed a bogus id " + slug);
-    }
-    return surfer;
+    return find.where().eq("slug", slug).findUnique();
   }
   
   /**
@@ -170,7 +163,7 @@ public class Surfer extends Model{
    * @return true if contains key false if not
    * */
   public static boolean contains(String slug) {
-    return (Surfer.find.byId(slug) != null)? true : false;
+    return (getSurfer(slug) != null);
   }
   
   /**
@@ -291,5 +284,5 @@ public class Surfer extends Model{
   public void setCountry(String country) {
     this.country = country;
   }
-
+  
 }

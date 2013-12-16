@@ -1,5 +1,8 @@
 body {
-  min-height: 800px;
+}
+
+.wave-icon {
+  height:50px;
 }
 
 .banner {
@@ -12,10 +15,13 @@ body {
   border-radius: 0px;
 }
 
+.carousel {
+    margin-bottom:20px;
+}
 .carousel-image {
   background-size: cover;
   background-position: center;
-  height: 500px;
+  height: 400px;
 }
 
 .bio-image {

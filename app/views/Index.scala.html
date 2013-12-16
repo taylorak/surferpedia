@@ -1,34 +1,62 @@
-@(page: String, isLoggedIn: Boolean, userInfo: UserInfo, Surfers: List[Surfer], typeList: Map[String,Boolean], countryList: Map[String,Boolean], searchForm : Form[views.formdata.SearchFormData]) 
+@(page: String, isLoggedIn: Boolean, user: User, Surfers: List[Surfer], typeList: Map[String,Boolean], countryList: Map[String,Boolean], searchForm : Form[views.formdata.SearchFormData]) 
 
-@Main(page, isLoggedIn, userInfo, typeList, countryList, searchForm) {
+@Main(page, isLoggedIn, user, typeList, countryList, searchForm) {
 <div class="container">
-  <div id="carousel-example-generic" class="carousel slide">
-    <!-- Indicators -->
-    <ol class="carousel-indicators">
-     @for((surfer, index) <- Surfers.zipWithIndex) {
-      <li data-target="#carousel-example-generic" data-slide-to="@index"@if(index == 0) {class="active"}></li>
-      }
-    </ol>
+  <div class="row">
+  <div class="col-sm-12">
+    <div id="carousel-example-generic" class="carousel slide">
+      <!-- Indicators -->
+      <ol class="carousel-indicators">
+        @for((surfer, index) <- Surfers.zipWithIndex) {
+        <li data-target="#carousel-example-generic" data-slide-to="@index" @if(index== 0) {class="active"}></li> }
+      </ol>
 
 
-    <!-- Wrapper for slides -->
-    <div class="carousel-inner">
-    
-     @for((surfer, index) <- Surfers.zipWithIndex) {
-      <div class="item@if(index == 0) { active}">
-        <div class="carousel-image" style="background-image: url('@surfer.getCarouselUrl');"></div>
-        <div class="carousel-caption">
-         <h3>@surfer.getName()</h3>
+      <!-- Wrapper for slides -->
+      <div class="carousel-inner">
+
+        @for((surfer, index) <- Surfers.zipWithIndex) {
+        <div class="item@if(index == 0) { active}">
+          <div class="carousel-image" style="background-image: url('@surfer.getCarouselUrl');"></div>
+          <div class="carousel-caption">
+            <h3>@surfer.getName()</h3>
+          </div>
         </div>
-        </div>
-      }
+        }
+      </div>
+
+      <!-- Controls -->
+      <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev"> <span class="icon-prev"></span>
+      </a> <a class="right carousel-control" href="#carousel-example-generic" data-slide="next"> <span class="icon-next"></span>
+      </a>
     </div>
+    </div>
+  </div>
 
-
-    <!-- Controls -->
-    <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev"> <span class="icon-prev"></span>
-    </a> <a class="right carousel-control" href="#carousel-example-generic" data-slide="next"> <span class="icon-next"></span>
-    </a>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Featured Surfers</h3>
+        </div>
+        <div class="panel-body">
+        <ul>
+        @for((surfer, index) <- Surfers.zipWithIndex) {
+            <li><a href="@routes.Application.getSurfer(surfer.getSlug())">@surfer.getName()</a></li>
+        }
+        </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Recently Added</h3>
+        </div>
+        <div class="panel-body">Panel content</div>
+      </div>
+    </div>
   </div>
 </div>
+
 }
