@@ -1,0 +1,9 @@
+@(page: String, isLoggedIn: Boolean, user: User, registrationForm: Form[views.formdata.RegistrationForm], typeList: Map[String,Boolean], countryList: Map[String,Boolean], searchForm : Form[views.formdata.SearchFormData])
+
+@import bootstrap3._
+
+@Main(page, isLoggedIn, user, typeList, countryList, searchForm) {
+   <div class="container">
+     @registrationform(routes.Application.postRegister(), registrationForm("first"), registrationForm("last"), registrationForm("email"),registrationForm("password"), registrationForm("confirmPassword"))     
+   </div>
+}

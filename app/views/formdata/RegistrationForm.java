@@ -1,6 +1,10 @@
 package views.formdata;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Id;
+import models.User;
+import play.data.validation.ValidationError;
 import play.data.validation.Constraints.Email;
 import play.data.validation.Constraints.MaxLength;
 import play.data.validation.Constraints.MinLength;
@@ -25,13 +29,34 @@ public class RegistrationForm {
   public String password;
   
   @Required(message="Confirmation password is required.")
-  @MinLength(value=6, message="Password must be at least 6 characters long.")
+//  @MinLength(value=6, message="Password must be at least 6 characters long.")
   public String confirmPassword;
   
-  public String validate() {
-    if(!password.equals(confirmPassword)) {
-        return "Password mismatch";
-    }
-    return null;
+  public RegistrationForm() {
+    //required
   }
+  
+  public RegistrationForm(String first, String last, String email, String password, String confirm) {
+    this.first = first;
+    this.last = last;
+    this.email = email;
+    this.password = password;
+    this.confirmPassword = confirm;
+  }
+  
+  /** Checks if form is valid.
+   * @return null if no errors, List of errors if there are.
+   */
+  public List<ValidationError> validate() {
+    List<ValidationError> errors = new ArrayList<>();
+    
+    if (User.contains(email)) {
+      errors.add(new ValidationError("email", "Email already exists."));
+    }
+    if(!password.equals(confirmPassword)) {
+      errors.add(new ValidationError("confirmPassword", "Passwords did not match."));
+  }
+    return errors.isEmpty() ? null : errors; 
+  }
+  
 }

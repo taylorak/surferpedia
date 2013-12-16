@@ -24,7 +24,7 @@
     
     <!--<div class="banner"></div>
       Responsive navbar -->
-  <div class="navbar navbar-inverse navbar-static" role="navigation">
+  <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -43,7 +43,7 @@
           <li class="@(" active".when(page=="NewSurfer"))"><a href="@routes.Application.newSurfer()">New</a></li>
           <li class="@(" active".when(page=="Update"))"><a href="@routes.Application.updateSurfer()">Updates</a></li> } -->
 
-          @if(page != "Login") { @form(routes.Application.surferSearch(), 'class -> "navbar-form navbar-left") {
+          @if(page != "Login" && page != "Registration") { @form(routes.Application.surferSearch(), 'class -> "navbar-form navbar-left") {
           @search(searchForm("name"), placeholder = "Name") @searchselect(searchForm("surferType"), searchType = "Type",
           optionMap = typeList, isMultiple = false) @searchselect(searchForm("country"), searchType = "Country",
           optionMap = countryList, isMultiple = false)
@@ -61,14 +61,15 @@
           <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">@user.getFirst()<b
               class="caret"></b></a>
             <ul class="dropdown-menu">
-              <li class="@(" active".when(page=="NewSurfer"))"><a href="@routes.Application.newSurfer()">New
+              <li class="@(" active".when(page=="Manage"))"><a href="@routes.Application.newSurfer()">New
                   Surfer</a></li>
               <li class="@(" active".when(page=="Update"))"><a href="@routes.Application.updateSurfer()">Updates</a></li>
                   
             </ul></li>
-          <li><a href="@routes.Application.logout()">Logout</a></li> } else { @if(page != "Login") {
-          <li><a href="#">Register</a></li>
-          <li><a href="@routes.Application.login()">Login</a></li> } }
+          <li><a href="@routes.Application.logout()">Logout</a></li> } else { 
+         
+          <li><a href="@routes.Application.register()">Register</a></li>
+          <li><a href="@routes.Application.login()">Login</a></li>  }
         </ul>
       </div>
 

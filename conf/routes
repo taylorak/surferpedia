@@ -13,6 +13,8 @@ GET     /updates                    controllers.Application.updateSurfer()
 POST    /post                       controllers.Application.postSurfer()
 GET     /login                      controllers.Application.login()
 POST    /login                      controllers.Application.postLogin()
+GET     /register                   controllers.Application.register()
+POST    /register                   controllers.Application.postRegister()
 GET     /logout                      controllers.Application.logout()
 POST    /search                     controllers.Application.surferSearch()
 

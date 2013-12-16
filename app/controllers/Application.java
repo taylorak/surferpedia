@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import models.Surfer;
 import models.SurferUpdate;
+import models.User;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -11,12 +12,16 @@ import play.mvc.Security;
 import views.formdata.CountryTypes;
 import views.formdata.FootstyleTypes;
 import views.formdata.LoginForm;
+import views.formdata.LoginForm;
+import views.formdata.RegistrationForm;
+import views.formdata.RegistrationForm;
 import views.formdata.SearchFormData;
 import views.formdata.SurferFormData;
 import views.formdata.SurferTypes;
 import views.html.Index;
 import views.html.Login;
 import views.html.ManageSurfer;
+import views.html.Registration;
 import views.html.ShowSurfer;
 import views.html.UpdateSurfer;
 import views.html.SurferList;
@@ -174,6 +179,51 @@ public class Application extends Controller {
   }
   
   /**
+   * Provides the Registration page (only to unauthenticated users). 
+   * @return The Registration page. 
+   */
+  public static Result register() {
+    Form<RegistrationForm> registrationFormData = Form.form(RegistrationForm.class);
+    return ok(Registration.render("Registration", 
+        Secured.isLoggedIn(ctx()), 
+        Secured.getUserInfo(ctx()), 
+        registrationFormData, 
+        surferTypeMap, 
+        countryTypeMap, 
+        searchFormData));
+  }
+  
+  /**
+   * Processes a login form submission from an unauthenticated user. 
+   * First we bind the HTTP POST data to an instance of LoginFormData.
+   * The binding process will invoke the LoginFormData.validate() method.
+   * If errors are found, re-render the page, displaying the error data. 
+   * If errors not found, render the page with the good data. 
+   * @return The index page with the results of validation. 
+   */
+  public static Result postRegister() {
+
+    Form<RegistrationForm> formData = Form.form(RegistrationForm.class);
+    Form<RegistrationForm> filledFormData = formData.bindFromRequest();
+    
+    if (filledFormData.hasErrors()) {
+      //flash("error", "Registration infromation not valid.");
+      return badRequest(Registration.render("Registration", 
+          Secured.isLoggedIn(ctx()), 
+          Secured.getUserInfo(ctx()), 
+          filledFormData, 
+          surferTypeMap, 
+          countryTypeMap, 
+          searchFormData));
+    }
+    else {
+      RegistrationForm data = filledFormData.get();
+      User.addUser(data);
+      return redirect(routes.Application.index());
+    }
+  }
+  
+  /**
    * Provides the Login page (only to unauthenticated users). 
    * @return The Login page. 
    */
@@ -209,7 +259,7 @@ public class Application extends Controller {
       return badRequest(Login.render("Login", 
           Secured.isLoggedIn(ctx()), 
           Secured.getUserInfo(ctx()), 
-          formData, 
+          filledFormData, 
           surferTypeMap, 
           countryTypeMap, 
           searchFormData));

@@ -3,11 +3,8 @@ package models;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.validation.constraints.AssertFalse;
-import play.data.validation.Constraints.Email;
-import play.data.validation.Constraints.MinLength;
-import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
+import views.formdata.RegistrationForm;
 
 /**
  * A simple representation of a user. 
@@ -50,21 +47,6 @@ public class User extends Model {
       String.class, User.class
     ); 
   
-  
-  /**
-   * Defines the admin account if values are non-null.
-   * @param name Their name.
-   * @param email Their email.
-   * @param password Their password. 
-   */
-  public static void defineAdmin(String first, String last, String email, String password) {
-    if(email != null && password != null) {
-      User user = new User(first, last, email, password);
-      user.setAdmin(true);
-      user.save();
-    }
-  }
-  
   /**
    * Returns true if there is an admin.
    * @return
@@ -86,6 +68,16 @@ public class User extends Model {
   }
   
   /**
+   * Adds the specified user to the UserInfoDB.
+   * @param formData RegistrationForm info. 
+   */
+  public static User addUser(RegistrationForm formData) {
+    User user = new User(formData.first, formData.last, formData.email, formData.password);
+    user.save();
+    return user;
+  }
+  
+  /**
    * Returns the UserInfo associated with the email, or null if not found.
    * @param email The email.
    * @return The UserInfo.
@@ -94,6 +86,15 @@ public class User extends Model {
     return find.where().eq("email", email).findUnique();
   }
 
+  /**
+   * Check if email exists.
+   * @param email
+   * @return true if contains key false if not
+   * */
+  public static boolean contains(String email) {
+    return (getUser(email) != null);
+  }
+  
   /**
    * Returns true if email and password are valid credentials.
    * @param email The email. 

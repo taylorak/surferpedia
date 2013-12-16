@@ -3,6 +3,7 @@ import play.Play;
 import models.Surfer;
 import models.User;
 import play.Application;
+import views.formdata.RegistrationForm;
 import views.formdata.SurferFormData;
 
 /**
@@ -22,11 +23,13 @@ public class Global extends GlobalSettings {
 
     if (admin == null) {
 
-      User.defineAdmin("Administrator","Administrator", adminEmail, adminPassword);
+      User administrator = User.addUser(new RegistrationForm("Administrator","Administrator", adminEmail, adminPassword, adminPassword));
+      administrator.setAdmin(true);
+      //User.defineAdmin(new RegistrationForm("Administrator","Administrator", adminEmail, adminPassword, adminPassword));
       
       if (Surfer.getSurfers().isEmpty()) {
 
-       User.addUser("John", "Smith", "smith@example.com", "password");
+       User.addUser(new RegistrationForm("John", "Smith", "smith@example.com", "password","password"));
        
        Surfer.addSurfer(new SurferFormData("Laird Hamilton", "San Fransisco, California", "",
             "http://swellseekers.ie/home/wp-content/themes/classifiedstheme/thumbs//laird-hamilton-surf.jpg",
