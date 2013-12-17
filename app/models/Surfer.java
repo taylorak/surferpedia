@@ -1,5 +1,8 @@
 package models;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -53,6 +56,9 @@ public class Surfer extends Model{
   /** The surfer's country **/
   private String country;
   
+  /**URL to a video of surfer**/
+  private String vidUrl;
+  
   public static Finder<String,Surfer> find = new Finder<String,Surfer>(
       String.class, Surfer.class
     ); 
@@ -75,11 +81,12 @@ public class Surfer extends Model{
    * @param awards The surfer's awards.
    * @param carouselUrl Image URL for carousel.
    * @param bioUrl Image URL for biography.
+   * @param vidUrl Video URL of surfer.
    * @param bio The surfer's biography.
    * @param slug The surfer's slug field.
    * @param type The surfer's type.
    */
-  public Surfer(String name, String home, String awards, String carouselUrl, String bioUrl, String bio, String slug,
+  public Surfer(String name, String home, String awards, String carouselUrl, String bioUrl, String vidUrl, String bio, String slug,
       String type, String footstyle, String country) {
     this.slug = slug;
     this.setName(name);
@@ -87,6 +94,7 @@ public class Surfer extends Model{
     this.setAwards(awards);
     this.setCarouselUrl(carouselUrl);
     this.setBioUrl(bioUrl);
+    this.setVidUrl(vidUrl);
     this.setBio(bio);
     this.setType(type);
     this.setFootStyle(footstyle);
@@ -130,12 +138,30 @@ public class Surfer extends Model{
   }
   
   /**
+   * @throws IOException 
+   * Determines whether or not a url returns a valid web page.
+   * @param url
+   * @return
+   * @throws  
+   */
+  public static boolean isValidUrl(String url) throws IOException {
+    final URL testingUrl = new URL(url);
+    HttpURLConnection huc = (HttpURLConnection) testingUrl.openConnection();
+    int responseCode = huc.getResponseCode();
+    
+    if(responseCode == 200) {
+      return true;
+    }
+    return false;
+  }
+  
+  /**
    * Creates a new contact and adds it to the database.
    * @param formData
    * @return contact
    */
   public static Surfer addSurfer(SurferFormData formData) {
-    Surfer surfer = new Surfer(formData.name, formData.home, formData.awards, formData.carouselUrl, formData.bioUrl, formData.bio, formData.slug, formData.type, formData.footstyle,  formData.country);
+    Surfer surfer = new Surfer(formData.name, formData.home, formData.awards, formData.carouselUrl, formData.bioUrl, formData.vidUrl, formData.bio, formData.slug, formData.type, formData.footstyle,  formData.country);
     surfer.save();
     return surfer;
   }
@@ -295,6 +321,22 @@ public class Surfer extends Model{
    */
   public void setCountry(String country) {
     this.country = country;
+  }
+
+
+  /**
+   * @return the vidUrl
+   */
+  public String getVidUrl() {
+    return vidUrl;
+  }
+
+
+  /**
+   * @param vidUrl the vidUrl to set
+   */
+  public void setVidUrl(String vidUrl) {
+    this.vidUrl = vidUrl;
   }
 
 }

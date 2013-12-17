@@ -32,6 +32,7 @@ public class Global extends GlobalSettings {
        Surfer.addSurfer(new SurferFormData("Laird Hamilton", "San Fransisco, California", "",
             "http://swellseekers.ie/home/wp-content/themes/classifiedstheme/thumbs//laird-hamilton-surf.jpg",
             "http://assets-s3.mensjournal.com/img/article/laird-hamiltons-high-performance-breathing/298_298_laird-hamiltons-high-performance-breathing.jpg",
+            "",
             "Laird was born Laird John Zerfas in San Francisco on March 2, 1964, in an experimental salt-water sphere"
                 + " at UCSF Medical Center designed to ease the mother's labor. His Greek birth father, L. G. Zerfas, left the"
                 + " family before his first birthday. While he was an infant, Laird and his mother, Joann, moved to Hawaii. While"
@@ -45,6 +46,7 @@ public class Global extends GlobalSettings {
         Surfer.addSurfer(new SurferFormData("Bethany Hamilton", "Lihue, Hawaii", "",
             "http://upload.wikimedia.org/wikipedia/commons/a/a4/Bethany_Hamilton_20070311.jpg",
             "http://blog.zap2it.com/frominsidethebox/bethany-hamilton-acm.jpg",
+            "http://www.youtube.com/embed/IESTKaU9WLI",
             "Bethany Hamilton is an American professional surfer. She is known for surviving a"
                 + " shark attack in which her left arm was bitten off, and for overcoming the injury"
                 + " to ultimately return to professional surfing. She wrote about her experience in the" 
@@ -56,6 +58,7 @@ public class Global extends GlobalSettings {
         Surfer.addSurfer(new SurferFormData("Jake Marshall", "San Diego, California", "",
             "http://cdn.surf.transworld.net/wp-content/blogs.dir/443/files/2012/06/Jake-Marshall.jpg",
             "http://www.surfingamerica.org/wp-content/uploads/2011/01/JakeMarshall_AM7H9425-2.jpg",
+            "http://www.youtube.com/embed/6Ux1FKkG2ig",
             "Many young surfers have the potential to make an impact on our sport, but none look more poised to do so"
                 + "than Jake Marshall. Raised on the rippable beachbreaks and reefs of San Diego’s North County, Jake has"
                 + "developed a solid base of smooth rail work as well as the kind of flair that few 14-year-old surfers can"

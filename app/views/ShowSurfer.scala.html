@@ -53,4 +53,15 @@
     </div>
   </div>
 </div>
+
+ @if(Surfer.getVidUrl() != "" && models.Surfer.isValidUrl(Surfer.getVidUrl())) {
+    <div class="container row">
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-10">
+        <div class="flex-video widescreen"><iframe src="@Surfer.getVidUrl()" frameborder="0" allowfullscreen="true"></iframe></div>
+    </div>
+    </div>
+  }
+
 }

@@ -43,6 +43,12 @@
           help = "A URL to the picture to be presented in the bio page for this surfer.",
           readonly = false)
     
+    @text(SurferForm("vidUrl"),
+          label = "Video URL",
+          placeholder = "http://example.com/video",
+          help = "URL must be in this format http://youtube.com/embed/j0DbZeliwrY or video will not work.",
+          readonly = false)
+    
     @textarea(SurferForm("bio"),
             rows = "10",
             label = "Bio",
