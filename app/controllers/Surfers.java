@@ -85,7 +85,8 @@ public class Surfers  extends Controller{
         Surfer.getRandomSurfers(3), 
         SurferTypes.getTypes(), 
         CountryTypes.getCountryTypes(), 
-        searchForm));
+        searchForm,
+        Surfer.getRecentSurfers()));
   }
   
   /**
@@ -127,8 +128,8 @@ public class Surfers  extends Controller{
     } 
     else {
       SurferForm data = filledSurferForm.get();
-      Surfer.addSurfer(data);
-      return redirect(routes.Application.index());
+      Surfer surfer = Surfer.addSurfer(data);
+      return redirect(routes.Surfers.getSurfer(surfer.getSlug()));
     }
   }
   

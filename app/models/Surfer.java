@@ -1,7 +1,13 @@
 package models;
 
 import java.util.Collections;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Lob;
@@ -50,6 +56,7 @@ public class Surfer extends Model {
   @Required
   private String country;
   
+  private String vidUrl;
   /**
    * The EBean ORM finder method for database queries on Surfer.
    * @return The finder method for surfer.
@@ -87,23 +94,79 @@ public class Surfer extends Model {
    * @param awards The surfer's awards.
    * @param carouselUrl Image URL for carousel.
    * @param bioUrl Image URL for biography.
+   * @param vidUrl Video URL of surfer.
    * @param bio The surfer's biography.
    * @param slug The surfer's slug field.
    * @param type The surfer's type.
    */
-  public Surfer(String name, String home, String awards, String carouselUrl, String bioUrl, String bio, String slug, String type, String footstyle, String country) {
+  public Surfer(String name, String home, String awards, String carouselUrl, String bioUrl, String vidUrl, String bio, String slug,
+      String type, String footstyle, String country) {
     this.slug = slug;
     this.setName(name);
     this.setHome(home);
     this.setAwards(awards);
     this.setCarouselUrl(carouselUrl);
     this.setBioUrl(bioUrl);
+    this.setVidUrl(vidUrl);
     this.setBio(bio);
     this.setType(type);
     this.setFootStyle(footstyle);
     this.setCountry(country);
   }
   
+  /**
+   * Creates a list of all countries that are in the database.
+   * @return 
+   */
+  public static Map<String, Boolean> getCountries() {
+    Map<String, Boolean> countryMap = new HashMap<>();
+    List<Surfer> countryList = Surfer.getSurfers();
+    for(Surfer surfer : countryList) {
+      if(! countryMap.containsKey(surfer.getCountry())) {
+        countryMap.put(surfer.getCountry(), false);
+      }
+    }
+    return countryMap;
+  }
+  
+  /**
+   * Returns up to three of the most recent surfers added to the application.
+   * @return
+   */
+  public static List<Surfer> getRecentSurfers() {
+    List<Surfer> surferList = Surfer.getSurfers();
+    List<Surfer> newSurfers = new ArrayList<>();
+    int totalSurferIndex = Surfer.find.findRowCount()-1;
+    int index = 2;
+    while(index >= 0) {
+      if(index < surferList.size()) {
+        newSurfers.add(surferList.get(totalSurferIndex-index));
+        index--;
+      }else {
+        index--;
+      }
+    }
+    
+    return newSurfers;
+  }
+  
+  /**
+   * @throws IOException 
+   * Determines whether or not a url returns a valid web page.
+   * @param url
+   * @return
+   * @throws  
+   */
+  public static boolean isValidUrl(String url) throws IOException {
+    final URL testingUrl = new URL(url);
+    HttpURLConnection huc = (HttpURLConnection) testingUrl.openConnection();
+    int responseCode = huc.getResponseCode();
+    
+    if(responseCode == 200) {
+      return true;
+    }
+    return false;
+  }
   
   /**
    * Creates a new contact and adds it to the database.
@@ -115,7 +178,7 @@ public class Surfer extends Model {
     Surfer surfer;
     if (!contains(formData.slug)){
       surfer = new Surfer(formData.name, formData.home, formData.awards, formData.carouselUrl, formData.bioUrl, 
-          formData.bio, formData.slug, formData.type, formData.footstyle,  formData.country);
+          formData.vidUrl, formData.bio, formData.slug, formData.type, formData.footstyle,  formData.country);
       surfer.save();
       SurferUpdate.addUpdate("Create", surfer);
     } 
@@ -134,7 +197,6 @@ public class Surfer extends Model {
       SurferUpdate.addUpdate("Edit", surfer);
     }
     return surfer;
-
   }
   
   /**
@@ -301,5 +363,19 @@ public class Surfer extends Model {
   public void setCountry(String country) {
     this.country = country;
   }
-  
+
+  /**
+   * @return the vidUrl
+   */
+  public String getVidUrl() {
+    return vidUrl;
+  }
+
+  /**
+   * @param vidUrl the vidUrl to set
+   */
+  public void setVidUrl(String vidUrl) {
+    this.vidUrl = vidUrl;
+  }
+
 }

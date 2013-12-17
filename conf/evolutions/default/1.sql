@@ -14,6 +14,7 @@ create table surfer (
   type                      varchar(255),
   footstyle                 varchar(255),
   country                   varchar(255),
+  vid_url                   varchar(255),
   constraint pk_surfer primary key (slug))
 ;
 

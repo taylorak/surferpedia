@@ -50,6 +50,8 @@ public class SurferForm {
   
   @Required
   public boolean isEditable;
+
+  public String vidUrl;
   
   /**
    * The default constructor.
@@ -66,11 +68,12 @@ public class SurferForm {
    * @param awards
    * @param carouselUrl
    * @param bioUrl
+   * @param vidUrl
    * @param bio
    * @param slug
    * @param type
    */
-  public SurferForm(String name, String home, String awards, String carouselUrl, String bioUrl, String bio, String slug,
+  public SurferForm(String name, String home, String awards, String carouselUrl, String bioUrl, String vidUrl, String bio, String slug,
       String type, String footstyle, String country) {
     this.slug = slug;
     this.name = name;
@@ -78,6 +81,7 @@ public class SurferForm {
     this.awards = awards;
     this.carouselUrl = carouselUrl;
     this.bioUrl = bioUrl;
+    this.vidUrl = vidUrl;
     this.bio = bio;
     this.type = type;
     this.footstyle = footstyle;
@@ -96,6 +100,7 @@ public class SurferForm {
     this.awards = surfer.getAwards();
     this.carouselUrl = surfer.getCarouselUrl();
     this.bioUrl = surfer.getBioUrl();
+    this.vidUrl = surfer.getVidUrl();
     this.bio = surfer.getBio();
     this.type = surfer.getType();
     this.footstyle = surfer.getFootStyle();

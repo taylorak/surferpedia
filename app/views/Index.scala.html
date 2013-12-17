@@ -1,5 +1,5 @@
 @(page: String, isLoggedIn: Boolean, user: User, Surfers: List[Surfer], typeList: Map[String,Boolean], 
-countryList: Map[String,Boolean], searchForm : Form[views.formdata.SearchForm]) 
+countryList: Map[String,Boolean], searchForm : Form[views.formdata.SearchForm], recentSurfers: List[Surfer]) 
 
 @Main(page, isLoggedIn, user, typeList, countryList, searchForm) {
 <div class="container">
@@ -11,7 +11,6 @@ countryList: Map[String,Boolean], searchForm : Form[views.formdata.SearchForm])
         @for((surfer, index) <- Surfers.zipWithIndex) {
         <li data-target="#carousel-example-generic" data-slide-to="@index" @if(index== 0) {class="active"}></li> }
       </ol>
-
 
       <!-- Wrapper for slides -->
       <div class="carousel-inner">
@@ -54,7 +53,12 @@ countryList: Map[String,Boolean], searchForm : Form[views.formdata.SearchForm])
         <div class="panel-heading">
           <h3 class="panel-title">Recently Added</h3>
         </div>
-        <div class="panel-body">Panel content</div>
+        <div class="panel-body">
+          <ul>
+            @for(surfer <- recentSurfers) {
+            <li><a href="@routes.Surfers.getSurfer(surfer.getSlug())">@surfer.getName()</a></li> }
+          </ul>
+        </div>
       </div>
     </div>
   </div>

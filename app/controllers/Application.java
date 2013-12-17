@@ -1,5 +1,8 @@
 package controllers;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import models.Surfer;
 import models.User;
 import play.data.Form;
@@ -35,7 +38,8 @@ public class Application extends Controller {
         Surfer.getRandomSurfers(3), 
         SurferTypes.getTypes(), 
         CountryTypes.getCountryTypes(), 
-        searchForm));
+        searchForm,
+        Surfer.getRecentSurfers()));
   }  
   
   /**

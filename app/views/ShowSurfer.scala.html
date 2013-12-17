@@ -5,28 +5,40 @@ countryList: Map[String,Boolean], searchForm : Form[views.formdata.SearchForm])
 <div class="container">
   <div class="col-md-4">
     <div class="well">
-      <div class="bio-image" style="background-image: url('@Surfer.getBioUrl()')"></div>
+      <div class="table-responsive table-bordered">
+      <table class="info-box table">
+        <thead>
+        <tr><th style="text-align:center;" colspan="2">@Surfer.getName()</th></tr>
+        </thead>
+        <tbody>
+        <tr><td colspan="2"><div class="bio-image" style="background-image: url('@Surfer.getBioUrl()')"></div></td></tr>
+        <tr><td><b>Country</b></td> <td>@Surfer.getCountry()</td></tr>
+        <tr><td><b>Home Town</b></td> <td>@Surfer.getHome()</td></tr>
+        <tr><td><b>Foot Style</b></td> <td>@Surfer.getFootStyle()</td></tr>
+        </tbody>
+      </table>
+      </div>
     </div>
   </div>
   <div class="col-md-8">
   
     <div class="well">
       <h2>@Surfer.getName()</h2>
-      <p>
-        <b>Country: </b> @Surfer.getCountry()
-      </p>
-      <p>
-        <b>Home Town: </b> @Surfer.getHome()
-      </p>
+        
+      @if(Surfer.getAwards() != "") {
       <p>
         <b>Awards: </b> @Surfer.getAwards()
       </p>
-      <p>
-        <b>Foot Style: </b> @Surfer.getFootStyle()
-      </p>
+      }
       <p>
         <b>Biography: </b> @Surfer.getBio()
       </p>
+     
+      @if(Surfer.getVidUrl() != "" && models.Surfer.isValidUrl(Surfer.getVidUrl())) {
+      
+     <div class="flex-video widescreen"><iframe src="@Surfer.getVidUrl()" frameborder="0" allowfullscreen="true"></iframe></div>
+     
+     } 
       
       @if(isLoggedIn) {
       <div class="container">
@@ -57,4 +69,6 @@ countryList: Map[String,Boolean], searchForm : Form[views.formdata.SearchForm])
     </div>
   </div>
 </div>
+
+
 }
