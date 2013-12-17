@@ -4,19 +4,22 @@
  
 # Home page
 GET     /                           controllers.Application.index()
-GET     /new                        controllers.Application.newSurfer()
-GET     /surfer/:slug               controllers.Application.getSurfer(slug)
-GET     /surfer/:slug/delete        controllers.Application.deleteSurfer(slug)
-GET     /surfer/:slug/edit          controllers.Application.manageSurfer(slug)
-GET     /surfers                   controllers.Application.getSurfers(page:Int ?= 0,name ?= "", country ?= "", surferType ?= "")
-GET     /updates                    controllers.Application.updateSurfer()
-POST    /post                       controllers.Application.postSurfer()
 GET     /login                      controllers.Application.login()
 POST    /login                      controllers.Application.postLogin()
 GET     /register                   controllers.Application.register()
 POST    /register                   controllers.Application.postRegister()
 GET     /logout                      controllers.Application.logout()
-POST    /search                     controllers.Application.surferSearch()
+
+GET     /new                        controllers.Surfers.newSurfer()
+GET     /surfer/:slug               controllers.Surfers.getSurfer(slug)
+GET     /surfer/:slug/delete        controllers.Surfers.deleteSurfer(slug)
+GET     /surfer/:slug/edit          controllers.Surfers.manageSurfer(slug)
+GET     /surfers                   controllers.Surfers.index(page:Int ?= 0,name ?= "", country ?= "", surferType ?= "")
+POST    /post                       controllers.Surfers.postSurfer()
+POST    /search                     controllers.Surfers.surferSearch()
+
+GET     /updates                    controllers.SurferUpdates.index()
+
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

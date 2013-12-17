@@ -14,7 +14,7 @@
   <tbody>
     @for(surfer <- Surfers.getList) {
     <tr>
-    <td><a href="@routes.Application.getSurfer(surfer.getSlug())">@surfer.getName()</a></td>
+    <td><a href="@routes.Surfers.getSurfer(surfer.getSlug())">@surfer.getName()</a></td>
     <td>@surfer.getHome()</td>
     <td>@surfer.getCountry()</td>
     </tr> 
@@ -26,7 +26,7 @@
             <ul class="pagination">
                 @if(Surfers.hasPrev) {
                     <li class="prev">
-                        <a href="@routes.Application.getSurfers(Surfers.getPageIndex - 1)">&larr; Previous</a>
+                        <a href="@routes.Surfers.index(Surfers.getPageIndex - 1)">&larr; Previous</a>
                     </li>
                 } else {
                     <li class="disabled">
@@ -38,7 +38,7 @@
                 </li>
                 @if(Surfers.hasNext) {
                     <li class="next">
-                        <a href="@routes.Application.getSurfers(Surfers.getPageIndex + 1)">Next &rarr;</a>
+                        <a href="@routes.Surfers.index(Surfers.getPageIndex + 1)">Next &rarr;</a>
                     </li>
                 } else {
                     <li class="disabled">
@@ -49,12 +49,12 @@
 -->            
             <ul class="pager">
                 @if(Surfers.hasPrev) {
-                <li class="previous"><a href="@routes.Application.getSurfers(Surfers.getPageIndex - 1)">&larr; Prev</a></li>
+                <li class="previous"><a href="@routes.Surfers.index(Surfers.getPageIndex - 1)">&larr; Prev</a></li>
                 } else {
                 <li class="previous disabled"><a href="#">&larr; Prev</a></li>
                } 
                 @if(Surfers.hasNext) {               
-                <li class="next"><a href="@routes.Application.getSurfers(Surfers.getPageIndex + 1)">Next &rarr;</a></li>
+                <li class="next"><a href="@routes.Surfers.index(Surfers.getPageIndex + 1)">Next &rarr;</a></li>
                 } else {
                 <li class="next disabled"><a href="#">Next &rarr;</a></li>
                 }

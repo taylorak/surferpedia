@@ -30,7 +30,7 @@ public class Surfer extends Model{
   private String home;
 
   /** The surfer's awards **/
- private String awards;
+  private String awards;
 
   /** The surfer's portrait picture **/
   private String carouselUrl;

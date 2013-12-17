@@ -34,10 +34,11 @@ public class User extends Model {
    * @param password The password.
    */
   public User(String first, String last, String email, String password) {
+    String passwordHash = BCrypt.hashpw(password, BCrypt.gensalt());
     this.first = first;
     this.last = last;
     this.email = email;
-    this.password = password;
+    this.password = passwordHash;
   }
   
   /**
@@ -73,8 +74,7 @@ public class User extends Model {
    * @param formData RegistrationForm info. 
    */
   public static User addUser(RegistrationForm formData) {
-    String passwordHash = BCrypt.hashpw(formData.password, BCrypt.gensalt());
-    User user = new User(formData.first, formData.last, formData.email, passwordHash);
+    User user = new User(formData.first, formData.last, formData.email, formData.password);
     user.save();
     return user;
   }

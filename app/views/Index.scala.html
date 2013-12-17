@@ -42,7 +42,7 @@
         <div class="panel-body">
         <ul>
         @for((surfer, index) <- Surfers.zipWithIndex) {
-            <li><a href="@routes.Application.getSurfer(surfer.getSlug())">@surfer.getName()</a></li>
+            <li><a href="@routes.Surfers.getSurfer(surfer.getSlug())">@surfer.getName()</a></li>
         }
         </ul>
         </div>

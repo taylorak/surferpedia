@@ -1,5 +1,5 @@
 @(page: String, isLoggedIn: Boolean, user: User, SurferForm: Form[views.formdata.SurferFormData], 
-FootStyleMap: List[String], ReadOnly:Boolean, typeList: Map[String,Boolean], countryList: Map[String,Boolean], 
+FootStyleMap: List[String], typeList: Map[String,Boolean], countryList: Map[String,Boolean], 
 searchForm : Form[views.formdata.SearchFormData]) 
 
 @import helper.form 
@@ -8,45 +8,39 @@ searchForm : Form[views.formdata.SearchFormData])
 @Main(page, isLoggedIn, user, typeList, countryList, searchForm) {
 <div class="container">
     
-  @form(routes.Application.postSurfer(), 'class -> "form-horizontal") {
+  @form(routes.Surfers.postSurfer(), 'class -> "form-horizontal") {
 
     @hidden(SurferForm("isEditable"))
         
     @text(SurferForm("name"),
           label = "Name",
           placeholder = "Eddie Aikau",
-          help = "The name of the surfer.",
-          readonly = false)
+          help = "The name of the surfer.")
     
     @text(SurferForm("country"),
           label = "Country",
           placeholder = "United States",
-          help = "The surfer's country.",
-          readonly = false)
+          help = "The surfer's country.")
           
     @text(SurferForm("home"),
           label = "Home",
           placeholder = "Kahului, Hawaii",
-          help = "The surfer's home town.",
-          readonly = false)
+          help = "The surfer's home town.")
       
     @text(SurferForm("awards"),
           label = "Awards",
           placeholder = "1977 Duke Kahanamoku Invitational Surfing Championship.",
-          help = "Optional: List of titles and surfing awards.",
-          readonly = false)
+          help = "Optional: List of titles and surfing awards.")
     
     @text(SurferForm("carouselUrl"),
           label = "Carousel URL",
           placeholder = "http://example.com/picture.jpg",
-          help = "A URL to the picture to be presented in the home page carousel of surfers.",
-          readonly = false)
+          help = "A URL to the picture to be presented in the home page carousel of surfers.")
     
     @text(SurferForm("bioUrl"),
           label = "Bio URL",
           placeholder = "http://example.com/picture.jpg",
-          help = "A URL to the picture to be presented in the bio page for this surfer.",
-          readonly = false)
+          help = "A URL to the picture to be presented in the bio page for this surfer.")
     
     @textarea(SurferForm("bio"),
             rows = "10",
@@ -54,11 +48,10 @@ searchForm : Form[views.formdata.SearchFormData])
             placeholder = "Bio statement goes here.",
             help = "One paragraph description of this surfer.")
     
-    @text(SurferForm("slug"),
+    @slug(SurferForm("slug"),
           label = "Slug",
           placeholder = "eddieaikau",
-          help = "Letters and digits to be used to identify the surfers in URLs; i.e. http://surferpedia.com/surfer/eddieaikau",
-          readonly = ReadOnly)
+          help = "Letters and digits to be used to identify the surfers in URLs; i.e. http://surferpedia.com/surfer/eddieaikau")
 
     @select(SurferForm("type"),
             label = "Type",
