@@ -5,6 +5,11 @@ countryList: Map[String,Boolean], searchForm : Form[views.formdata.SearchForm], 
 <div class="container">
   <div class="row">
   <div class="col-sm-12">
+           @if(flash.containsKey("registered")) {
+           <div class="alert alert-success" style="text-align:center;">
+            @flash.get("registered") You are now free to add <a href="routes.Surfers.newSurfer()" class="alert-link">new surfers</a>.
+           </div>
+            }
     <div id="carousel-example-generic" class="carousel slide">
       <!-- Indicators -->
       <ol class="carousel-indicators">
@@ -40,11 +45,11 @@ countryList: Map[String,Boolean], searchForm : Form[views.formdata.SearchForm], 
           <h3 class="panel-title">Featured Surfers</h3>
         </div>
         <div class="panel-body">
-        <ul>
+        <ol>
         @for((surfer, index) <- Surfers.zipWithIndex) {
             <li><a href="@routes.Surfers.getSurfer(surfer.getSlug())">@surfer.getName()</a></li>
         }
-        </ul>
+        </ol>
         </div>
       </div>
     </div>
@@ -54,10 +59,10 @@ countryList: Map[String,Boolean], searchForm : Form[views.formdata.SearchForm], 
           <h3 class="panel-title">Recently Added</h3>
         </div>
         <div class="panel-body">
-          <ul>
+          <ol>
             @for(surfer <- recentSurfers) {
             <li><a href="@routes.Surfers.getSurfer(surfer.getSlug())">@surfer.getName()</a></li> }
-          </ul>
+          </ol>
         </div>
       </div>
     </div>

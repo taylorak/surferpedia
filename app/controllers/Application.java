@@ -79,7 +79,10 @@ public class Application extends Controller {
     }
     else {
       RegistrationForm data = filledRegistrationForm.get();
-      User.addUser(data);
+      User user = User.addUser(data);
+      session().clear();
+      session("email", user.getEmail());
+      flash("registered", "Thank you for signing up with Surferpedia!");
       return redirect(routes.Application.index());
     }
   }
@@ -136,6 +139,14 @@ public class Application extends Controller {
    */
   @Security.Authenticated(Secured.class)
   public static Result logout() {
+    session().clear();
+    return redirect(routes.Application.index());
+  }
+  
+  @Security.Authenticated(Secured.class)
+  public static Result deleteUser() {
+    User user = Secured.getUserInfo(ctx());
+    user.delete();
     session().clear();
     return redirect(routes.Application.index());
   }

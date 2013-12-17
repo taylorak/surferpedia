@@ -1,9 +1,6 @@
 body {
     padding-top: 70px;  /* Move body of page below navbar. */
-}
-
-.wave-icon {
-  height:50px;
+    background: #FFFFFF;
 }
 
 .banner {

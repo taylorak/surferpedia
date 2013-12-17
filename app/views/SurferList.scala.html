@@ -4,11 +4,11 @@ typeList: Map[String,Boolean], countryList: Map[String,Boolean], searchForm : Fo
 @Main(page, isLoggedIn, user, typeList, countryList, searchForm) {
 <div class="container">
   @if(Surfers.getList().size() > 0) {
-  <table class="table table-condensed table-bordered">
+  <table class="table table-hover table-bordered">
   <thead>
   <tr>
   <td>Name</td>
-  <td>Hometown</td>
+  <td>Type</td>
   <td>Country</td>
   </tr>
   </thead>
@@ -16,7 +16,7 @@ typeList: Map[String,Boolean], countryList: Map[String,Boolean], searchForm : Fo
     @for(surfer <- Surfers.getList) {
     <tr>
     <td><a href="@routes.Surfers.getSurfer(surfer.getSlug())">@surfer.getName()</a></td>
-    <td>@surfer.getHome()</td>
+    <td>@surfer.getType()</td>
     <td>@surfer.getCountry()</td>
     </tr> 
     }

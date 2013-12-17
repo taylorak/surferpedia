@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import org.hibernate.validator.constraints.URL;
 import models.Surfer;
 import play.data.validation.ValidationError;
 import play.data.validation.Constraints.Pattern;
@@ -27,11 +28,13 @@ public class SurferForm {
   @Required(message="Home is required.")
   public String home;
 
- public String awards;
+  public String awards;
 
+  @URL
   @Required(message="Carousel image required.")
   public String carouselUrl;
 
+  @URL
   @Required(message="Bio image required.")
   public String bioUrl;
 
@@ -51,6 +54,7 @@ public class SurferForm {
   @Required
   public boolean isEditable;
 
+  @URL
   public String vidUrl;
   
   /**

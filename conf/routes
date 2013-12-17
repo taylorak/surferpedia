@@ -9,6 +9,7 @@ POST    /login                      controllers.Application.postLogin()
 GET     /register                   controllers.Application.register()
 POST    /register                   controllers.Application.postRegister()
 GET     /logout                      controllers.Application.logout()
+GET     /delete                     controllers.Application.deleteUser()
 
 GET     /new                        controllers.Surfers.newSurfer()
 GET     /surfer/:slug               controllers.Surfers.getSurfer(slug)

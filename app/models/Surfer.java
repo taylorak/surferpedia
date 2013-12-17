@@ -200,7 +200,7 @@ public class Surfer extends Model {
   }
   
   /**
-   * Deletes a surfer from in memory database.
+   * Deletes a surfer from the database.
    * @param id
    */
   public static void deleteSurfer(String slug) {
@@ -209,7 +209,7 @@ public class Surfer extends Model {
   }
   
   /**
-   * Return in memory database containing all surfers.
+   * Return a list containing all surfers.
    * @return surfers
    */
   public static List<Surfer> getSurfers() {
@@ -217,7 +217,7 @@ public class Surfer extends Model {
   }
 
   /**
-   * Return in memory database containing all surfers.
+   * Return a list of random surfers.
    * @param max
    * @return surfers
    */
