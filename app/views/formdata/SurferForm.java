@@ -14,7 +14,7 @@ import play.data.validation.Constraints.Required;
  * @author taylorak
  *
  */
-public class SurferFormData {
+public class SurferForm {
   
   /** The slug related to surfer **/
   @Id
@@ -64,7 +64,7 @@ public class SurferFormData {
   /**
    * The default constructor.
    */
-  public SurferFormData() {
+  public SurferForm() {
     // default no arg constructor
     this.isEditable = false;
   }
@@ -80,7 +80,7 @@ public class SurferFormData {
    * @param slug
    * @param type
    */
-  public SurferFormData(String name, String home, String awards, String carouselUrl, String bioUrl, String bio, String slug,
+  public SurferForm(String name, String home, String awards, String carouselUrl, String bioUrl, String bio, String slug,
       String type, String footstyle, String country) {
     this.slug = slug;
     this.name = name;
@@ -99,7 +99,7 @@ public class SurferFormData {
    * Create a surfer form data object based on surfer.
    * @param surfer
    */
-  public SurferFormData(Surfer surfer, boolean isEditable) {
+  public SurferForm(Surfer surfer, boolean isEditable) {
     this.slug = surfer.getSlug();
     this.name = surfer.getName();
     this.home = surfer.getHome();

@@ -4,13 +4,14 @@ import java.util.List;
 import java.util.Map;
 import models.Surfer;
 import play.data.Form;
+import play.libs.F.Option;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
 import views.formdata.CountryTypes;
 import views.formdata.FootstyleTypes;
-import views.formdata.SearchFormData;
-import views.formdata.SurferFormData;
+import views.formdata.SearchForm;
+import views.formdata.SurferForm;
 import views.formdata.SurferTypes;
 import views.html.Index;
 import views.html.ManageSurfer;
@@ -20,8 +21,8 @@ import views.html.SurferList;
 public class Surfers  extends Controller{
 
   
-  private static final Form<SearchFormData> searchFormData = Form.form(SearchFormData.class);
-  private static final Form<SurferFormData> surferFormData = Form.form(SurferFormData.class);
+  private static final Form<SearchForm> searchForm = Form.form(SearchForm.class);
+  private static final Form<SurferForm> surferForm = Form.form(SurferForm.class);
   
   /**
    * Gets all surfers. 
@@ -34,7 +35,7 @@ public class Surfers  extends Controller{
         Surfer.page(5,page,name,country,surferType), 
         SurferTypes.getTypes(), 
         CountryTypes.getCountryTypes(), 
-        searchFormData));
+        searchForm));
   }
   
   /**
@@ -48,7 +49,7 @@ public class Surfers  extends Controller{
         Surfer.getSurfer(slug), 
         SurferTypes.getTypes(), 
         CountryTypes.getCountryTypes(), 
-        searchFormData));
+        searchForm));
   }
   
   /**
@@ -58,16 +59,16 @@ public class Surfers  extends Controller{
   @Security.Authenticated(Secured.class)
   public static Result newSurfer() {
     
-    Form<SurferFormData> filledSurferFormData = surferFormData.fill(new SurferFormData());
+    Form<SurferForm> filledSurferForm = surferForm.fill(new SurferForm());
 
-    return ok(ManageSurfer.render("Manage", 
+    return ok(ManageSurfer.render("New", 
         Secured.isLoggedIn(ctx()), 
         Secured.getUserInfo(ctx()), 
-        filledSurferFormData, 
+        filledSurferForm, 
         FootstyleTypes.getFootStyleTypes(), 
         SurferTypes.getTypes(), 
         CountryTypes.getCountryTypes(), 
-        searchFormData));
+        searchForm));
   }
   
   /**
@@ -83,7 +84,7 @@ public class Surfers  extends Controller{
         Surfer.getRandomSurfers(3), 
         SurferTypes.getTypes(), 
         CountryTypes.getCountryTypes(), 
-        searchFormData));
+        searchForm));
   }
   
   /**
@@ -92,17 +93,17 @@ public class Surfers  extends Controller{
    */
   @Security.Authenticated(Secured.class)
   public static Result manageSurfer(String slug) {
-    SurferFormData data = new SurferFormData(Surfer.getSurfer(slug),true);
-    Form<SurferFormData> filledFormData = surferFormData.fill(data);
+    SurferForm data = new SurferForm(Surfer.getSurfer(slug),true);
+    Form<SurferForm> filledSurferForm = surferForm.fill(data);
     Map<String, Boolean> filledSurferTypeMap = SurferTypes.getTypes(data.type);
     return ok(ManageSurfer.render("Manage",
         Secured.isLoggedIn(ctx()), 
         Secured.getUserInfo(ctx()), 
-        filledFormData, 
+        filledSurferForm, 
         FootstyleTypes.getFootStyleTypes(), 
         filledSurferTypeMap, 
         CountryTypes.getCountryTypes(), 
-        searchFormData));
+        searchForm));
   }
   
   /**
@@ -110,21 +111,19 @@ public class Surfers  extends Controller{
    * @return The resulting home page. 
    */
   public static Result postSurfer() {
-    Form<SurferFormData> filledFormData = surferFormData.bindFromRequest();
-    System.out.println(filledFormData);
-   // String type = filledFormData.get().type;
-   // Map<String, Boolean> surferTypeMap = SurferTypes.getTypes(type);
-    if (filledFormData.hasErrors()) {
+    Form<SurferForm> filledSurferForm = surferForm.bindFromRequest();
+    String type = filledSurferForm.data().get("type");
+    if (filledSurferForm.hasErrors()) {
       return badRequest(ManageSurfer.render("Manage", 
           Secured.isLoggedIn(ctx()), 
           Secured.getUserInfo(ctx()), 
-          filledFormData, 
+          filledSurferForm, 
           FootstyleTypes.getFootStyleTypes(), 
-          SurferTypes.getTypes(), 
+          SurferTypes.getTypes(type), 
           CountryTypes.getCountryTypes(), 
-          searchFormData));
+          searchForm));
     } else {
-      SurferFormData data = filledFormData.get();
+      SurferForm data = filledSurferForm.get();
       //SurferFormData data = surferFormData.get();
       Surfer.addSurfer(data);
       return redirect(routes.Application.index());
@@ -132,14 +131,14 @@ public class Surfers  extends Controller{
   }
   
   public static Result surferSearch() {
-    Form<SearchFormData> formData = searchFormData.bindFromRequest();
-    SearchFormData data = formData.get();
+    Form<SearchForm> formData = searchForm.bindFromRequest();
+    SearchForm data = formData.get();
     return ok(SurferList.render("Search", 
         Secured.isLoggedIn(ctx()), 
         Secured.getUserInfo(ctx()), 
         Surfer.page(5,0,data.name,data.country,data.surferType), 
         SurferTypes.getTypes(), 
         CountryTypes.getCountryTypes(), 
-        searchFormData));
+        searchForm));
   }
 }

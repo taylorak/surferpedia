@@ -6,7 +6,7 @@ package views.formdata;
  * @author Evan Komiyama
  *
  */
-public class SearchFormData {
+public class SearchForm {
 
   /**Name field**/
   public String name = "";
@@ -17,11 +17,11 @@ public class SearchFormData {
   /**Surfer type field**/
   public String surferType = "";
   
-  public SearchFormData() {
+  public SearchForm() {
     //Do nothing
   }
   
-  public SearchFormData(String name, String country, String surferType) {
+  public SearchForm(String name, String country, String surferType) {
     this.name = name;
     this.country = country;
     this.surferType = surferType;

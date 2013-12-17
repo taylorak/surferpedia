@@ -7,13 +7,13 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
 import views.formdata.CountryTypes;
-import views.formdata.SearchFormData;
+import views.formdata.SearchForm;
 import views.formdata.SurferTypes;
 import views.html.UpdateSurfer;
 
 public class SurferUpdates extends Controller{
 
-  private static final Form<SearchFormData> searchFormData = Form.form(SearchFormData.class);
+  private static final Form<SearchForm> searchFormData = Form.form(SearchForm.class);
 
   private static final Map<String, Boolean> surferTypeMap = SurferTypes.getTypes();
   private static final Map<String, Boolean> countryTypeMap = CountryTypes.getCountryTypes();

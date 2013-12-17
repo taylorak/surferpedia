@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import com.avaje.ebean.Page;
 import play.db.ebean.Model;
-import views.formdata.SurferFormData;
+import views.formdata.SurferForm;
 
 /**
  * A Model for a surfer.
@@ -97,7 +97,7 @@ public class Surfer extends Model{
    * @param formData
    * @return contact
    */
-  public static Surfer addSurfer(SurferFormData formData) {
+  public static Surfer addSurfer(SurferForm formData) {
     //String slug = formData.name.toLowerCase().replaceAll("[^a-z0-9-]", "_");
     Surfer surfer;
     if (!contains(formData.slug)){

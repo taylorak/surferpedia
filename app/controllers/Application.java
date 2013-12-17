@@ -9,20 +9,21 @@ import play.mvc.Security;
 import views.formdata.CountryTypes;
 import views.formdata.LoginForm;
 import views.formdata.RegistrationForm;
-import views.formdata.SearchFormData;
+import views.formdata.SearchForm;
 import views.formdata.SurferTypes;
 import views.html.Index;
 import views.html.Login;
 import views.html.Registration;
-import views.html.SurferList;
 
 /**
  * Implements the controllers for this application.
  */
 public class Application extends Controller {
   
-  private static final Form<SearchFormData> searchFormData = Form.form(SearchFormData.class);
- 
+  private static final Form<SearchForm> searchForm = Form.form(SearchForm.class);
+  private static final Form<RegistrationForm> registrationForm = Form.form(RegistrationForm.class);
+  private static final Form<LoginForm> loginForm = Form.form(LoginForm.class);
+
   /**
    * Returns the home page. 
    * @return The resulting home page. 
@@ -34,7 +35,7 @@ public class Application extends Controller {
         Surfer.getRandomSurfers(3), 
         SurferTypes.getTypes(), 
         CountryTypes.getCountryTypes(), 
-        searchFormData));
+        searchForm));
   }  
   
   /**
@@ -42,14 +43,13 @@ public class Application extends Controller {
    * @return The Registration page. 
    */
   public static Result register() {
-    Form<RegistrationForm> registrationFormData = Form.form(RegistrationForm.class);
     return ok(Registration.render("Registration", 
         Secured.isLoggedIn(ctx()), 
         Secured.getUserInfo(ctx()), 
-        registrationFormData, 
+        registrationForm, 
         SurferTypes.getTypes(), 
         CountryTypes.getCountryTypes(), 
-        searchFormData));
+        searchForm));
   }
   
   /**
@@ -62,21 +62,20 @@ public class Application extends Controller {
    */
   public static Result postRegister() {
 
-    Form<RegistrationForm> formData = Form.form(RegistrationForm.class);
-    Form<RegistrationForm> filledFormData = formData.bindFromRequest();
+    Form<RegistrationForm> filledRegistrationForm = registrationForm.bindFromRequest();
     
-    if (filledFormData.hasErrors()) {
+    if (filledRegistrationForm.hasErrors()) {
       //flash("error", "Registration infromation not valid.");
       return badRequest(Registration.render("Registration", 
           Secured.isLoggedIn(ctx()), 
           Secured.getUserInfo(ctx()), 
-          filledFormData, 
+          filledRegistrationForm, 
           SurferTypes.getTypes(), 
           CountryTypes.getCountryTypes(), 
-          searchFormData));
+          searchForm));
     }
     else {
-      RegistrationForm data = filledFormData.get();
+      RegistrationForm data = filledRegistrationForm.get();
       User.addUser(data);
       return redirect(routes.Application.index());
     }
@@ -87,15 +86,14 @@ public class Application extends Controller {
    * @return The Login page. 
    */
   public static Result login() {
-    Form<LoginForm> formData = Form.form(LoginForm.class);
 
     return ok(Login.render("Login", 
         Secured.isLoggedIn(ctx()), 
         Secured.getUserInfo(ctx()), 
-        formData, 
+        loginForm, 
         SurferTypes.getTypes(), 
         CountryTypes.getCountryTypes(), 
-        searchFormData));
+        searchForm));
   }
 
   /**
@@ -109,23 +107,22 @@ public class Application extends Controller {
   public static Result postLogin() {
 
     // Get the submitted form data from the request object, and run validation.
-    Form<LoginForm> formData = Form.form(LoginForm.class);
-    Form<LoginForm> filledFormData = formData.bindFromRequest();
+    Form<LoginForm> filledLoginForm = loginForm.bindFromRequest();
 
-    if (filledFormData.hasErrors()) {
+    if (filledLoginForm.hasErrors()) {
       flash("error", "Login credentials not valid.");
       return badRequest(Login.render("Login", 
           Secured.isLoggedIn(ctx()), 
           Secured.getUserInfo(ctx()), 
-          filledFormData, 
+          filledLoginForm, 
           SurferTypes.getTypes(), 
           CountryTypes.getCountryTypes(), 
-          searchFormData));
+          searchForm));
     }
     else {
       // email/password OK, so now we set the session variable and only go to authenticated pages.
       session().clear();
-      session("email", filledFormData.get().email);
+      session("email", filledLoginForm.get().email);
       return redirect(routes.Application.index());
     }
   }
@@ -140,16 +137,4 @@ public class Application extends Controller {
     return redirect(routes.Application.index());
   }
   
-  public static Result surferSearch() {
-    Form<SearchFormData> formData = searchFormData.bindFromRequest();
-    SearchFormData data = formData.get();
-    return ok(SurferList.render("Search", 
-        Secured.isLoggedIn(ctx()), 
-        Secured.getUserInfo(ctx()), 
-        Surfer.page(5,0,data.name,data.country,data.surferType), 
-        SurferTypes.getTypes(), 
-        CountryTypes.getCountryTypes(), 
-        searchFormData));
-  }
-
 }

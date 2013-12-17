@@ -1,4 +1,4 @@
-@(page: String, isLoggedIn: Boolean, user: User, typeList: Map[String,Boolean], countryList: Map[String,Boolean], searchForm : Form[views.formdata.SearchFormData])(content: Html)
+@(page: String, isLoggedIn: Boolean, user: User, typeList: Map[String,Boolean], countryList: Map[String,Boolean], searchForm : Form[views.formdata.SearchForm])(content: Html)
 @import helper.form 
 @import bootstrap3._
 
@@ -61,7 +61,7 @@
           <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">@user.getFirst()<b
               class="caret"></b></a>
             <ul class="dropdown-menu">
-              <li class="@(" active".when(page=="Manage"))"><a href="@routes.Surfers.newSurfer()">New
+              <li class="@(" active".when(page=="New"))"><a href="@routes.Surfers.newSurfer()">New
                   Surfer</a></li>
               <li class="@(" active".when(page=="Update"))"><a href="@routes.SurferUpdates.index()">Updates</a></li>
                   

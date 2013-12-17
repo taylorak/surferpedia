@@ -4,7 +4,7 @@ import models.Surfer;
 import models.User;
 import play.Application;
 import views.formdata.RegistrationForm;
-import views.formdata.SurferFormData;
+import views.formdata.SurferForm;
 
 /**
  * Initialize the contact table.
@@ -31,7 +31,7 @@ public class Global extends GlobalSettings {
 
        User.addUser(new RegistrationForm("John", "Smith", "smith@example.com", "password","password"));
        
-       Surfer.addSurfer(new SurferFormData("Laird Hamilton", "San Fransisco, California", "",
+       Surfer.addSurfer(new SurferForm("Laird Hamilton", "San Fransisco, California", "",
             "http://swellseekers.ie/home/wp-content/themes/classifiedstheme/thumbs//laird-hamilton-surf.jpg",
             "http://assets-s3.mensjournal.com/img/article/laird-hamiltons-high-performance-breathing/298_298_laird-hamiltons-high-performance-breathing.jpg",
             "Laird was born Laird John Zerfas in San Francisco on March 2, 1964, in an experimental salt-water sphere"
@@ -44,7 +44,7 @@ public class Global extends GlobalSettings {
                 + " meet his mother. Bill Hamilton married Laird's then-single mother, becoming Laird's adoptive father.",
                 "lairdhamilton", "Male", "Regular", "USA"));
        
-        Surfer.addSurfer(new SurferFormData("Bethany Hamilton", "Lihue, Hawaii", "",
+        Surfer.addSurfer(new SurferForm("Bethany Hamilton", "Lihue, Hawaii", "",
             "http://upload.wikimedia.org/wikipedia/commons/a/a4/Bethany_Hamilton_20070311.jpg",
             "http://blog.zap2it.com/frominsidethebox/bethany-hamilton-acm.jpg",
             "Bethany Hamilton is an American professional surfer. She is known for surviving a"
@@ -55,7 +55,7 @@ public class Global extends GlobalSettings {
                 + " and additional interviews. She has appeared on many television shows since the loss of her arm.",
                 "bethanyhamilton", "Female", "Regular", "USA"));
 
-        Surfer.addSurfer(new SurferFormData("Jake Marshall", "San Diego, California", "",
+        Surfer.addSurfer(new SurferForm("Jake Marshall", "San Diego, California", "",
             "http://cdn.surf.transworld.net/wp-content/blogs.dir/443/files/2012/06/Jake-Marshall.jpg",
             "http://www.surfingamerica.org/wp-content/uploads/2011/01/JakeMarshall_AM7H9425-2.jpg",
             "Many young surfers have the potential to make an impact on our sport, but none look more poised to do so"
