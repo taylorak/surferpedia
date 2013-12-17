@@ -16,45 +16,35 @@ import play.data.validation.Constraints.Required;
  */
 public class SurferForm {
   
-  /** The slug related to surfer **/
   @Id
   @Required(message="Slug is required.")
   @Pattern(value="[0-9a-zA-Z]+", message="Letters and digits to be used.") 
   public String slug;
 
-  /** The surfer's name **/
   @Required(message="Name is required.")
   public String name;
 
-  /** The surfer's home **/
   @Required(message="Home is required.")
   public String home;
 
-  /** The surfer's awards **/
  public String awards;
 
-  /** The surfer's portrait picture **/
   @Required(message="Carousel image required.")
   public String carouselUrl;
 
-  /** The surfer's bio picture **/
   @Required(message="Bio image required.")
   public String bioUrl;
 
-  /** The surfer's bio **/
   @Lob
   @Required(message="Bio paragraph required.")
   public String bio;
 
-  /** The surfer's type **/
   @Required(message="Surfer type required.")
   public String type;
 
-  /** The surfer's foot style **/
   @Required(message="Footstyle required.")
   public String footstyle;
   
-  /** The surfer's country **/
   @Required(message="Country required.")
   public String country;
   
@@ -70,7 +60,7 @@ public class SurferForm {
   }
   
   /**
-   * Initialize contact form data.
+   * Initialize surfer form.
    * @param name
    * @param home
    * @param awards

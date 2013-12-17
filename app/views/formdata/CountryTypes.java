@@ -6,15 +6,16 @@ import java.util.Map;
 import models.Surfer;
 
 public class CountryTypes {
+  
   /**
-   * Creates a list of all countries in the database
-   * @return 
+   * Creates a list of all countries in the database.
+   * @return Map<String, Boolean>
    */
   public static Map<String, Boolean> getCountryTypes() {
     Map<String, Boolean> countryMap = new HashMap<>();
     List<Surfer> countryList = Surfer.getSurfers();
-    for(Surfer surfer : countryList) {
-      if(! countryMap.containsKey(surfer.getCountry())) {
+    for (Surfer surfer : countryList) {
+      if (!countryMap.containsKey(surfer.getCountry())) {
         countryMap.put(surfer.getCountry(), false);
       }
     }

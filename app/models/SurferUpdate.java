@@ -1,11 +1,9 @@
 package models;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import play.data.format.Formats.DateTime;
 import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
@@ -19,16 +17,29 @@ public class SurferUpdate extends Model{
   private long id;
   
   @DateTime(pattern="MM/dd/yyyy HH:mm:ss")
+  @Required
   private Date date;
   
+  @Required
   private String action;
   
+  @Required
   private String surfer;
   
+  /**
+   * The EBean ORM finder method for database queries on SurferUpdates.
+   * @return The finder method for updates.
+   */  
   public static Finder<String,SurferUpdate> find = new Finder<String,SurferUpdate>(
       String.class, SurferUpdate.class
   ); 
   
+  /**
+   * Initializes new SurferUpdate.
+   * @param date
+   * @param action
+   * @param surfer
+   */
   public SurferUpdate(Date date, String action, Surfer surfer) {
     this.setDate(date);
     this.setAction(action);

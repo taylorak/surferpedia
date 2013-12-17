@@ -8,25 +8,27 @@ import models.User;
  */
 public class LoginForm {
 
-  /** The submitted email. */
   @Required
   public String email;
-  /** The submitted password. */
+
   @Required
   public String password;
 
-  /** Required for form instantiation. */
+  /**
+   * The default constructor.
+   */
   public LoginForm() {
+    // default no arg constructor
   }
 
   /**
-   * Validates Form<LoginFormData>.
+   * Validates Form<LoginForm>.
    * Called automatically in the controller by bindFromRequest().
    * Checks to see that email and password are valid credentials.
    * @return Null if valid, or a List[ValidationError] if problems found.
    */
   public String validate() {
-    if(!User.authenticate(email, password)) {
+    if (!User.authenticate(email, password)) {
         return "Invalid email or password";
     }
     return null;

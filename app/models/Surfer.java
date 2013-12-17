@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import com.avaje.ebean.Page;
+import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
 import views.formdata.SurferForm;
 
@@ -15,50 +16,63 @@ import views.formdata.SurferForm;
  *
  */
 @Entity
-public class Surfer extends Model{
+public class Surfer extends Model {
 
   private static final long serialVersionUID = -6751624712871590107L;
   
-  /** The slug related to surfer **/
   @Id
   private String slug;
 
-  /** The surfer's name **/
+  @Required
   private String name;
 
-  /** The surfer's home **/
+  @Required
   private String home;
 
-  /** The surfer's awards **/
   private String awards;
 
-  /** The surfer's portrait picture **/
+  @Required
   private String carouselUrl;
 
-  /** The surfer's bio picture **/
+  @Required
   private String bioUrl;
 
-  /** The surfer's bio **/
   @Lob
+  @Required
   private String bio;
 
-  /** The surfer's type **/
+  @Required
   private String type;
 
-  /** The surfer's foot style **/
+  @Required
   private String footstyle;
   
-  /** The surfer's country **/
+  @Required
   private String country;
   
-  public static Finder<String,Surfer> find = new Finder<String,Surfer>(
+  /**
+   * The EBean ORM finder method for database queries on Surfer.
+   * @return The finder method for surfer.
+   */  
+  public static Finder<String, Surfer> find = new Finder<String, Surfer>(
       String.class, Surfer.class
     ); 
   
+  /**
+   * Paginates a list of surfers.
+   * @param size
+   * @param page
+   * @param name
+   * @param country
+   * @param surferType
+   * @return Page<Surfer>
+   */
   public static Page<Surfer> page(int size, int page, String name, String country, String surferType) {
-    return (surferType == "")? 
+    return (surferType == "")
+        ? 
         find.where().contains("name", name).contains("country", country)
-            .findPagingList(size).getPage(page) : 
+            .findPagingList(size).getPage(page) 
+            : 
         find.where().contains("name", name).contains("country", country).eq("type", surferType)
             .findPagingList(size).getPage(page);
         // return find.where().orderBy("name asc")
@@ -67,7 +81,7 @@ public class Surfer extends Model{
 
   
   /**
-   * Constructs a new Surfer.
+   * Initializes a new Surfer.
    * @param name The surfer's name.
    * @param home The surfer's home-town.
    * @param awards The surfer's awards.
@@ -77,8 +91,7 @@ public class Surfer extends Model{
    * @param slug The surfer's slug field.
    * @param type The surfer's type.
    */
-  public Surfer(String name, String home, String awards, String carouselUrl, String bioUrl, String bio, String slug,
-      String type, String footstyle, String country) {
+  public Surfer(String name, String home, String awards, String carouselUrl, String bioUrl, String bio, String slug, String type, String footstyle, String country) {
     this.slug = slug;
     this.setName(name);
     this.setHome(home);
@@ -101,10 +114,12 @@ public class Surfer extends Model{
     //String slug = formData.name.toLowerCase().replaceAll("[^a-z0-9-]", "_");
     Surfer surfer;
     if (!contains(formData.slug)){
-      surfer = new Surfer(formData.name, formData.home, formData.awards, formData.carouselUrl, formData.bioUrl, formData.bio, formData.slug, formData.type, formData.footstyle,  formData.country);
+      surfer = new Surfer(formData.name, formData.home, formData.awards, formData.carouselUrl, formData.bioUrl, 
+          formData.bio, formData.slug, formData.type, formData.footstyle,  formData.country);
       surfer.save();
       SurferUpdate.addUpdate("Create", surfer);
-    } else {
+    } 
+    else {
       surfer = getSurfer(formData.slug);
       surfer.setName(formData.name);
       surfer.setHome(formData.home);
@@ -127,7 +142,7 @@ public class Surfer extends Model{
    * @param id
    */
   public static void deleteSurfer(String slug) {
-    SurferUpdate.addUpdate("Delete",find.ref(slug));
+    SurferUpdate.addUpdate("Delete", find.ref(slug));
     find.ref(slug).delete();
   }
   
@@ -141,6 +156,7 @@ public class Surfer extends Model{
 
   /**
    * Return in memory database containing all surfers.
+   * @param max
    * @return surfers
    */
   public static List<Surfer> getRandomSurfers(int max) {
@@ -151,7 +167,7 @@ public class Surfer extends Model{
   
   /**
    * Returns surfer with specified id.
-   * @param id
+   * @param slug
    * @return surfer
    */
   public static Surfer getSurfer(String slug) {

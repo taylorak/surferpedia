@@ -3,13 +3,15 @@ package models;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import play.data.validation.Constraints.Email;
+import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
 import views.formdata.RegistrationForm;
 import org.mindrot.jbcrypt.BCrypt;
 
 /**
  * A simple representation of a user. 
- * @author Philip Johnson
+ * @author taylorak
  */
 @Entity
 public class User extends Model {
@@ -17,18 +19,23 @@ public class User extends Model {
   private static final long serialVersionUID = 514181764033756576L;
   
   @Id
+  @Email
   private String email;
   
+  @Required
   private String first;
   
+  @Required
   private String last;
   
+  @Required
   private String password;
   
+  @Required
   private boolean admin;
   
   /**
-   * Creates a new UserInfo instance.
+   * Initializes new User.
    * @param name The name.
    * @param email The email.
    * @param password The password.
@@ -42,8 +49,8 @@ public class User extends Model {
   }
   
   /**
-   * The EBean ORM finder method for database queries on LastTimeStamp.
-   * @return The finder method for products.
+   * The EBean ORM finder method for database queries on User.
+   * @return The finder method for user.
    */  
   public static Finder<String,User> find = new Finder<String,User>(
       String.class, User.class
@@ -59,7 +66,7 @@ public class User extends Model {
   }
   
   /**
-   * Adds the specified user to the UserInfoDB.
+   * Adds the specified user to the database.
    * @param name Their name.
    * @param email Their email.
    * @param password Their password. 
@@ -70,7 +77,7 @@ public class User extends Model {
   }
   
   /**
-   * Adds the specified user to the UserInfoDB.
+   * Adds the specified user to the database.
    * @param formData RegistrationForm info. 
    */
   public static User addUser(RegistrationForm formData) {
@@ -80,7 +87,7 @@ public class User extends Model {
   }
   
   /**
-   * Returns the UserInfo associated with the email, or null if not found.
+   * Returns the User associated with the email, or null if not found.
    * @param email The email.
    * @return The UserInfo.
    */

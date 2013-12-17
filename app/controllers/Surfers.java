@@ -1,10 +1,8 @@
 package controllers;
 
-import java.util.List;
 import java.util.Map;
 import models.Surfer;
 import play.data.Form;
-import play.libs.F.Option;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
@@ -18,6 +16,9 @@ import views.html.ManageSurfer;
 import views.html.ShowSurfer;
 import views.html.SurferList;
 
+/**
+ * Implements the surfer controllers for this application.
+ */
 public class Surfers  extends Controller{
 
   
@@ -40,7 +41,7 @@ public class Surfers  extends Controller{
   
   /**
    * Gets an existing surfer's page.
-   * @return The resulting home page. 
+   * @return The surfer's page. 
    */
   public static Result getSurfer(String slug) {
     return ok(ShowSurfer.render("Surfer", 
@@ -54,7 +55,7 @@ public class Surfers  extends Controller{
   
   /**
    * Creates a new surfer's page.
-   * @return The resulting home page. 
+   * @return The new surfer form. 
    */
   @Security.Authenticated(Secured.class)
   public static Result newSurfer() {
@@ -89,7 +90,7 @@ public class Surfers  extends Controller{
   
   /**
    * Edit a surfer's page. 
-   * @return The resulting home page. 
+   * @return The edit surfer form. 
    */
   @Security.Authenticated(Secured.class)
   public static Result manageSurfer(String slug) {
@@ -108,7 +109,7 @@ public class Surfers  extends Controller{
   
   /**
    * Post a surfer's page. 
-   * @return The resulting home page. 
+   * @return The resulting home page, or edit form on error. 
    */
   public static Result postSurfer() {
     Form<SurferForm> filledSurferForm = surferForm.bindFromRequest();
@@ -122,21 +123,25 @@ public class Surfers  extends Controller{
           SurferTypes.getTypes(type), 
           CountryTypes.getCountryTypes(), 
           searchForm));
-    } else {
+    } 
+    else {
       SurferForm data = filledSurferForm.get();
-      //SurferFormData data = surferFormData.get();
       Surfer.addSurfer(data);
       return redirect(routes.Application.index());
     }
   }
   
+  /**
+   * Searches for surfers.
+   * @return The resulting list of surfers who satisfy the search.
+   */
   public static Result surferSearch() {
     Form<SearchForm> formData = searchForm.bindFromRequest();
     SearchForm data = formData.get();
     return ok(SurferList.render("Search", 
         Secured.isLoggedIn(ctx()), 
         Secured.getUserInfo(ctx()), 
-        Surfer.page(5,0,data.name,data.country,data.surferType), 
+        Surfer.page(5, 0, data.name, data.country, data.surferType), 
         SurferTypes.getTypes(), 
         CountryTypes.getCountryTypes(), 
         searchForm));

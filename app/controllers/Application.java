@@ -16,7 +16,7 @@ import views.html.Login;
 import views.html.Registration;
 
 /**
- * Implements the controllers for this application.
+ * Implements the login controller for this application.
  */
 public class Application extends Controller {
   
@@ -53,9 +53,9 @@ public class Application extends Controller {
   }
   
   /**
-   * Processes a login form submission from an unauthenticated user. 
-   * First we bind the HTTP POST data to an instance of LoginFormData.
-   * The binding process will invoke the LoginFormData.validate() method.
+   * Processes a registration form submission from an unauthenticated user. 
+   * First we bind the HTTP POST data to an instance of RegistrationForm.
+   * The binding process will invoke the Registration.validate() method.
    * If errors are found, re-render the page, displaying the error data. 
    * If errors not found, render the page with the good data. 
    * @return The index page with the results of validation. 
@@ -65,7 +65,6 @@ public class Application extends Controller {
     Form<RegistrationForm> filledRegistrationForm = registrationForm.bindFromRequest();
     
     if (filledRegistrationForm.hasErrors()) {
-      //flash("error", "Registration infromation not valid.");
       return badRequest(Registration.render("Registration", 
           Secured.isLoggedIn(ctx()), 
           Secured.getUserInfo(ctx()), 

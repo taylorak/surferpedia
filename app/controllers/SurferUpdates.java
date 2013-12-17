@@ -11,12 +11,13 @@ import views.formdata.SearchForm;
 import views.formdata.SurferTypes;
 import views.html.UpdateSurfer;
 
+/**
+ * Implements the update controllers for this application.
+ */
 public class SurferUpdates extends Controller{
 
   private static final Form<SearchForm> searchFormData = Form.form(SearchForm.class);
 
-  private static final Map<String, Boolean> surferTypeMap = SurferTypes.getTypes();
-  private static final Map<String, Boolean> countryTypeMap = CountryTypes.getCountryTypes();
   
   /**
    * A list of Updates.
@@ -28,8 +29,8 @@ public class SurferUpdates extends Controller{
         Secured.isLoggedIn(ctx()), 
         Secured.getUserInfo(ctx()), 
         SurferUpdate.getUpdates(), 
-        surferTypeMap, 
-        countryTypeMap, 
+        SurferTypes.getTypes(), 
+        CountryTypes.getCountryTypes(), 
         searchFormData));
   }
 }

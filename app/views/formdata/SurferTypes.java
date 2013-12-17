@@ -13,7 +13,7 @@ public class SurferTypes {
   private static String[] types = {"Male", "Female", "Grom"};
 
   /**
-   * Initializes map of surfers.
+   * Initializes map of surfer types.
    * @return typeMap
    */
   public static Map<String, Boolean> getTypes() {
