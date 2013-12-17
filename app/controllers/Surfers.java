@@ -111,6 +111,7 @@ public class Surfers  extends Controller{
    * Post a surfer's page. 
    * @return The resulting home page, or edit form on error. 
    */
+  @Security.Authenticated(Secured.class)
   public static Result postSurfer() {
     Form<SurferForm> filledSurferForm = surferForm.bindFromRequest();
     String type = filledSurferForm.data().get("type");
