@@ -10,8 +10,11 @@ searchForm : Form[views.formdata.SearchForm])
     
   @form(routes.Surfers.postSurfer(), 'class -> "form-horizontal") {
 
-    @hidden(SurferForm("isEditable"))
-        
+
+    @hidden(SurferForm("isEditable"))    
+
+    @hidden(SurferForm("id"))
+
     @text(SurferForm("name"),
           label = "Name",
           placeholder = "Eddie Aikau",
