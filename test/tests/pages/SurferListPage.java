@@ -33,7 +33,13 @@ public class SurferListPage extends FluentPage {
   
   @Override
   public void isAt() {
-    assertThat(title()).isEqualTo("Surfer List");
+    assertThat(title()).isEqualTo("Surfer List (surferpedia)");
+  }
+  
+  
+  public void search() {
+    
+    
   }
   
   

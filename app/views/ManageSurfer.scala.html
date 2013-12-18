@@ -7,6 +7,8 @@
     
   @form(routes.Application.postSurfer(), 'class -> "form-horizontal") {
 
+    @hidden(SurferForm("id"))
+
     @text(SurferForm("name"),
           label = "Name",
           placeholder = "Eddie Aikau",

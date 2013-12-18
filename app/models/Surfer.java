@@ -59,6 +59,9 @@ public class Surfer extends Model{
   /**URL to a video of surfer**/
   private String vidUrl;
   
+  /**Surfer ID**/
+  private long id = -1;
+  
   public static Finder<String,Surfer> find = new Finder<String,Surfer>(
       String.class, Surfer.class
     ); 
@@ -86,8 +89,9 @@ public class Surfer extends Model{
    * @param slug The surfer's slug field.
    * @param type The surfer's type.
    */
-  public Surfer(String name, String home, String awards, String carouselUrl, String bioUrl, String vidUrl, String bio, String slug,
+  public Surfer(long id, String name, String home, String awards, String carouselUrl, String bioUrl, String vidUrl, String bio, String slug,
       String type, String footstyle, String country) {
+    this.setId(id);
     this.slug = slug;
     this.setName(name);
     this.setHome(home);
@@ -121,20 +125,47 @@ public class Surfer extends Model{
    * @return
    */
   public static List<Surfer> getRecentSurfers() {
-    List<Surfer> surferList = Surfer.getSurfers();
+    
+    //Checks to see if there are any out of sync ids and if so, fixes them.
+    int index = 0;
+    List<Surfer> sortedSurfer = new ArrayList<>();
     List<Surfer> newSurfers = new ArrayList<>();
-    int totalSurferIndex = Surfer.find.findRowCount()-1;
-    int index = 2;
-    while(index >= 0) {
-      if(index < surferList.size()) {
-        newSurfers.add(surferList.get(totalSurferIndex-index));
-        index--;
-      }else {
-        index--;
+    sortedSurfer = Surfer.find.where().orderBy("id desc").findList();
+    boolean needSort = false;
+    while(index < sortedSurfer.size()) {
+      if(sortedSurfer.get(index).id == -1) {
+        needSort = true;
       }
+      index++;
+    }
+    if(needSort) {
+      resortSurferList();
     }
     
+    //Takes up to three most recent added surfers
+    index = 0;  
+    sortedSurfer = Surfer.find.where().orderBy("id desc").findList();
+    while(index < 3 && index < sortedSurfer.size()) {
+      newSurfers.add(sortedSurfer.get(index));
+      index++; 
+    }
+    
+    
     return newSurfers;
+  }
+  
+  /**
+   * Resorts surfer list so that surfer ids match total number of surfers in the database
+   */
+  public static void resortSurferList() {
+    int index = 0;
+    List<Surfer> sortedSurfer = new ArrayList<>();
+    sortedSurfer = Surfer.find.where().orderBy("id").findList();
+    while(index < sortedSurfer.size()) {
+      sortedSurfer.get(index).setId(index+1);
+      sortedSurfer.get(index).save();
+      index++;
+    }
   }
   
   /**
@@ -161,7 +192,12 @@ public class Surfer extends Model{
    * @return contact
    */
   public static Surfer addSurfer(SurferFormData formData) {
-    Surfer surfer = new Surfer(formData.name, formData.home, formData.awards, formData.carouselUrl, formData.bioUrl, formData.vidUrl, formData.bio, formData.slug, formData.type, formData.footstyle,  formData.country);
+    Surfer surfer;
+    if(formData.id == -1) {
+    surfer = new Surfer(Surfer.getSurfers().size()+1, formData.name, formData.home, formData.awards, formData.carouselUrl, formData.bioUrl, formData.vidUrl, formData.bio, formData.slug, formData.type, formData.footstyle,  formData.country);
+    }else {
+    surfer = new Surfer(formData.id, formData.name, formData.home, formData.awards, formData.carouselUrl, formData.bioUrl, formData.vidUrl, formData.bio, formData.slug, formData.type, formData.footstyle,  formData.country);  
+    }
     surfer.save();
     return surfer;
   }
@@ -172,6 +208,7 @@ public class Surfer extends Model{
    */
   public static void deleteSurfer(String slug) {
     Surfer.find.ref(slug).delete();
+    resortSurferList();
   }
   
   /**
@@ -337,6 +374,22 @@ public class Surfer extends Model{
    */
   public void setVidUrl(String vidUrl) {
     this.vidUrl = vidUrl;
+  }
+
+
+  /**
+   * @return the id
+   */
+  public long getId() {
+    return id;
+  }
+
+
+  /**
+   * @param id the id to set
+   */
+  public void setId(long id) {
+    this.id = id;
   }
 
 }

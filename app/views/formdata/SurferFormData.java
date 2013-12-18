@@ -46,6 +46,8 @@ public class SurferFormData {
   /**URL for video of surfer**/
   public String vidUrl;
   
+  /**Surfer ID**/
+  public long id = -1;
   
   /**
    * The default constructor.
@@ -97,6 +99,7 @@ public class SurferFormData {
     this.type = surfer.getType();
     this.footstyle = surfer.getFootStyle();
     this.country = surfer.getCountry();
+    this.id = surfer.getId();
   }
   
   /** Checks if form is valid.
@@ -137,6 +140,9 @@ public class SurferFormData {
     }
     if (country == null || country.length() == 0) {
       errors.add(new ValidationError("country", "Country is required."));
+    }
+    if(vidUrl == null && ! vidUrl.contains("youtube.com")) {
+      errors.add(new ValidationError("vidUrl", "We are sorry. Currently all videos must be from Youtube"));
     }
     return errors.isEmpty() ? null : errors; 
   }
