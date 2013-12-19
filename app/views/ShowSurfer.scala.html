@@ -33,6 +33,7 @@ countryList: Map[String,Boolean], searchForm : Form[views.formdata.SearchForm])
       </div>
     </div>
   </div>
+
   <div class="col-md-8">
 
     <div class="well">
@@ -57,19 +58,10 @@ countryList: Map[String,Boolean], searchForm : Form[views.formdata.SearchForm])
       <div class="row">       
       <a type="button" id="edit" class="pull-left btn btn-primary" href="@routes.Surfers.manageSurfer(Surfer.getSlug())">Edit</a>
       <a type="button" id="delete" data-toggle="modal" href="#myModal" class="pull-right btn btn-primary">Delete</a>
-     </div>
-     </div>
-     }
-
-      } @if(isLoggedIn) {
-      <div class="container">
-        <div class="row">
-          <a id="edit" type="button" class="pull-left btn btn-primary" href="@routes.Surfers.manageSurfer(Surfer.getSlug())">Edit</a>
-          <a id="delete" type="button" data-toggle="modal" href="#myModal" class="pull-right btn btn-primary">Delete</a>
-        </div>
       </div>
-      }
-      
+      </div>
+     }
+   
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -93,6 +85,6 @@ countryList: Map[String,Boolean], searchForm : Form[views.formdata.SearchForm])
     </div>
   </div>
 </div>
-
+</div>
 
 }
