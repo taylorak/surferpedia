@@ -1,5 +1,6 @@
 @(Surfers: com.avaje.ebean.Page[Surfer])
 
+@if(Surfers.getTotalPageCount > 1) {
 <ul class="pagination">
   @if(Surfers.hasPrev) {
     <li class="prev"><a href="@routes.Surfers.index(Surfers.getPageIndex - 1)">&laquo;</a></li>
@@ -19,3 +20,4 @@
     <li class="disabled"><a>&raquo;</a></li> 
   }
 </ul>
+}
