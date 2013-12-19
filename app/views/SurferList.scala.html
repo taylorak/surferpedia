@@ -1,6 +1,8 @@
 @(page: String, isLoggedIn: Boolean, user: User, Surfers:  com.avaje.ebean.Page[Surfer], 
 typeList: Map[String,Boolean], countryList: Map[String,Boolean], searchForm : Form[views.formdata.SearchForm])
 
+@import bootstrap3._
+
 @Main(page, isLoggedIn, user, typeList, countryList, searchForm) {
 <div class="container">
   @if(Surfers.getList().size() > 0) {
@@ -20,50 +22,11 @@ typeList: Map[String,Boolean], countryList: Map[String,Boolean], searchForm : Fo
       }
     </tbody>
   </table>
-
-
-
-  <ul class="pagination">
-                @if(Surfers.hasPrev) {
-                    <li class="prev">
-                        <a href="@routes.Surfers.index(Surfers.getPageIndex - 1)">&laquo; Prev</a>
-                    </li>
-                } else {
-                    <li class="disabled">
-                        <a>&laquo; Prev</a>
-                    </li>
-                }
-
-
-                @if(Surfers.hasNext) {
-                    <li class="next">
-                        <a href="@routes.Surfers.index(Surfers.getPageIndex + 1)">Next &raquo;</a>
-                    </li>
-                } else {
-                    <li class="disabled">
-                        <a>Next &raquo;</a>
-                    </li>
-                }
-            </ul>
-            
-
-<!--            <ul class="pager">
-                @if(Surfers.hasPrev) {
-                <li class="previous"><a href="@routes.Surfers.index(Surfers.getPageIndex - 1)">&larr; Prev</a></li>
-                } else {
-                <li class="previous disabled"><a href="#">&larr; Prev</a></li>
-               } 
-                @if(Surfers.hasNext) {               
-                <li class="next"><a href="@routes.Surfers.index(Surfers.getPageIndex + 1)">Next &rarr;</a></li>
-                } else {
-                <li class="next disabled"><a href="#">Next &rarr;</a></li>
-                }
-            </ul> -->
-    } else {
-        <div class="col-sm-8 col-sm-offset-2">
-        <h3>There were no results matching this query.</h3>
-        </div>
-    }       
-        
+  @pagination(Surfers) 
+  } else {
+  <div class="col-sm-8 col-sm-offset-2">
+    <h3>There were no results matching this query.</h3>
+  </div>
+  }
 </div>
 }

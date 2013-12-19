@@ -1,0 +1,21 @@
+@(Surfers: com.avaje.ebean.Page[Surfer])
+
+<ul class="pagination">
+  @if(Surfers.hasPrev) {
+    <li class="prev"><a href="@routes.Surfers.index(Surfers.getPageIndex - 1)">&laquo;</a></li>
+   } else {
+    <li class="disabled"><a>&laquo;</a></li> 
+  } 
+  @for(page <- 1 to Surfers.getTotalPageCount) { 
+    @if(Surfers.getPageIndex == (page - 1)) {
+        <li class="active"><a href="@routes.Surfers.index(Surfers.getPageIndex)">@page</a></li> 
+        } else {
+            <li><a href="@routes.Surfers.index(page-1)" class="page">@page</a></li> 
+        } 
+    } 
+  @if(Surfers.hasNext) {
+    <li class="next"><a href="@routes.Surfers.index(Surfers.getPageIndex + 1)">&raquo;</a></li> 
+  } else {
+    <li class="disabled"><a>&raquo;</a></li> 
+  }
+</ul>

@@ -1,6 +1,7 @@
 package models;
 
 import java.util.Collections;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.imageio.ImageIO;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Lob;
@@ -65,7 +67,6 @@ public class Surfer extends Model {
    * The EBean ORM finder method for database queries on Surfer.
    * @return The finder method for surfer.
    */  
- 
   public static Finder<String,Surfer> find = new Finder<String,Surfer>(
       String.class, Surfer.class
     ); 
@@ -289,6 +290,20 @@ public class Surfer extends Model {
   public String getShortBio(int length) {
     return (bio.length() > length) ? this.bio.substring(0, length) : this.bio;
   }
+  
+  
+  public static boolean isImage(String url) {
+    try {
+      BufferedImage image = ImageIO.read(new URL(url));
+      if (image == null) {
+        return false;
+      }
+    } catch(IOException ex) {
+       return false;
+    }
+    return true;
+  }
+  
   /**
    * @return the name
    */

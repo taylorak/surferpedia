@@ -7,7 +7,7 @@ import play.data.validation.Constraints.Email;
 import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
 import views.formdata.RegistrationForm;
-//import org.mindrot.jbcrypt.BCrypt;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  * A simple representation of a user. 
@@ -41,7 +41,7 @@ public class User extends Model {
    * @param password The password.
    */
   public User(String first, String last, String email, String password) {
-    String passwordHash = password;//BCrypt.hashpw(password, BCrypt.gensalt());
+    String passwordHash = BCrypt.hashpw(password, BCrypt.gensalt());
     this.first = first;
     this.last = last;
     this.email = email;
@@ -112,17 +112,17 @@ public class User extends Model {
    */
   public static boolean authenticate(String email, String password) {
     
-    /*User user = find.where().eq("email", email).findUnique();
+    User user = find.where().eq("email", email).findUnique();
     if (user != null && BCrypt.checkpw(password, user.password)) {
       return true;
     } else {
       return false;
-    }*/
-        return find.where()
+    }
+    /*    return find.where()
             .eq("email", email)
             .eq("password", password)
             .findUnique() != null;
- 
+   */
   }
 
   /**

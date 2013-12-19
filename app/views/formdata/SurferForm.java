@@ -117,6 +117,7 @@ public class SurferForm {
     this.id = surfer.getId();
   }
 
+  
   /** Checks if form is valid.
    * @return null if no errors, List of errors if there are.
    */
@@ -132,12 +133,14 @@ public class SurferForm {
     if (!FootstyleTypes.isType(footstyle)) {
       errors.add(new ValidationError("footstyle", "Invalid foot style type."));
     }
-
-    if (country == null || country.length() == 0) {
-      errors.add(new ValidationError("country", "Country is required."));
-    }
     if(vidUrl != "" && (! vidUrl.contains("youtube.com"))) {
       errors.add(new ValidationError("vidUrl", "We are sorry. Currently all videos must be from Youtube"));
+    }
+    if(Surfer.isImage(bioUrl) != true) {
+      errors.add(new ValidationError("bioUrl", "URL is not an image"));
+    }
+    if(Surfer.isImage(carouselUrl) != true) {
+      errors.add(new ValidationError("carouselUrl", "URL is not an image"));
     }
 
     return errors.isEmpty() ? null : errors; 
