@@ -92,7 +92,6 @@ public class Application extends Controller {
    * @return The Login page. 
    */
   public static Result login() {
-
     return ok(Login.render("Login", 
         Secured.isLoggedIn(ctx()), 
         Secured.getUserInfo(ctx()), 

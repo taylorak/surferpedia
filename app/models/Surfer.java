@@ -246,6 +246,13 @@ public class Surfer extends Model {
   }
   
   /**
+   * Returns bio truncated to 40 characters.
+   * @return shortened bio
+   */
+  public String getShortBio(int length) {
+    return (bio.length() > length) ? this.bio.substring(0, length) : this.bio;
+  }
+  /**
    * @return the name
    */
   public String getName() {

@@ -4,51 +4,50 @@ typeList: Map[String,Boolean], countryList: Map[String,Boolean], searchForm : Fo
 @Main(page, isLoggedIn, user, typeList, countryList, searchForm) {
 <div class="container">
   @if(Surfers.getList().size() > 0) {
-  <table class="table table-hover table-bordered">
-  <thead>
-  <tr>
-  <td>Name</td>
-  <td>Type</td>
-  <td>Country</td>
-  </tr>
-  </thead>
-  <tbody>
-    @for(surfer <- Surfers.getList) {
-    <tr>
-    <td><a href="@routes.Surfers.getSurfer(surfer.getSlug())">@surfer.getName()</a></td>
-    <td>@surfer.getType()</td>
-    <td>@surfer.getCountry()</td>
-    </tr> 
-    }
-  </tbody>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <td>Name</td>
+        <td>Description</td>
+      </tr>
+    </thead>
+    <tbody>
+      @for(surfer <- Surfers.getList) {
+      <tr>
+        <td><a href="@routes.Surfers.getSurfer(surfer.getSlug())">@surfer.getName()</a></td>
+        <td>@surfer.getShortBio(40) ...</td>
+      </tr>
+      }
+    </tbody>
   </table>
 
-<!--
-            <ul class="pagination">
+
+
+  <ul class="pagination">
                 @if(Surfers.hasPrev) {
                     <li class="prev">
-                        <a href="@routes.Surfers.index(Surfers.getPageIndex - 1)">&larr; Previous</a>
+                        <a href="@routes.Surfers.index(Surfers.getPageIndex - 1)">&laquo; Prev</a>
                     </li>
                 } else {
                     <li class="disabled">
-                        <a>&larr; Previous</a>
+                        <a>&laquo; Prev</a>
                     </li>
                 }
-                <li class="current">
-                    <a>Displaying @Surfers.getDisplayXtoYofZ(" to "," of ")</a>
-                </li>
+
+
                 @if(Surfers.hasNext) {
                     <li class="next">
-                        <a href="@routes.Surfers.index(Surfers.getPageIndex + 1)">Next &rarr;</a>
+                        <a href="@routes.Surfers.index(Surfers.getPageIndex + 1)">Next &raquo;</a>
                     </li>
                 } else {
                     <li class="disabled">
-                        <a>Next &rarr;</a>
+                        <a>Next &raquo;</a>
                     </li>
                 }
             </ul>
--->            
-            <ul class="pager">
+            
+
+<!--            <ul class="pager">
                 @if(Surfers.hasPrev) {
                 <li class="previous"><a href="@routes.Surfers.index(Surfers.getPageIndex - 1)">&larr; Prev</a></li>
                 } else {
@@ -59,7 +58,7 @@ typeList: Map[String,Boolean], countryList: Map[String,Boolean], searchForm : Fo
                 } else {
                 <li class="next disabled"><a href="#">Next &rarr;</a></li>
                 }
-            </ul>
+            </ul> -->
     } else {
         <div class="col-sm-8 col-sm-offset-2">
         <h3>There were no results matching this query.</h3>

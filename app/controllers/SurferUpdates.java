@@ -1,6 +1,5 @@
 package controllers;
 
-import java.util.Map;
 import models.SurferUpdate;
 import play.data.Form;
 import play.mvc.Controller;
