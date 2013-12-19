@@ -47,7 +47,7 @@
           @search(searchForm("name"), placeholder = "Name") @searchselect(searchForm("surferType"), searchType = "Type",
           optionMap = typeList, isMultiple = false) @searchselect(searchForm("country"), searchType = "Country",
           optionMap = countryList, isMultiple = false)
-          <button type="submit" class="btn btn-default">
+          <button id="searchSubmit" type="submit" class="btn btn-default">
             <span class="glyphicon glyphicon-search"></span>
           </button>
           } }
@@ -58,19 +58,19 @@
 
 
           @if(isLoggedIn) {
-          <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">@user.getFirst()<b
+          <li class="dropdown"><a id="admindropdown" class="dropdown-toggle" data-toggle="dropdown" href="#">@user.getFirst()<b
               class="caret"></b></a>
             <ul class="dropdown-menu">
-              <li class="@(" active".when(page=="New"))"><a href="@routes.Surfers.newSurfer()">New
+              <li class="@(" active".when(page=="New"))"><a id="newSurfer" href="@routes.Surfers.newSurfer()">New
                   Surfer</a></li>
-              <li class="@(" active".when(page=="Update"))"><a href="@routes.SurferUpdates.index()">Updates</a></li>
+              <li class="@(" active".when(page=="Update"))"><a id="update" href="@routes.SurferUpdates.index()">Updates</a></li>
              <!-- <li><a href="@routes.Application.deleteUser()">Delete</a></li> -->
 
             </ul></li>
-          <li><a href="@routes.Application.logout()">Logout</a></li> } else { 
+          <li><a id="logout" href="@routes.Application.logout()">Logout</a></li> } else { 
          
-          <li><a href="@routes.Application.register()">Register</a></li>
-          <li><a href="@routes.Application.login()">Login</a></li>  }
+          <li><a id="register" href="@routes.Application.register()">Register</a></li>
+          <li><a id="login" href="@routes.Application.login()">Login</a></li>  }
         </ul>
       </div>
 

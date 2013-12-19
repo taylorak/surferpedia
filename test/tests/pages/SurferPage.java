@@ -1,5 +1,6 @@
 package tests.pages;
 
+import models.Surfer;
 import org.fluentlenium.core.FluentPage;
 import org.openqa.selenium.WebDriver;
 import play.Play;
@@ -13,7 +14,7 @@ import static org.fest.assertions.Assertions.assertThat;
  * Illustration of the Page Object Pattern in Fluentlenium.  
  * @author Taylor Kennedy
  */
-public class LoginPage extends FluentPage {
+public class SurferPage extends FluentPage {
   private String url;
   
   /**
@@ -21,9 +22,9 @@ public class LoginPage extends FluentPage {
    * @param webDriver The driver.
    * @param port The port.
    */
-  public LoginPage(WebDriver webDriver, int port) {
+  public SurferPage(WebDriver webDriver, int port) {
     super(webDriver);
-    this.url = "http://localhost:" + port + "/login";
+    this.url = "http://localhost:" + port + "/surfer/" + Surfer.find.findList().get(Surfer.find.findList().size()-1).getSlug();
   }
   
   @Override
@@ -33,30 +34,35 @@ public class LoginPage extends FluentPage {
   
   @Override
   public void isAt() {
-    assertThat(title()).isEqualTo("Login (surferpedia)");
+    assertThat(title()).isEqualTo("Surfer (surferpedia)");
   }
   
   /**
-   * Set the form to the passed values, then submit it.
+   * Moves to the surfer update page.
    * @param name The form name data.
    * @param gender The form gender value. 
    */
-  public void login() {
-    String adminEmail = Play.application().configuration().getString("surferpedia.admin.email");
-    String adminPassword = Play.application().configuration().getString("surferpedia.admin.password");
-    fill("#email").with(adminEmail);
-    fill("#password").with(adminPassword);
-    //find("#login").click();
-    find("#submitLogin").click();
+  public void updateButton() {
+   find("#edit").click();
   }
   
   /**
-   * logout of surferpedia.
+   * Tests the surfer update function using the bio as the changed field.
    * @param name The form name data.
    * @param gender The form gender value. 
    */
-  public void logout() {
-    find("#logout").click();
+  public void updateSurfer() {
+    fill("#bio").with("Testing Update");
+    find("#submit").click();
+  }
+  
+  /**
+   * Deletes a surfer from the database.
+   * @param name The form name data.
+   * @param gender The form gender value. 
+   */
+  public void delete() {
+    find("#delete").click();
   }
   
 }

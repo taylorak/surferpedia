@@ -43,8 +43,8 @@ countryList: Map[String,Boolean], searchForm : Form[views.formdata.SearchForm])
       @if(isLoggedIn) {
       <div class="container">
       <div class="row">       
-      <a type="button" class="pull-left btn btn-primary" href="@routes.Surfers.manageSurfer(Surfer.getSlug())">Edit</a>
-      <a type="button" data-toggle="modal" href="#myModal" class="pull-right btn btn-primary">Delete</a>
+      <a type="button" id="edit" class="pull-left btn btn-primary" href="@routes.Surfers.manageSurfer(Surfer.getSlug())">Edit</a>
+      <a type="button" id="delete" data-toggle="modal" href="#myModal" class="pull-right btn btn-primary">Delete</a>
       </div>
       </div>
       }
@@ -61,7 +61,7 @@ countryList: Map[String,Boolean], searchForm : Form[views.formdata.SearchForm])
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <a type="button" href="@routes.Surfers.deleteSurfer(Surfer.getSlug())" class="btn btn-primary">Delete</a>
+          <a id="accept" type="button" href="@routes.Surfers.deleteSurfer(Surfer.getSlug())" class="btn btn-primary">Delete</a>
           </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
