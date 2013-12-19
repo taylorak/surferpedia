@@ -33,7 +33,7 @@ public class LoginPage extends FluentPage {
   
   @Override
   public void isAt() {
-    assertThat(title()).isEqualTo("Login");
+    assertThat(title()).isEqualTo("Login (surferpedia)");
   }
   
   /**
@@ -42,8 +42,10 @@ public class LoginPage extends FluentPage {
    * @param gender The form gender value. 
    */
   public void login() {
-    String adminEmail = Play.application().configuration().getString("surferpedia.admin.email");
-    String adminPassword = Play.application().configuration().getString("surferpedia.admin.password");
+    //String adminEmail = Play.application().configuration().getString("surferpedia.admin.email");
+    //String adminPassword = Play.application().configuration().getString("surferpedia.admin.password");
+    String adminEmail = "admin";
+    String adminPassword = "password";
     fill("#email").with(adminEmail);
     fill("#password").with(adminPassword);
     submit("#submit");

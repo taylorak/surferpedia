@@ -57,11 +57,16 @@ public class Surfer extends Model {
   private String country;
   
   private String vidUrl;
+  
+  /**Surfer ID**/
+  private long id = -1;
+
   /**
    * The EBean ORM finder method for database queries on Surfer.
    * @return The finder method for surfer.
    */  
-  public static Finder<String, Surfer> find = new Finder<String, Surfer>(
+ 
+  public static Finder<String,Surfer> find = new Finder<String,Surfer>(
       String.class, Surfer.class
     ); 
   
@@ -99,8 +104,9 @@ public class Surfer extends Model {
    * @param slug The surfer's slug field.
    * @param type The surfer's type.
    */
-  public Surfer(String name, String home, String awards, String carouselUrl, String bioUrl, String vidUrl, String bio, String slug,
+  public Surfer(long id, String name, String home, String awards, String carouselUrl, String bioUrl, String vidUrl, String bio, String slug,
       String type, String footstyle, String country) {
+    this.setId(id);
     this.slug = slug;
     this.setName(name);
     this.setHome(home);
@@ -134,20 +140,47 @@ public class Surfer extends Model {
    * @return
    */
   public static List<Surfer> getRecentSurfers() {
-    List<Surfer> surferList = Surfer.getSurfers();
+    
+    //Checks to see if there are any out of sync ids and if so, fixes them.
+    int index = 0;
+    List<Surfer> sortedSurfer = new ArrayList<>();
     List<Surfer> newSurfers = new ArrayList<>();
-    int totalSurferIndex = Surfer.find.findRowCount()-1;
-    int index = 2;
-    while(index >= 0) {
-      if(index < surferList.size()) {
-        newSurfers.add(surferList.get(totalSurferIndex-index));
-        index--;
-      }else {
-        index--;
+    sortedSurfer = Surfer.find.where().orderBy("id desc").findList();
+    boolean needSort = false;
+    while(index < sortedSurfer.size()) {
+      if(sortedSurfer.get(index).id == -1) {
+        needSort = true;
       }
+      index++;
+    }
+    if(needSort) {
+      resortSurferList();
     }
     
+    //Takes up to three most recent added surfers
+    index = 0;  
+    sortedSurfer = Surfer.find.where().orderBy("id desc").findList();
+    while(index < 3 && index < sortedSurfer.size()) {
+      newSurfers.add(sortedSurfer.get(index));
+      index++; 
+    }
+    
+    
     return newSurfers;
+  }
+  
+  /**
+   * Resorts surfer list so that surfer ids match total number of surfers in the database
+   */
+  public static void resortSurferList() {
+    int index = 0;
+    List<Surfer> sortedSurfer = new ArrayList<>();
+    sortedSurfer = Surfer.find.where().orderBy("id").findList();
+    while(index < sortedSurfer.size()) {
+      sortedSurfer.get(index).setId(index+1);
+      sortedSurfer.get(index).save();
+      index++;
+    }
   }
   
   /**
@@ -177,13 +210,14 @@ public class Surfer extends Model {
     //String slug = formData.name.toLowerCase().replaceAll("[^a-z0-9-]", "_");
     Surfer surfer;
     if (!contains(formData.slug)){
-      surfer = new Surfer(formData.name, formData.home, formData.awards, formData.carouselUrl, formData.bioUrl, 
+      surfer = new Surfer(Surfer.getSurfers().size()+1, formData.name, formData.home, formData.awards, formData.carouselUrl, formData.bioUrl, 
           formData.vidUrl, formData.bio, formData.slug, formData.type, formData.footstyle,  formData.country);
       surfer.save();
       SurferUpdate.addUpdate("Create", surfer);
     } 
     else {
       surfer = getSurfer(formData.slug);
+      surfer.setId(formData.id);
       surfer.setName(formData.name);
       surfer.setHome(formData.home);
       surfer.setAwards(formData.awards);
@@ -193,9 +227,11 @@ public class Surfer extends Model {
       surfer.setType(formData.type);
       surfer.setFootStyle(formData.footstyle);
       surfer.setCountry(formData.country);
+      surfer.setVidUrl(formData.vidUrl);
       surfer.save();
       SurferUpdate.addUpdate("Edit", surfer);
     }
+
     return surfer;
   }
   
@@ -206,6 +242,7 @@ public class Surfer extends Model {
   public static void deleteSurfer(String slug) {
     SurferUpdate.addUpdate("Delete", find.ref(slug));
     find.ref(slug).delete();
+    resortSurferList();
   }
   
   /**
@@ -383,6 +420,22 @@ public class Surfer extends Model {
    */
   public void setVidUrl(String vidUrl) {
     this.vidUrl = vidUrl;
+  }
+
+
+  /**
+   * @return the id
+   */
+  public long getId() {
+    return id;
+  }
+
+
+  /**
+   * @param id the id to set
+   */
+  public void setId(long id) {
+    this.id = id;
   }
 
 }
