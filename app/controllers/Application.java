@@ -1,8 +1,5 @@
 package controllers;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
 import models.Surfer;
 import models.User;
 import play.data.Form;

@@ -118,11 +118,13 @@ public class User extends Model {
     } else {
       return false;
     }
+
     /*    return find.where()
             .eq("email", email)
             .eq("password", password)
             .findUnique() != null;
    */
+
   }
 
   /**

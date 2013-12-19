@@ -37,10 +37,4 @@ public class SurferListPage extends FluentPage {
   }
   
   
-  public void search() {
-    
-    
-  }
-  
-  
 }
