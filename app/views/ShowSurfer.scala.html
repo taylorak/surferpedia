@@ -46,10 +46,10 @@ countryList: Map[String,Boolean], searchForm : Form[views.formdata.SearchForm])
       <p>@Surfer.getBio()</p>
 
       @if(Surfer.getVidUrl() != "" && models.Surfer.isValidUrl(Surfer.getVidUrl())) {
-<<<<<<< HEAD
       
-     <div class="flex-video widescreen"><iframe src="@Surfer.getVidUrl()" frameborder="0" allowfullscreen="true"></iframe></div>
-     
+      <div class="flex-video widescreen">
+        <iframe src="@Surfer.getVidUrl()" frameborder="0" allowfullscreen="true"></iframe>
+      </div>
      } 
       
       @if(isLoggedIn) {
@@ -57,22 +57,18 @@ countryList: Map[String,Boolean], searchForm : Form[views.formdata.SearchForm])
       <div class="row">       
       <a type="button" id="edit" class="pull-left btn btn-primary" href="@routes.Surfers.manageSurfer(Surfer.getSlug())">Edit</a>
       <a type="button" id="delete" data-toggle="modal" href="#myModal" class="pull-right btn btn-primary">Delete</a>
-=======
-
-      <div class="flex-video widescreen">
-        <iframe src="@Surfer.getVidUrl()" frameborder="0" allowfullscreen="true"></iframe>
->>>>>>> 9dee7402305f0071811bae84b48d83f2af4b16c0
-      </div>
+     </div>
+     </div>
+     }
 
       } @if(isLoggedIn) {
       <div class="container">
         <div class="row">
-          <a type="button" class="pull-left btn btn-primary" href="@routes.Surfers.manageSurfer(Surfer.getSlug())">Edit</a>
-          <a type="button" data-toggle="modal" href="#myModal" class="pull-right btn btn-primary">Delete</a>
+          <a id="edit" type="button" class="pull-left btn btn-primary" href="@routes.Surfers.manageSurfer(Surfer.getSlug())">Edit</a>
+          <a id="delete" type="button" data-toggle="modal" href="#myModal" class="pull-right btn btn-primary">Delete</a>
         </div>
       </div>
       }
-<<<<<<< HEAD
       
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -87,21 +83,7 @@ countryList: Map[String,Boolean], searchForm : Form[views.formdata.SearchForm])
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           <a id="accept" type="button" href="@routes.Surfers.deleteSurfer(Surfer.getSlug())" class="btn btn-primary">Delete</a>
-=======
 
-      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-              <h4 class="modal-title">Really Delete Surfer?</h4>
-            </div>
-            <div class="modal-body">This cannot be undone.</div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <a type="button" href="@routes.Surfers.deleteSurfer(Surfer.getSlug())" class="btn btn-primary">Delete</a>
-            </div>
->>>>>>> 9dee7402305f0071811bae84b48d83f2af4b16c0
           </div>
           <!-- /.modal-content -->
         </div>
