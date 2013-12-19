@@ -46,7 +46,7 @@
           <input id="@confirmField.id" name="@confirmField.name" value="@confirmField.value.getOrElse("")" class="form-control" placeholder="Password" type="password">
           <div class="help-block">@{confirmField.error.map { error => error.message }}</div>
         </div>
-        <input class="btn btn-lg btn-primary btn-block" type="submit" value="Register">
+        <input id="submitRegister" class="btn btn-lg btn-primary btn-block" type="submit" value="Register">
       </fieldset>
     }
 

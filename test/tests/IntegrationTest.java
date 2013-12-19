@@ -5,6 +5,7 @@ import play.test.TestBrowser;
 import play.libs.F.Callback;
 import tests.pages.LoginPage;
 import tests.pages.NewSurferPage;
+import tests.pages.RegistrationPage;
 import tests.pages.SurferListPage;
 import tests.pages.SurferPage;
 //import static play.test.Helpers.HTMLUNIT;
@@ -145,7 +146,7 @@ public class IntegrationTest {
   }
   
   /**
-   * 
+   *Tests if user can get to the update list. 
    */
   @Test
   public void testGetUpdateList() {
@@ -159,6 +160,22 @@ public class IntegrationTest {
         browser.find("#update").click();
         assertThat(browser.pageSource()).contains("Update");
         
+      }
+    });
+  }
+  
+  /**
+   * Tests to see if user can register.
+   */
+  @Test
+  public void testRegistration() {
+    running(testServer(PORT, fakeApplication(inMemoryDatabase())), FIREFOX, new Callback<TestBrowser>() {
+      public void invoke(TestBrowser browser) {
+        RegistrationPage registrationpage = new RegistrationPage(browser.getDriver(), PORT);
+        browser.goTo(registrationpage);
+        registrationpage.isAt();
+        registrationpage.register();
+       assertThat(browser.pageSource()).contains("Home");
       }
     });
   }
