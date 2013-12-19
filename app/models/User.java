@@ -118,11 +118,19 @@ public class User extends Model {
     } else {
       return false;
     }
+<<<<<<< HEAD
      /**   return find.where()
             .eq("email", email)
             .eq("password", password)
             .findUnique() != null;
     **/
+=======
+    /*    return find.where()
+            .eq("email", email)
+            .eq("password", password)
+            .findUnique() != null;
+   */
+>>>>>>> 9dee7402305f0071811bae84b48d83f2af4b16c0
   }
 
   /**

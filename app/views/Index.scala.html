@@ -7,7 +7,7 @@ countryList: Map[String,Boolean], searchForm : Form[views.formdata.SearchForm], 
   <div class="col-sm-12">
            @if(flash.containsKey("registered")) {
            <div class="alert alert-success" style="text-align:center;">
-            @flash.get("registered") You are now free to add <a href="routes.Surfers.newSurfer()" class="alert-link">new surfers</a>.
+            @flash.get("registered") You are now free to add <a href="@routes.Surfers.newSurfer()" class="alert-link">new surfers</a>.
            </div>
             }
     <div id="carousel-example-generic" class="carousel slide">

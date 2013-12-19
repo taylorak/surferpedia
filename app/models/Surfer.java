@@ -1,13 +1,16 @@
 package models;
 
 import java.util.Collections;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.imageio.ImageIO;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Lob;
@@ -58,14 +61,13 @@ public class Surfer extends Model {
   
   private String vidUrl;
   
-  /**Surfer ID**/
-  private long id = -1;
+  @Required
+  private Date postedOn;
 
   /**
    * The EBean ORM finder method for database queries on Surfer.
    * @return The finder method for surfer.
    */  
- 
   public static Finder<String,Surfer> find = new Finder<String,Surfer>(
       String.class, Surfer.class
     ); 
@@ -104,9 +106,8 @@ public class Surfer extends Model {
    * @param slug The surfer's slug field.
    * @param type The surfer's type.
    */
-  public Surfer(long id, String name, String home, String awards, String carouselUrl, String bioUrl, String vidUrl, String bio, String slug,
+  public Surfer(String name, String home, String awards, String carouselUrl, String bioUrl, String vidUrl, String bio, String slug,
       String type, String footstyle, String country) {
-    this.setId(id);
     this.slug = slug;
     this.setName(name);
     this.setHome(home);
@@ -118,6 +119,7 @@ public class Surfer extends Model {
     this.setType(type);
     this.setFootStyle(footstyle);
     this.setCountry(country);
+    this.setPostedOn(new Date());
   }
   
   /**
@@ -140,47 +142,8 @@ public class Surfer extends Model {
    * @return
    */
   public static List<Surfer> getRecentSurfers() {
-    
-    //Checks to see if there are any out of sync ids and if so, fixes them.
-    int index = 0;
-    List<Surfer> sortedSurfer = new ArrayList<>();
-    List<Surfer> newSurfers = new ArrayList<>();
-    sortedSurfer = Surfer.find.where().orderBy("id desc").findList();
-    boolean needSort = false;
-    while(index < sortedSurfer.size()) {
-      if(sortedSurfer.get(index).id == -1) {
-        needSort = true;
-      }
-      index++;
-    }
-    if(needSort) {
-      resortSurferList();
-    }
-    
-    //Takes up to three most recent added surfers
-    index = 0;  
-    sortedSurfer = Surfer.find.where().orderBy("id desc").findList();
-    while(index < 3 && index < sortedSurfer.size()) {
-      newSurfers.add(sortedSurfer.get(index));
-      index++; 
-    }
-    
-    
-    return newSurfers;
-  }
-  
-  /**
-   * Resorts surfer list so that surfer ids match total number of surfers in the database
-   */
-  public static void resortSurferList() {
-    int index = 0;
-    List<Surfer> sortedSurfer = new ArrayList<>();
-    sortedSurfer = Surfer.find.where().orderBy("id").findList();
-    while(index < sortedSurfer.size()) {
-      sortedSurfer.get(index).setId(index+1);
-      sortedSurfer.get(index).save();
-      index++;
-    }
+    List<Surfer> sortedSurfer = Surfer.find.where().orderBy("posted_on desc").findList();
+    return sortedSurfer.subList(0, 3);
   }
   
   /**
@@ -210,14 +173,14 @@ public class Surfer extends Model {
     //String slug = formData.name.toLowerCase().replaceAll("[^a-z0-9-]", "_");
     Surfer surfer;
     if (!contains(formData.slug)){
-      surfer = new Surfer(Surfer.getSurfers().size()+1, formData.name, formData.home, formData.awards, formData.carouselUrl, formData.bioUrl, 
+      surfer = new Surfer(formData.name, formData.home, formData.awards, formData.carouselUrl, formData.bioUrl, 
           formData.vidUrl, formData.bio, formData.slug, formData.type, formData.footstyle,  formData.country);
       surfer.save();
       SurferUpdate.addUpdate("Create", surfer);
     } 
     else {
       surfer = getSurfer(formData.slug);
-      surfer.setId(formData.id);
+      surfer.setPostedOn(new Date());
       surfer.setName(formData.name);
       surfer.setHome(formData.home);
       surfer.setAwards(formData.awards);
@@ -242,7 +205,6 @@ public class Surfer extends Model {
   public static void deleteSurfer(String slug) {
     SurferUpdate.addUpdate("Delete", find.ref(slug));
     find.ref(slug).delete();
-    resortSurferList();
   }
   
   /**
@@ -280,6 +242,27 @@ public class Surfer extends Model {
    * */
   public static boolean contains(String slug) {
     return (getSurfer(slug) != null);
+  }
+  
+  /**
+   * Returns bio truncated to 40 characters.
+   * @return shortened bio
+   */
+  public String getShortBio(int length) {
+    return (bio.length() > length) ? this.bio.substring(0, length) : this.bio;
+  }
+  
+  
+  public static boolean isImage(String url) {
+    try {
+      BufferedImage image = ImageIO.read(new URL(url));
+      if (image == null) {
+        return false;
+      }
+    } catch(IOException ex) {
+       return false;
+    }
+    return true;
   }
   
   /**
@@ -414,21 +397,20 @@ public class Surfer extends Model {
   public void setVidUrl(String vidUrl) {
     this.vidUrl = vidUrl;
   }
-
-
+  
   /**
-   * @return the id
+   * @return the postedOn
    */
-  public long getId() {
-    return id;
+  public Date getPostedOn() {
+    return postedOn;
   }
 
 
   /**
-   * @param id the id to set
+   * @param postedOn the postedOn to set
    */
-  public void setId(long id) {
-    this.id = id;
+  public void setPostedOn(Date postedOn) {
+    this.postedOn = postedOn;
   }
 
 }

@@ -25,10 +25,14 @@ public class Surfers  extends Controller{
   private static final Form<SearchForm> searchForm = Form.form(SearchForm.class);
   private static final Form<SurferForm> surferForm = Form.form(SurferForm.class);
   
-  /**
-   * Gets all surfers. 
-   * @return The resulting home page. 
-   */
+ /**
+ * Gets all surfers. 
+ * @param page
+ * @param name
+ * @param country
+ * @param surferType
+ * @return A list of all surfers.
+ */
   public static Result index(int page, String name, String country, String surferType) {
     return ok(SurferList.render("Surfer List", 
         Secured.isLoggedIn(ctx()), 
@@ -140,12 +144,13 @@ public class Surfers  extends Controller{
   public static Result surferSearch() {
     Form<SearchForm> formData = searchForm.bindFromRequest();
     SearchForm data = formData.get();
-    return ok(SurferList.render("Search", 
+    /**return ok(SurferList.render("Search", 
         Secured.isLoggedIn(ctx()), 
         Secured.getUserInfo(ctx()), 
         Surfer.page(5, 0, data.name, data.country, data.surferType), 
         SurferTypes.getTypes(), 
         CountryTypes.getCountryTypes(), 
-        searchForm));
+        searchForm)); **/
+    return redirect(routes.Surfers.index(0, data.name, data.country, data.surferType));
   }
 }
