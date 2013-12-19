@@ -57,9 +57,6 @@ public class SurferForm {
   @URL
   public String vidUrl;
   
-  @Required(message="id is required.")
-  public long id = -1;
-  
   
   /**
    * The default constructor.
@@ -114,7 +111,6 @@ public class SurferForm {
     this.footstyle = surfer.getFootStyle();
     this.country = surfer.getCountry();
     this.isEditable = isEditable;
-    this.id = surfer.getId();
   }
 
   
